@@ -11,8 +11,6 @@ const PageLayout: FC = () => (
 const Wrapper = styled.div`
   height: 100vh;
   background-color: ${({theme}) => theme.colors.gray050};
-  display: grid;
-  grid-template-columns: auto 1fr;
 `;
 
 export default PageLayout;
