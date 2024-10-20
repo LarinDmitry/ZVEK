@@ -1,6 +1,8 @@
 import React, {useCallback, useMemo, FC, ReactNode} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Checkbox from '@mui/material/Checkbox';
+import SvgIcon from '@mui/material/SvgIcon';
 import {teamDetails} from 'pages/Main/DATA';
 import X from 'assets/images/quality/x.png';
 import B from 'assets/images/quality/b+.png';
@@ -14,6 +16,7 @@ import Aspen from 'assets/images/heroes/aspen.png';
 import Vulkan from 'assets/images/heroes/vulkan.png';
 import Vesa from 'assets/images/heroes/vesa.png';
 import Mokman from 'assets/images/heroes/mokman.png';
+import Arrow from 'assets/icons/arrow.svg';
 import {font_body_4_bold} from 'theme/fonts';
 
 interface Props {
@@ -25,6 +28,8 @@ interface Props {
 }
 
 const Table: FC<Props> = ({data, total}) => {
+  const navigate = useNavigate();
+
   const headerArr = useMemo(() => ['', '№', 'Nickname', 'Quality', 'Hero', 'Damage, billions', 'Impact, %', ''], []);
 
   const handleChange = useCallback((value: boolean, name: string) => {
@@ -66,7 +71,8 @@ const Table: FC<Props> = ({data, total}) => {
         ))}
       </Header>
       {data.map(({name, damage}, idx) => (
-        <Row key={name}>
+        // TODO add map for Cells
+        <Row key={name} onClick={() => navigate(`/details/${name}`)}>
           <Cell>
             <Checkbox onChange={({target: {checked}}) => handleChange(checked, name)} />
           </Cell>
@@ -76,7 +82,11 @@ const Table: FC<Props> = ({data, total}) => {
           <Cell>{getHeroType(teamDetails.find((detail) => detail.name === name)?.damageDealer || '')}</Cell>
           <Cell>{(damage / 1000000000).toFixed(3)}</Cell>
           <Cell>{((damage / total) * 100).toFixed(3)}</Cell>
-          <Cell>{'>'}</Cell>
+          <Cell>
+            <Icon>
+              <Arrow />
+            </Icon>
+          </Cell>
         </Row>
       ))}
     </Wrapper>
@@ -113,11 +123,27 @@ const Cell = styled.div`
   padding: 0.5rem;
 `;
 
+const Icon = styled(SvgIcon)`
+  &.MuiSvgIcon-root {
+    fill: ${({theme}) => theme.colors.gray090};
+    transform: rotate(-90deg);
+  }
+`;
+
 const Row = styled.div`
   display: grid;
   grid-template-columns: 4rem 1.5rem auto 4rem 4rem 7rem 7rem 3rem;
   border-bottom: 1px solid rgb(224, 224, 224);
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({theme}) => theme.colors.blue050};
+
+    ${Icon} {
+      fill: ${({theme}) => theme.colors.gray100};
+    }
+  }
 `;
 
 const Quality = styled.img`

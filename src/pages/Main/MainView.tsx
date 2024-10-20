@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: 58% auto;
+  grid-template-columns: 58% 42%;
   grid-template-rows: calc(100vh - 4.7rem);
   grid-column-gap: 1rem;
 `;

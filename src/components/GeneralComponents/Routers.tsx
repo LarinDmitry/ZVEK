@@ -10,7 +10,7 @@ const Routers = () => (
   <Fragment>
     <Route element={<PageLayout />}>
       <Route path="/" element={<Main />} />
-      <Route path="/:id" element={<Details />} />
+      <Route path="/details/:id" element={<Details />} />
     </Route>
     <Route path="*" element={<NotFound />} />
   </Fragment>
