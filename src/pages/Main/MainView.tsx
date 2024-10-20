@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Table from './components/Table';
 import PieChart from './components/PieChart';
-import DATA from './DATA';
+import {lastZvek} from './DATA';
 import {font_header_5_bold} from 'theme/fonts';
 
-const {data, total, date} = DATA;
+const {data, total, date} = lastZvek;
 
 const MainView = () => (
   <Wrapper>
@@ -23,7 +23,8 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 58% auto;
+  grid-template-rows: calc(100vh - 4.7rem);
   grid-column-gap: 1rem;
 `;
 
