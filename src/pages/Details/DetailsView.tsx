@@ -1,76 +1,39 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useParams} from 'react-router-dom';
-import {Line} from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import styled from 'styled-components';
+import {zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks, lastZvek} from 'pages/Main/DATA';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+import LineChart from 'pages/Details/components/LineChart';
 
 const DetailsView = () => {
   const {id} = useParams<{id: string}>();
 
-  const lastZvekValues = lastZvek.data.find(({name}) => name === id)?.damageByDay;
-  const latestZvekValues = latestZveks.find(({name}) => name === id)?.damageByDay;
+  const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.damageByDay, [id]);
 
-  const chartData = {
-    labels: latestZvekValues?.map((item) => item.date) || [],
-    datasets: [
-      {
-        label: 'Демаг за ЗВЭК',
-        data: latestZvekValues?.map(item => item.damage / 1000000000) || [],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: false,
-        stepped: true,
-        tension: 0.4,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Демаг последних 3х ЗВЭК, млд',
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Дата',
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Демаг',
-        },
-      },
-    },
-  };
-
-  console.log(latestZvekValues, 'latestZvekValues');
-  console.log(JSON.stringify(lastZvekValues), 'lastZvekValues');
+  const lastZvekValues = useMemo(
+    () =>
+      lastZvek.data
+        .find(({name}) => name === id)
+        ?.damageByDay.map((damage, idx) => ({
+          damage,
+          date: zvekDaysOptions[idx],
+          guildTotal: 0,
+        })),
+    [id]
+  );
 
   return (
-    <div>
-      <Line data={chartData} options={options} />
-    </div>
+    <Wrapper>
+      <LineChart data={latestZvekValues || []} title='Демаг последних 3х ЗВЭК, млд' />
+      <LineChart data={lastZvekValues || []} title='Демаг последнего ЗВЭК, млд' />
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: calc(50% - 0.5rem) calc(50% - 0.5rem);
+  grid-column-gap: 1rem;
+`;
 
 export default DetailsView;

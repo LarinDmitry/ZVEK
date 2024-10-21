@@ -43,3 +43,5 @@ export const hoverBackgroundColor = [
   'rgb(255, 69, 132)',
   'rgb(54, 132, 235)',
 ]
+
+export const zvekDaysOptions = ['Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вск'];
