@@ -1,4 +1,5 @@
 import React, {FC, useMemo} from 'react';
+import styled from 'styled-components';
 import {Line} from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,15 +11,18 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, annotationPlugin);
 
 interface Props {
-  data: {damage: number; date: string; guildTotal: number}[];
+  data: {damage: number; date: string; guildTotal?: number}[];
   title: string;
+  averageTitle: string;
+  average: number;
 }
 
-const LineChart: FC<Props> = ({data, title}) => {
+const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
   const chartData = useMemo(
     () => ({
       labels: data?.map((item) => item.date) || [],
@@ -26,8 +30,8 @@ const LineChart: FC<Props> = ({data, title}) => {
         {
           label: 'Демаг за ЗВЭК',
           data: data?.map((item) => item.damage / 1000000000) || [],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgb(72, 99, 235)',
+          backgroundColor: 'rgb(68, 217, 38)',
           fill: false,
           stepped: true,
           tension: 0.4,
@@ -48,6 +52,20 @@ const LineChart: FC<Props> = ({data, title}) => {
           display: true,
           text: title,
         },
+        annotation: {
+          annotations: average
+            ? {
+                line1: {
+                  type: 'line',
+                  yMin: average / 1000000000,
+                  yMax: average / 1000000000,
+                  borderColor: 'rgb(235, 72, 99)',
+                  borderDash: [10],
+                  borderWidth: 2,
+                },
+              }
+            : {},
+        },
       },
       scales: {
         x: {
@@ -64,14 +82,22 @@ const LineChart: FC<Props> = ({data, title}) => {
         },
       },
     }),
-    [title]
+    [title, average]
   );
 
   return (
     <div>
-      <Line data={chartData} options={options} />
+      <Line data={chartData} options={options as any} />
+      <SubInfo>
+        {averageTitle} <b>{((average || 0) / 1000000000).toFixed(2)} млд</b>
+      </SubInfo>
     </div>
   );
 };
+
+const SubInfo = styled.div`
+  padding: 1rem;
+  text-align: center;
+`;
 
 export default LineChart;
