@@ -28,7 +28,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
       labels: data?.map((item) => item.date) || [],
       datasets: [
         {
-          label: 'Демаг за ЗВЭК',
+          label: 'Урон в ЗВЭК',
           data: data?.map((item) => item.damage / 1000000000) || [],
           borderColor: 'rgb(72, 99, 235)',
           backgroundColor: 'rgb(68, 217, 38)',
@@ -45,6 +45,12 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
     () => ({
       responsive: true,
       plugins: {
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          formatter: (value: number) => value.toFixed(2),
+        },
         legend: {
           position: 'top' as const,
         },
@@ -83,11 +89,11 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
       },
     }),
     [title, average]
-  );
+  ) as any;
 
   return (
     <div>
-      <Line data={chartData} options={options as any} />
+      <Line data={chartData} options={options} />
       <SubInfo>
         {averageTitle} <b>{((average || 0) / 1000000000).toFixed(2)} млд</b>
       </SubInfo>

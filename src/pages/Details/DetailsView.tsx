@@ -45,13 +45,13 @@ const DetailsView = () => {
         <Charts>
           <LineChart
             data={latestZvekValues || []}
-            title="Демаг последних 3х ЗВЭК, млд"
+            title="Урон последних 3х ЗВЭК, млд"
             average={averageLatestZveks || 0}
             averageTitle="Ваш средний урон последних трех звэков:"
           />
           <LineChart
             data={lastZvekValues || []}
-            title="Демаг последнего ЗВЭК, млд"
+            title="Урон последнего ЗВЭК, млд"
             average={averageLastZvek}
             averageTitle="Средний урон последнего звэка по гильдии:"
           />

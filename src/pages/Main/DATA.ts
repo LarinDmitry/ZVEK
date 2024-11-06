@@ -152,7 +152,7 @@ export const lastZvek = {
       damageByDay: [7478287, 6483386070, 125446193, 0, 0, 0],
     },
   ],
-  date: '10.24',
+  date: '11.24',
   total: 56746916942169,
 };
 
@@ -161,144 +161,144 @@ export const latestZveks = [
     name: 'DyrachYO',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 27067211205303, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'ph',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 12583748929367, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Smpl_dmpl',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 4129933061975, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Sarcazm',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 1908238618669, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Azural',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 1698789694995, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'YouMakeMyDay',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 1553773798473, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Ganjumian',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 995686168029, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Pul',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 867326008783, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Astell&kern',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 804367694892, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Matpockyx',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 721720635415, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Rich',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 621134536500, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Den4ik',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 587048915593, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Пряник',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 548104853821, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Корбан',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 480517784968, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Маэстро',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 453449832371, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Саурон',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 305529011719, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Resolve',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 225443100452, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'модератор',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 199537004167, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
 
@@ -306,96 +306,96 @@ export const latestZveks = [
     name: 'Iga',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 192434475302, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Santa',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 183238897093, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Doc',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 161946349083, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'MarVik',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 145906353891, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Мандалорец',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 97252959234, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Luciwer',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 61703267589, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Prizrak',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 41290055970, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Kboron',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 37931356254, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Stakanchik',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 33920018575, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'наглый',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 23847718574, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'Ps1h0z',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 9268324562, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
   {
     name: 'jusper',
     damageByDay: [
       {damage: 0, date: 'xx.xx', guildTotal: 0},
-      {damage: 0, date: 'xx.xx', guildTotal: 0},
       {damage: 6616310550, date: '10.24', guildTotal: 56746916942169},
+      {damage: 0, date: '11.24', guildTotal: 0},
     ],
   },
 ];

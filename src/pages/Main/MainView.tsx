@@ -22,7 +22,7 @@ const MainView = () => {
       <Title>
         Последний ЗВЭК - {date}
         {selected.length > 1 ? (
-          <Button variant="contained" onClick={() => navigate(`/compare/${selected.join('%')}`)}>
+          <Button variant="contained" onClick={() => navigate(`/compare/${selected.join('^')}`)}>
             Сравнить
           </Button>
         ) : null}

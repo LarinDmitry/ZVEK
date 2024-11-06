@@ -28,6 +28,7 @@ const PieChart: FC<Props> = ({data, total}) => {
 
   const options = {
     plugins: {
+      datalabels: false,
       tooltip: {
         callbacks: {
           label: ({label, raw}: any) => `${label}: ${raw.toLocaleString()} (${((raw / total) * 100).toFixed(3)}%)`,
@@ -38,7 +39,7 @@ const PieChart: FC<Props> = ({data, total}) => {
         position: 'bottom' as const,
       },
     },
-  };
+  } as any;
 
   return (
     <div>
