@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import styled from 'styled-components';
 import {Bar} from 'react-chartjs-2';
@@ -68,8 +68,8 @@ const CompareView = () => {
     [damageData, transformedData]
   );
 
-  const options = useMemo(
-    () => ({
+  const getOptions = useCallback(
+    (text: string) => ({
       responsive: true,
       scales: {
         x: {stacked: false},
@@ -77,7 +77,7 @@ const CompareView = () => {
       },
       plugins: {
         legend: {position: 'top'},
-        title: {display: true, text: 'Сравнение урона'},
+        title: {display: true, text},
         datalabels: {
           display: true,
           color: 'rgb(0, 0, 0)',
@@ -107,7 +107,14 @@ const CompareView = () => {
           <Arrow />
         </Icon>
       </Button>
-      <Bar options={options} data={data} />
+      <Charts>
+        <div>
+          <Bar options={getOptions('Сравнение урона последних трех ЗВЭК')} data={data} />
+        </div>
+        <div>
+          <Bar options={getOptions('Сравнение урона последнего ЗВЭК')} data={data} />
+        </div>
+      </Charts>
     </div>
   );
 };
@@ -118,6 +125,12 @@ const Icon = styled(SvgIcon)`
     fill: ${({theme}) => theme.colors.gray090};
     transform: rotate(90deg);
   }
+`;
+
+const Charts = styled.div`
+  display: grid;
+  grid-template-columns: calc(50% - 0.5rem) calc(50% - 0.5rem);
+  grid-column-gap: 1rem;
 `;
 
 export default CompareView;
