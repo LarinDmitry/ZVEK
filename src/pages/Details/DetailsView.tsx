@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import {zvekDaysOptions} from 'pages/Main/MainUtils';
-import {latestZveks, lastZvek} from 'pages/Main/DATA';
+import {latestZveks} from 'pages/Main/DATA';
 import LineChart from 'pages/Details/components/LineChart';
 import Arrow from 'assets/icons/arrow.svg';
 
@@ -12,47 +12,47 @@ const DetailsView = () => {
   const navigate = useNavigate();
   const {id} = useParams<{id: string}>();
 
-  const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.damageByDay, [id]);
+  const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
 
-  const lastZvekValues = useMemo(
-    () =>
-      lastZvek.data
-        .find(({name}) => name === id)
-        ?.damageByDay.map((damage, idx) => ({
-          damage,
-          date: zvekDaysOptions[idx],
-        })),
-    [id]
-  );
+  const damageByDayData = useMemo(() => {
+    const {damageByDay = [], date} = latestZvekValues.slice(-1)[0] || {};
+    return damageByDay.map((damage, idx) => ({
+      damage,
+      date: zvekDaysOptions[idx] || date,
+    }));
+  }, [latestZvekValues]);
 
-  const averageLastZvek = useMemo(() => lastZvek.total / 30, []);
-
-  const averageLatestZveks = useMemo(
-    () => latestZvekValues && latestZvekValues?.reduce((acc, {damage}) => acc + damage, 0) / latestZvekValues?.length,
+  const averageAllZveks = useMemo(
+    () => latestZvekValues.reduce((acc, {guildTotal}) => acc + guildTotal, 0) / 30 || 0,
     [latestZvekValues]
   );
 
+  const averageLatestZveks = useMemo(() => {
+    const {guildTotal = 0} = latestZvekValues.slice(-1)[0] || {};
+    return guildTotal / 30;
+  }, [latestZvekValues]);
+
   return (
     <div>
-      <Button>
-        <Icon onClick={() => navigate('/')}>
+      <Button onClick={() => navigate('/')}>
+        <Icon>
           <Arrow />
         </Icon>
       </Button>
-      {!latestZvekValues || !lastZvekValues ? (
+      {!latestZvekValues || damageByDayData.length === 0 ? (
         <div>Нет данных для отображения</div>
       ) : (
         <Charts>
           <LineChart
-            data={latestZvekValues || []}
+            data={latestZvekValues}
             title="Урон последних 3х ЗВЭК, млд"
-            average={averageLatestZveks || 0}
+            average={averageAllZveks || 0}
             averageTitle="Ваш средний урон последних трех звэков:"
           />
           <LineChart
-            data={lastZvekValues || []}
+            data={damageByDayData}
             title="Урон последнего ЗВЭК, млд"
-            average={averageLastZvek}
+            average={averageLatestZveks}
             averageTitle="Средний урон последнего звэка по гильдии:"
           />
         </Charts>

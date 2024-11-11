@@ -1,21 +1,12 @@
-import React, {useCallback, useMemo, FC, ReactNode} from 'react';
+import React, {useCallback, useMemo, FC, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Checkbox from '@mui/material/Checkbox';
 import SvgIcon from '@mui/material/SvgIcon';
+import {heroImages, qualityImages} from 'pages/Main/MainUtils';
 import {teamDetails} from 'pages/Main/DATA';
 import X from 'assets/images/quality/x.png';
-import B from 'assets/images/quality/b+.png';
-import A_Low from 'assets/images/quality/a-.png';
-import A from 'assets/images/quality/a.png';
-import A_High from 'assets/images/quality/a+.png';
-import S from 'assets/images/quality/s.png';
-import SS from 'assets/images/quality/ss.png';
-import SSS from 'assets/images/quality/sss.png';
-import Aspen from 'assets/images/heroes/aspen.png';
-import Vulkan from 'assets/images/heroes/vulkan.png';
-import Vesa from 'assets/images/heroes/vesa.png';
-import Mokman from 'assets/images/heroes/mokman.png';
+import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
 import {font_body_4_bold} from 'theme/fonts';
 
@@ -30,61 +21,124 @@ interface Props {
 
 const Table: FC<Props> = ({data, total, handleSelected}) => {
   const navigate = useNavigate();
+  const [sortConfig, setSortConfig] = useState<{key: string; direction: 'asc' | 'desc'} | null>({
+    key: 'name',
+    direction: 'asc',
+  });
 
-  const headerArr = useMemo(() => ['', '№', 'Никнейм', 'Качество', 'Герой ДД', 'Урон, млд', 'Влияние, %', ''], []);
+  const headerArr = useMemo(
+    () => ['', '№', 'Никнейм', 'Качество', <img src={Gey} alt="gey" />, 'Храм', 'Герой', 'Урон, млд', 'Влияние, %', ''],
+    []
+  );
 
-  const getQualityType = useCallback((type: string) => {
-    const target: {[key: string]: ReactNode} = {
-      '': <Quality src={X} alt="" />,
-      'b+': <Quality src={B} alt="b+" />,
-      'a-': <Quality src={A_Low} alt="a-" />,
-      a: <Quality src={A} alt="a" />,
-      'a+': <Quality src={A_High} alt="a+" />,
-      s: <Quality src={S} alt="s" />,
-      ss: <Quality src={SS} alt="ss" />,
-      sss: <Quality src={SSS} alt="sss" />,
-    };
+  const teamDetailsMap = useMemo(
+    () =>
+      teamDetails.reduce(
+        (acc, {name, quality, stars, temple, damageDealer}) => {
+          acc[name] = {quality, stars, temple, damageDealer};
+          return acc;
+        },
+        {} as Record<string, {quality?: string; stars?: number; temple?: number; damageDealer?: string}>
+      ),
+    []
+  );
 
-    return target[type] || '';
+  const getImageComponent = useCallback(
+    (type: string, images: Record<string, string>, fallback = X) => (
+      <StyledImage src={images[type] || fallback} alt={type} />
+    ),
+    []
+  );
+
+  const sortedData = useMemo(() => {
+    if (!sortConfig) return data;
+
+    const {key, direction} = sortConfig;
+    return [...data].sort((a, b) => {
+      const aDetails = teamDetailsMap[a.name] || {};
+      const bDetails = teamDetailsMap[b.name] || {};
+
+      const getValue = (item: typeof a, details: typeof aDetails) => {
+        switch (key) {
+          case 'name':
+            return item.name;
+          case 'quality':
+            return Object.keys(qualityImages).indexOf(details.quality || '');
+          case 'gey':
+            return details.stars || 0;
+          case 'temple':
+            return details.temple || 0;
+          case 'hero':
+            return Object.keys(heroImages).indexOf(details.damageDealer || '');
+          case 'damage':
+            return item.damage;
+          case 'influence':
+            return (item.damage / total) * 100;
+          default:
+            return 0;
+        }
+      };
+
+      const aValue = getValue(a, aDetails);
+      const bValue = getValue(b, bDetails);
+
+      if (aValue < bValue) return direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [data, sortConfig, total, teamDetailsMap]);
+
+  const requestSort = useCallback((key: string) => {
+    if (key && key !== '№') {
+      setSortConfig((prevConfig) =>
+        prevConfig?.key === key && prevConfig.direction === 'asc' ? {key, direction: 'desc'} : {key, direction: 'asc'}
+      );
+    }
   }, []);
 
-  const getHeroType = useCallback((type: string) => {
-    const target: {[key: string]: ReactNode} = {
-      aspen: <Hero src={Aspen} alt="aspen" />,
-      vulkan: <Hero src={Vulkan} alt="vulkan" />,
-      mokman: <Hero src={Mokman} alt="mokman" />,
-      vesa: <Hero src={Vesa} alt="vesa" />,
-    };
-
-    return target[type] || '';
-  }, []);
+  const SortIcon = ({columnKey}: {columnKey: string}) =>
+    sortConfig?.key === columnKey ? (
+      <Icon direction={sortConfig.direction}>
+        <Arrow />
+      </Icon>
+    ) : null;
 
   return (
     <Wrapper>
       <Header>
-        {headerArr.map((item, idx) => (
-          <HCell key={idx}>{item}</HCell>
-        ))}
+        {headerArr.map((item, idx) => {
+          const key = ['', '№', 'name', 'quality', 'gey', 'temple', 'hero', 'damage', 'influence', ''][idx];
+          return (
+            <HCell key={idx} onClick={() => requestSort(key)}>
+              {item}
+              {key && <SortIcon columnKey={key} />}
+            </HCell>
+          );
+        })}
       </Header>
-      {data.map(({name, damage}, idx) => (
-        // TODO add map for Cells
-        <Row key={name}>
-          <Cell>
-            <Checkbox onChange={({target: {checked}}) => handleSelected(name, checked)} />
-          </Cell>
-          <Cell>{idx + 1}</Cell>
-          <Cell>{name}</Cell>
-          <Cell>{getQualityType(teamDetails.find((detail) => detail.name === name)?.quality || '')}</Cell>
-          <Cell>{getHeroType(teamDetails.find((detail) => detail.name === name)?.damageDealer || '')}</Cell>
-          <Cell>{(damage / 1000000000).toFixed(3)}</Cell>
-          <Cell>{((damage / total) * 100).toFixed(3)}</Cell>
-          <Cell>
-            <Icon onClick={() => navigate(`/details/${name}`)}>
-              <Arrow />
-            </Icon>
-          </Cell>
-        </Row>
-      ))}
+      {sortedData.map(({name, damage}, idx) => {
+        const {quality, stars = 0, temple = 0, damageDealer} = teamDetailsMap[name] || {};
+        return (
+          <Row key={name}>
+            <Cell>
+              <Checkbox onChange={({target: {checked}}) => handleSelected(name, checked)} />
+            </Cell>
+            <Cell>{idx + 1}</Cell>
+            <Cell>{name}</Cell>
+            <Cell>{getImageComponent(quality || '', qualityImages)}</Cell>
+            <Cell>{stars}</Cell>
+            <Cell>{temple}</Cell>
+            <Cell>{getImageComponent(damageDealer || '', heroImages, '')}</Cell>
+            <Cell>{(damage / 1_000_000_000).toFixed(3)}</Cell>
+            <Cell>{((damage / total) * 100).toFixed(3)}</Cell>
+            <Cell>
+              <Icon onClick={() => navigate(`/details/${name}`)}>
+                <Arrow />
+              </Icon>
+            </Cell>
+          </Row>
+        );
+      })}
     </Wrapper>
   );
 };
@@ -100,7 +154,7 @@ const Wrapper = styled.div`
 const Header = styled.div`
   ${font_body_4_bold};
   display: grid;
-  grid-template-columns: 4rem 1.5rem auto 5rem 5rem 7rem 7rem 3rem;
+  grid-template-columns: 4rem 1.5rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
   color: ${({theme}) => theme.colors.gray090};
   height: 3rem;
   align-items: center;
@@ -109,27 +163,35 @@ const Header = styled.div`
   top: 0;
   background: ${({theme}) => theme.colors.gray000};
   z-index: 1;
+
+  img {
+    width: fit-content;
+    height: 1.6rem;
+  }
 `;
 
 const HCell = styled.div`
   padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 const Cell = styled.div`
   padding: 0.5rem;
 `;
 
-const Icon = styled(SvgIcon)`
+const Icon = styled(SvgIcon)<{direction?: string}>`
   &.MuiSvgIcon-root {
     cursor: pointer;
     fill: ${({theme}) => theme.colors.gray090};
-    transform: rotate(-90deg);
+    transform: rotate(${({direction}) => (direction ? (direction === 'asc' ? '0' : '-180') : '-90')}deg);
   }
 `;
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 4rem 1.5rem auto 5rem 5rem 7rem 7rem 3rem;
+  grid-template-columns: 4rem 1.5rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
   border-bottom: 1px solid rgb(224, 224, 224);
   align-items: center;
 
@@ -142,12 +204,7 @@ const Row = styled.div`
   }
 `;
 
-const Quality = styled.img`
-  height: 3rem;
-  width: 3rem;
-`;
-
-const Hero = styled.img`
+const StyledImage = styled.img`
   height: 3rem;
   width: 3rem;
 `;

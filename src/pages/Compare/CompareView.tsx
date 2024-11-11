@@ -22,7 +22,7 @@ const CompareView = () => {
 
     return id.split('^').map((item) => {
       const entry = latestZveks.find(({name}) => name === item);
-      return {name: entry?.name, damageByDay: entry?.damageByDay};
+      return {name: entry?.name, damageByDay: entry?.info};
     });
   }, [id]);
 
