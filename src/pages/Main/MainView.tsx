@@ -17,7 +17,7 @@ const MainView = () => {
     () =>
       latestZveks.map(({name, info}) => ({
         name,
-        damage: info.reduce((acc, {damage = 0}) => acc + damage, 0),
+        damage: info[info.length - 1].damage,
       })),
     []
   );
@@ -26,13 +26,12 @@ const MainView = () => {
     () =>
       latestZveks.map(({name, info}) => ({
         name,
-        damage: info.reduce(
-          (acc, {damageByDay = []}) => acc + damageByDay.reduce((dayAcc, dayDamage) => dayAcc + dayDamage, 0),
-          0
-        ),
+        damage: info[info.length - 1].damage,
       })),
     []
   );
+
+  console.log(latestZveks, 'latestZveks');
 
   const handleSelected = useCallback((name: string, checked: boolean) => {
     setSelected((prevSelected) => (checked ? [...prevSelected, name] : prevSelected.filter((item) => item !== name)));
@@ -62,7 +61,7 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: calc(62% - 0.5rem) calc(38% - 0.5rem);
+  grid-template-columns: calc(68% - 0.5rem) calc(32% - 0.5rem);
   grid-template-rows: calc(100vh - 5.6rem);
   grid-column-gap: 1rem;
 `;

@@ -23,7 +23,7 @@ const DetailsView = () => {
   }, [latestZvekValues]);
 
   const averageAllZveks = useMemo(
-    () => latestZvekValues.reduce((acc, {guildTotal}) => acc + guildTotal, 0) / 30 || 0,
+    () => latestZvekValues.reduce((acc, {damage}) => acc + damage, 0) / 3 || 0,
     [latestZvekValues]
   );
 

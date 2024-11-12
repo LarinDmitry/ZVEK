@@ -89,7 +89,7 @@ const CompareView = () => {
 
             if (maxValue) {
               const percentage = (value / maxValue) * 100;
-              return percentage === 100 ? '' : `${percentage.toFixed(1)}%`;
+              return `${percentage.toFixed(1)}%`;
             }
 
             return '';
@@ -112,7 +112,7 @@ const CompareView = () => {
           <Bar options={getOptions('Сравнение урона последних трех ЗВЭК')} data={data} />
         </div>
         <div>
-          <Bar options={getOptions('Сравнение урона последнего ЗВЭК')} data={data} />
+          <Bar options={getOptions('Сравнение урона последнего ЗВЭК (в работе)')} data={data} />
         </div>
       </Charts>
     </div>
