@@ -1,11 +1,12 @@
 import React, {useMemo} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
+import LineChart from './components/LineChart';
+import BarChart from './components/BarChart';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import {zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks} from 'pages/Main/DATA';
-import LineChart from 'pages/Details/components/LineChart';
 import Arrow from 'assets/icons/arrow.svg';
 
 const DetailsView = () => {
@@ -32,6 +33,8 @@ const DetailsView = () => {
     return guildTotal / 30;
   }, [latestZvekValues]);
 
+  const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
+
   return (
     <div>
       <Button onClick={() => navigate('/')}>
@@ -42,20 +45,26 @@ const DetailsView = () => {
       {!latestZvekValues || damageByDayData.length === 0 ? (
         <div>Нет данных для отображения</div>
       ) : (
-        <Charts>
-          <LineChart
-            data={latestZvekValues}
-            title="Урон последних 3х ЗВЭК, млд"
-            average={averageAllZveks || 0}
-            averageTitle="Ваш средний урон последних трех звэков:"
-          />
-          <LineChart
-            data={damageByDayData}
-            title="Урон последнего ЗВЭК, млд"
-            average={averageLatestZveks}
-            averageTitle="Средний урон последнего звэка по гильдии:"
-          />
-        </Charts>
+        <>
+          <Charts>
+            <LineChart
+              data={latestZvekValues}
+              title="Урон последних 3х ЗВЭК, млд"
+              average={averageAllZveks || 0}
+              averageTitle="Ваш средний урон последних трех звэков:"
+              stepped
+            />
+            <LineChart
+              data={damageByDayData}
+              title="Урон последнего ЗВЭК, млд"
+              average={averageLatestZveks}
+              averageTitle="Средний урон последнего звэка по гильдии:"
+            />
+          </Charts>
+          <BarChartContainer>
+            <BarChart data={latestDamageByDayValues} title="Сравнение урона по дням, млд" />
+          </BarChartContainer>
+        </>
       )}
     </div>
   );
@@ -64,7 +73,17 @@ const DetailsView = () => {
 const Charts = styled.div`
   display: grid;
   grid-template-columns: calc(50% - 0.5rem) calc(50% - 0.5rem);
+  grid-template-rows: 20rem;
   grid-column-gap: 1rem;
+  padding: 0 4rem;
+`;
+
+const BarChartContainer = styled.div`
+  margin-top: 1rem;
+  height: calc(100vh - 23.5rem);
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 const Icon = styled(SvgIcon)`

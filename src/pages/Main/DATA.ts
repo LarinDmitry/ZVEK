@@ -463,21 +463,11 @@ export const latestZveks = [
     ],
   },
   {
-    name: 'Stakanchik',
+    name: 'Vartem',
     info: [
       {damage: 0, date: 'xx.xx', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
-      {
-        damage: 33920018575,
-        date: '10.24',
-        guildTotal: 56746916942169,
-        damageByDay: [3816241, 13181991286, 20719198963, 7523769, 4139731, 3348585],
-      },
-      {
-        damage: 23644140521,
-        date: '11.24',
-        guildTotal: 149479729601118,
-        damageByDay: [2779590, 23606133328, 18680613, 2952324, 13017866, 576800],
-      },
+      {damage: 0, date: '10.24', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
+      {damage: 0, date: '11.24', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
     ],
   },
   {
@@ -703,11 +693,11 @@ export const teamDetails = [
     temple: 5,
   },
   {
-    name: 'Stakanchik',
-    damageDealer: 'vulkan',
-    quality: 'b+',
-    stars: 3,
-    temple: 2,
+    name: 'Vartem',
+    damageDealer: 'aspen',
+    quality: 'a-',
+    stars: 13,
+    temple: 12,
   },
   {
     name: 'наглый',

@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import {font_body_4_reg} from 'theme/fonts';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, annotationPlugin);
 
@@ -20,9 +21,10 @@ interface Props {
   title: string;
   averageTitle: string;
   average: number;
+  stepped?: boolean;
 }
 
-const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
+const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => {
   const chartData = useMemo(
     () => ({
       labels: data?.map((item) => item.date) || [],
@@ -33,12 +35,12 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
           borderColor: 'rgb(72, 99, 235)',
           backgroundColor: 'rgb(68, 217, 38)',
           fill: false,
-          stepped: true,
+          stepped,
           tension: 0.4,
         },
       ],
     }),
-    [data]
+    [data, stepped]
   );
 
   const options = useMemo(
@@ -74,13 +76,8 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
         },
       },
       scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Дата',
-          },
-        },
         y: {
+          beginAtZero: true,
           title: {
             display: true,
             text: 'Демаг',
@@ -102,7 +99,8 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average}) => {
 };
 
 const SubInfo = styled.div`
-  padding: 1rem;
+  ${font_body_4_reg};
+  padding-top: 0.5rem;
   text-align: center;
 `;
 
