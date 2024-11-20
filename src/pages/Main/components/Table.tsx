@@ -24,10 +24,9 @@ interface Props {
     name: string;
     damage: number;
   }[];
-  handleSelected: (name: string, checked: boolean) => void;
 }
 
-const Table: FC<Props> = ({data, total, handleSelected}) => {
+const Table: FC<Props> = ({data, total}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
@@ -83,17 +82,9 @@ const Table: FC<Props> = ({data, total, handleSelected}) => {
   }, [data, sortConfig, total, teamDetailsMap]);
 
   const toggleSelectAll = useCallback(
-    (checked: boolean) => {
-      if (checked) {
-        const allNames = sortedData.map(({name}) => name);
-        dispatch(selectAllItems(allNames));
-        allNames.forEach((name) => handleSelected(name, true));
-      } else {
-        dispatch(clearSelection());
-        sortedData.forEach(({name}) => handleSelected(name, false));
-      }
-    },
-    [dispatch, sortedData, handleSelected]
+    (checked: boolean) =>
+      checked ? dispatch(selectAllItems(sortedData.map(({name}) => name))) : dispatch(clearSelection()),
+    [dispatch, sortedData]
   );
 
   const headerArr = useMemo(
@@ -138,13 +129,7 @@ const Table: FC<Props> = ({data, total, handleSelected}) => {
     [dispatch, sortConfig?.direction, sortConfig?.key]
   );
 
-  const toggleSelectItem = useCallback(
-    (name: string, checked: boolean) => {
-      dispatch(toggleItemSelection(name));
-      handleSelected(name, checked);
-    },
-    [dispatch, handleSelected]
-  );
+  const toggleSelectItem = useCallback((name: string) => dispatch(toggleItemSelection(name)), [dispatch]);
 
   const SortIcon = ({columnKey}: {columnKey: string}) =>
     sortConfig?.key === columnKey ? (
@@ -173,7 +158,7 @@ const Table: FC<Props> = ({data, total, handleSelected}) => {
         return (
           <Row key={name}>
             <Cell>
-              <Checkbox checked={isChecked} onChange={({target: {checked}}) => toggleSelectItem(name, checked)} />
+              <Checkbox checked={isChecked} onChange={() => toggleSelectItem(name)} />
             </Cell>
             <Cell>{idx + 1}</Cell>
             <Cell>{name}</Cell>

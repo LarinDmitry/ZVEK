@@ -1,17 +1,19 @@
-import React, {useCallback, useState, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Table from './components/Table';
 import PieChart from './components/PieChart';
 import {latestZveks} from './DATA';
 import Button from '@mui/material/Button';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
 import {font_header_5_bold} from 'theme/fonts';
 
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 
 const MainView = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState<string[]>([]);
+  const {selectedItems} = useAppSelector(selectUserConfiguration);
 
   const pieChartData = useMemo(
     () =>
@@ -31,22 +33,18 @@ const MainView = () => {
     []
   );
 
-  const handleSelected = useCallback((name: string, checked: boolean) => {
-    setSelected((prevSelected) => (checked ? [...prevSelected, name] : prevSelected.filter((item) => item !== name)));
-  }, []);
-
   return (
     <Wrapper>
       <Title>
         Последний ЗВЭК - {date}
-        {selected.length > 1 && (
-          <Button variant="contained" onClick={() => navigate(`/compare/${selected.join('^')}`)}>
+        {selectedItems.length > 1 && (
+          <Button variant="contained" onClick={() => navigate(`/compare/${selectedItems.join('^')}`)}>
             Сравнить
           </Button>
         )}
       </Title>
       <Content>
-        <Table data={tableData} total={guildTotal} handleSelected={handleSelected} />
+        <Table data={tableData} total={guildTotal} />
         <PieChart data={pieChartData} total={guildTotal} />
       </Content>
     </Wrapper>
