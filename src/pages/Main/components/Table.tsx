@@ -1,8 +1,16 @@
-import React, {useCallback, useMemo, FC, useState} from 'react';
+import React, {useCallback, useMemo, FC} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Checkbox from '@mui/material/Checkbox';
 import SvgIcon from '@mui/material/SvgIcon';
+import {useAppDispatch, useAppSelector} from 'services/hooks';
+import {
+  selectUserConfiguration,
+  setSortConfig,
+  toggleItemSelection,
+  selectAllItems,
+  clearSelection,
+} from 'store/userSlice';
 import {heroImages, qualityImages} from 'pages/Main/MainUtils';
 import {teamDetails} from 'pages/Main/DATA';
 import X from 'assets/images/quality/x.png';
@@ -21,15 +29,8 @@ interface Props {
 
 const Table: FC<Props> = ({data, total, handleSelected}) => {
   const navigate = useNavigate();
-  const [sortConfig, setSortConfig] = useState<{key: string; direction: 'asc' | 'desc'} | null>({
-    key: 'name',
-    direction: 'asc',
-  });
-
-  const headerArr = useMemo(
-    () => ['', '№', 'Никнейм', 'Качество', <img src={Gey} alt="gey" />, 'Храм', 'Герой', 'Урон, млд', 'Влияние, %', ''],
-    []
-  );
+  const dispatch = useAppDispatch();
+  const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
 
   const teamDetailsMap = useMemo(
     () =>
@@ -40,13 +41,6 @@ const Table: FC<Props> = ({data, total, handleSelected}) => {
         },
         {} as Record<string, {quality?: string; stars?: number; temple?: number; damageDealer?: string}>
       ),
-    []
-  );
-
-  const getImageComponent = useCallback(
-    (type: string, images: Record<string, string>, fallback = X) => (
-      <StyledImage src={images[type] || fallback} alt={type} />
-    ),
     []
   );
 
@@ -88,13 +82,69 @@ const Table: FC<Props> = ({data, total, handleSelected}) => {
     });
   }, [data, sortConfig, total, teamDetailsMap]);
 
-  const requestSort = useCallback((key: string) => {
-    if (key && key !== '№') {
-      setSortConfig((prevConfig) =>
-        prevConfig?.key === key && prevConfig.direction === 'asc' ? {key, direction: 'desc'} : {key, direction: 'asc'}
-      );
-    }
-  }, []);
+  const toggleSelectAll = useCallback(
+    (checked: boolean) => {
+      if (checked) {
+        const allNames = sortedData.map(({name}) => name);
+        dispatch(selectAllItems(allNames));
+        allNames.forEach((name) => handleSelected(name, true));
+      } else {
+        dispatch(clearSelection());
+        sortedData.forEach(({name}) => handleSelected(name, false));
+      }
+    },
+    [dispatch, sortedData, handleSelected]
+  );
+
+  const headerArr = useMemo(
+    () => [
+      <Checkbox
+        indeterminate={selectedItems.length > 0 && selectedItems.length < data.length}
+        checked={selectedItems.length === data.length}
+        onChange={({target: {checked}}) => toggleSelectAll(checked)}
+      />,
+      '№',
+      'Никнейм',
+      'Качество',
+      <img src={Gey} alt="gey" />,
+      'Храм',
+      'Герой',
+      'Урон, млд',
+      'Влияние, %',
+      '',
+    ],
+    [data.length, selectedItems.length, toggleSelectAll]
+  );
+
+  const getImageComponent = useCallback(
+    (type: string, images: Record<string, string>, fallback = X) => (
+      <StyledImage src={images[type] || fallback} alt={type} />
+    ),
+    []
+  );
+
+  const requestSort = useCallback(
+    (key: string) => {
+      if (key && key !== '№') {
+        dispatch(
+          setSortConfig(
+            sortConfig?.key === key && sortConfig.direction === 'asc'
+              ? {key, direction: 'desc'}
+              : {key, direction: 'asc'}
+          )
+        );
+      }
+    },
+    [dispatch, sortConfig?.direction, sortConfig?.key]
+  );
+
+  const toggleSelectItem = useCallback(
+    (name: string, checked: boolean) => {
+      dispatch(toggleItemSelection(name));
+      handleSelected(name, checked);
+    },
+    [dispatch, handleSelected]
+  );
 
   const SortIcon = ({columnKey}: {columnKey: string}) =>
     sortConfig?.key === columnKey ? (
@@ -117,11 +167,13 @@ const Table: FC<Props> = ({data, total, handleSelected}) => {
         })}
       </Header>
       {sortedData.map(({name, damage}, idx) => {
+        const isChecked = selectedItems.includes(name);
         const {quality, stars = 0, temple = 0, damageDealer} = teamDetailsMap[name] || {};
+
         return (
           <Row key={name}>
             <Cell>
-              <Checkbox onChange={({target: {checked}}) => handleSelected(name, checked)} />
+              <Checkbox checked={isChecked} onChange={({target: {checked}}) => toggleSelectItem(name, checked)} />
             </Cell>
             <Cell>{idx + 1}</Cell>
             <Cell>{name}</Cell>

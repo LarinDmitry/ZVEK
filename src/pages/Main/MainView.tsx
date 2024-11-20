@@ -31,8 +31,6 @@ const MainView = () => {
     []
   );
 
-  console.log(latestZveks, 'latestZveks');
-
   const handleSelected = useCallback((name: string, checked: boolean) => {
     setSelected((prevSelected) => (checked ? [...prevSelected, name] : prevSelected.filter((item) => item !== name)));
   }, []);

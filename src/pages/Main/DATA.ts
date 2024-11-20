@@ -471,21 +471,11 @@ export const latestZveks = [
     ],
   },
   {
-    name: 'наглый',
+    name: 'ilyaGrol',
     info: [
       {damage: 0, date: 'xx.xx', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
-      {
-        damage: 23847718574,
-        date: '10.24',
-        guildTotal: 56746916942169,
-        damageByDay: [7494524, 8510700793, 8636629140, 1691626428, 3108051022, 1893216667],
-      },
-      {
-        damage: 17224276726,
-        date: '11.24',
-        guildTotal: 149479729601118,
-        damageByDay: [34087427, 5846898012, 4670374131, 4445926204, 1413881870, 813109082],
-      },
+      {damage: 0, date: '10.24', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
+      {damage: 0, date: '11.24', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
     ],
   },
   {
@@ -700,11 +690,11 @@ export const teamDetails = [
     temple: 12,
   },
   {
-    name: 'наглый',
-    damageDealer: 'vulkan',
-    quality: 'b+',
-    stars: 10,
-    temple: 9,
+    name: 'ilyaGrol',
+    damageDealer: 'aspen',
+    quality: 'a',
+    stars: 13,
+    temple: 12,
   },
   {
     name: 'Artem',
