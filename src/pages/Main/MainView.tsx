@@ -3,10 +3,12 @@ import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Table from './components/Table';
 import PieChart from './components/PieChart';
-import {latestZveks} from './DATA';
 import Button from '@mui/material/Button';
+import SvgIcon from '@mui/material/SvgIcon';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
+import {latestZveks} from '../../DATA';
+import Info from 'assets/icons/info.svg';
 import {font_header_5_bold} from 'theme/fonts';
 
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
@@ -35,14 +37,20 @@ const MainView = () => {
 
   return (
     <Wrapper>
-      <Title>
-        Последний ЗВЭК - {date}
+      <Header>
+        <Title>
+          Последний ЗВЭК - {date}
+          <Icon onClick={() => navigate('/statistic')}>
+            <Info />
+          </Icon>
+        </Title>
+
         {selectedItems.length > 1 && (
           <Button variant="contained" onClick={() => navigate(`/compare/${selectedItems.join('^')}`)}>
             Сравнить
           </Button>
         )}
-      </Title>
+      </Header>
       <Content>
         <Table data={tableData} total={guildTotal} />
         <PieChart data={pieChartData} total={guildTotal} />
@@ -62,7 +70,7 @@ const Content = styled.div`
   grid-column-gap: 1rem;
 `;
 
-const Title = styled.div`
+const Header = styled.div`
   ${font_header_5_bold};
   margin-bottom: 1rem;
   display: flex;
@@ -70,6 +78,19 @@ const Title = styled.div`
   justify-content: space-between;
   width: 67%;
   height: 2.5rem;
+`;
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+`;
+
+const Icon = styled(SvgIcon)`
+  &.MuiSvgIcon-root {
+    cursor: pointer;
+    fill: ${({theme}) => theme.colors.gray090};
+  }
 `;
 
 export default MainView;

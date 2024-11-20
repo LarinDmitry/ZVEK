@@ -694,7 +694,7 @@ export const teamDetails = [
     damageDealer: 'aspen',
     quality: 'a',
     stars: 13,
-    temple: 12,
+    temple: 13,
   },
   {
     name: 'Artem',

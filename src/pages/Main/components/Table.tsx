@@ -12,7 +12,7 @@ import {
   clearSelection,
 } from 'store/userSlice';
 import {heroImages, qualityImages} from 'pages/Main/MainUtils';
-import {teamDetails} from 'pages/Main/DATA';
+import {teamDetails} from '../../../DATA';
 import X from 'assets/images/quality/x.png';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';

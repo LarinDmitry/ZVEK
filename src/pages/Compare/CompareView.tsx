@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
 import {DamageByDayProps, TransformedDataItemProps} from 'pages/Compare/CompareUtils';
-import {latestZveks} from 'pages/Main/DATA';
+import {latestZveks} from '../../DATA';
 import Arrow from 'assets/icons/arrow.svg';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
