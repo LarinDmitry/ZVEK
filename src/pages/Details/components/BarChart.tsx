@@ -39,7 +39,6 @@ const BarChart: FC<Props> = ({data, title}) => {
           display: true,
           text: title,
         },
-
         tooltip: {
           mode: 'index',
           intersect: false,
