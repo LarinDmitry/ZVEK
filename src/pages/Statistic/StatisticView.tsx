@@ -1,21 +1,17 @@
 import React, {Fragment, useMemo} from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router-dom';
+import BackBtn from 'components/GeneralComponents/BackBtn';
 import DamageGrow from './components/DamageGrow';
 import TopPlayers from './components/TopPlayers';
 import Djinni from './components/Djinni';
-import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
-import Arrow from 'assets/icons/arrow.svg';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
 
 // Игроки, чей урон снижается от ивента к ивенту?
 
 const StatisticView = () => {
-  const navigate = useNavigate();
-
   const arrValues = useMemo(
     () => [
       {title: 'Звэк движение', value: <DamageGrow />},
@@ -86,35 +82,29 @@ const StatisticView = () => {
   );
 
   return (
-    <Fragment>
-      <Button onClick={() => navigate('/')}>
-        <Icon>
-          <Arrow />
-        </Icon>
-      </Button>
+    <Wrapper>
+      <BackBtn />
       {arrValues.map(({title, value}, idx) => (
         <Fragment key={idx}>
           <Title>{title}</Title>
           {value}
         </Fragment>
       ))}
-    </Fragment>
+    </Wrapper>
   );
 };
 
-const Title = styled.div`
-  ${font_body_2_bold};
-  margin: 1rem 0 1rem 2rem;
-  display: flex;
-  align-items: center;
+const Wrapper = styled.div`
+  height: 100%;
+  overflow: auto;
+  padding: 1rem 1rem 1.5rem;
 `;
 
-const Icon = styled(SvgIcon)`
-  &.MuiSvgIcon-root {
-    cursor: pointer;
-    fill: ${({theme}) => theme.colors.gray090};
-    transform: rotate(90deg);
-  }
+const Title = styled.div`
+  ${font_body_2_bold};
+  margin: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 const List = styled.ul`

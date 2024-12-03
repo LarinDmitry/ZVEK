@@ -1,19 +1,13 @@
-import React, {useCallback, useMemo, FC} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, {useCallback, useMemo, useState, FC} from 'react';
 import styled from 'styled-components';
+import TableRow from './TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import SvgIcon from '@mui/material/SvgIcon';
 import {useAppDispatch, useAppSelector} from 'services/hooks';
-import {
-  selectUserConfiguration,
-  setSortConfig,
-  toggleItemSelection,
-  selectAllItems,
-  clearSelection,
-} from 'store/userSlice';
+import useQuery from 'services/useQuery';
+import {selectUserConfiguration, setSortConfig, selectAllItems, clearSelection} from 'store/userSlice';
 import {heroImages, qualityImages} from 'pages/Main/MainUtils';
 import {teamDetails} from '../../../DATA';
-import X from 'assets/images/quality/x.png';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
 import {font_body_4_bold} from 'theme/fonts';
@@ -27,9 +21,15 @@ interface Props {
 }
 
 const Table: FC<Props> = ({data, total}) => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
+  const [, , isLaptop] = useQuery();
+
+  const [expandedRows, setExpandedRows] = useState<string[]>([]);
+
+  const toggleRowExpansion = useCallback((name: string) => {
+    setExpandedRows((prev) => (prev.includes(name) ? prev.filter((row) => row !== name) : [...prev, name]));
+  }, []);
 
   const teamDetailsMap = useMemo(
     () =>
@@ -97,26 +97,15 @@ const Table: FC<Props> = ({data, total}) => {
       '№',
       'Никнейм',
       'Качество',
-      <img src={Gey} alt="gey" />,
-      'Храм',
-      'Герой',
-      'Урон, млд',
-      'Влияние, %',
+      ...(isLaptop ? [<img src={Gey} alt="gey" />, 'Храм', 'Герой', 'Урон, млд', 'Влияние, %'] : ['Больше']),
       '',
     ],
-    [data.length, selectedItems.length, toggleSelectAll]
-  );
-
-  const getImageComponent = useCallback(
-    (type: string, images: Record<string, string>, fallback = X) => (
-      <StyledImage src={images[type] || fallback} alt={type} />
-    ),
-    []
+    [data.length, isLaptop, selectedItems.length, toggleSelectAll]
   );
 
   const requestSort = useCallback(
     (key: string) => {
-      if (key && key !== '№') {
+      if (key && key !== '№' && key !== 'more') {
         dispatch(
           setSortConfig(
             sortConfig?.key === key && sortConfig.direction === 'asc'
@@ -129,8 +118,6 @@ const Table: FC<Props> = ({data, total}) => {
     [dispatch, sortConfig?.direction, sortConfig?.key]
   );
 
-  const toggleSelectItem = useCallback((name: string) => dispatch(toggleItemSelection(name)), [dispatch]);
-
   const SortIcon = ({columnKey}: {columnKey: string}) =>
     sortConfig?.key === columnKey ? (
       <Icon direction={sortConfig.direction}>
@@ -142,7 +129,15 @@ const Table: FC<Props> = ({data, total}) => {
     <Wrapper>
       <Header>
         {headerArr.map((item, idx) => {
-          const key = ['', '№', 'name', 'quality', 'gey', 'temple', 'hero', 'damage', 'influence', ''][idx];
+          const key = [
+            '',
+            '№',
+            'name',
+            'quality',
+            ...(!isLaptop ? ['more', ''] : ['gey', 'temple', 'hero', 'damage', 'influence']),
+            '',
+          ][idx];
+
           return (
             <HCell key={idx} onClick={() => requestSort(key)}>
               {item}
@@ -153,27 +148,21 @@ const Table: FC<Props> = ({data, total}) => {
       </Header>
       {sortedData.map(({name, damage}, idx) => {
         const isChecked = selectedItems.includes(name);
-        const {quality, stars = 0, temple = 0, damageDealer} = teamDetailsMap[name] || {};
+        const details = teamDetailsMap[name] || {};
+        const isExpanded = expandedRows.includes(name);
 
         return (
-          <Row key={name}>
-            <Cell>
-              <Checkbox checked={isChecked} onChange={() => toggleSelectItem(name)} />
-            </Cell>
-            <Cell>{idx + 1}</Cell>
-            <Cell>{name}</Cell>
-            <Cell>{getImageComponent(quality || '', qualityImages)}</Cell>
-            <Cell>{stars}</Cell>
-            <Cell>{temple}</Cell>
-            <Cell>{getImageComponent(damageDealer || '', heroImages, '')}</Cell>
-            <Cell>{(damage / 1_000_000_000).toFixed(3)}</Cell>
-            <Cell>{((damage / total) * 100).toFixed(3)}</Cell>
-            <Cell>
-              <Icon onClick={() => navigate(`/details/${name}`)}>
-                <Arrow />
-              </Icon>
-            </Cell>
-          </Row>
+          <TableRow
+            key={name}
+            idx={idx}
+            name={name}
+            damage={damage}
+            total={total}
+            details={details}
+            isChecked={isChecked}
+            isExpanded={isExpanded}
+            toggleRowExpansion={toggleRowExpansion}
+          />
         );
       })}
     </Wrapper>
@@ -205,6 +194,10 @@ const Header = styled.div`
     width: fit-content;
     height: 1.6rem;
   }
+
+  @media ${({theme}) => theme.breakpoints.maxLtg} {
+    grid-template-columns: 4rem 2.3rem auto 4rem 3rem 3rem;
+  }
 `;
 
 const HCell = styled.div`
@@ -214,36 +207,12 @@ const HCell = styled.div`
   align-items: center;
 `;
 
-const Cell = styled.div`
-  padding: 0.5rem;
-`;
-
 const Icon = styled(SvgIcon)<{direction?: string}>`
   &.MuiSvgIcon-root {
     cursor: pointer;
     fill: ${({theme}) => theme.colors.gray090};
     transform: rotate(${({direction}) => (direction ? (direction === 'asc' ? '0' : '-180') : '-90')}deg);
   }
-`;
-
-const Row = styled.div`
-  display: grid;
-  grid-template-columns: 4rem 1.5rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
-  border-bottom: 1px solid rgb(224, 224, 224);
-  align-items: center;
-
-  &:hover {
-    background-color: ${({theme}) => theme.colors.blue050};
-
-    ${Icon} {
-      fill: ${({theme}) => theme.colors.gray100};
-    }
-  }
-`;
-
-const StyledImage = styled.img`
-  height: 3rem;
-  width: 3rem;
 `;
 
 export default Table;

@@ -57,8 +57,8 @@ const Djinni = () => {
 
 const Container = styled(TableContainer)<{component: ElementType}>`
   &.MuiPaper-root {
-    margin: 0 2rem;
-    width: calc(100% - 4rem);
+    margin: 0 1rem;
+    width: calc(100% - 2rem);
   }
 `;
 

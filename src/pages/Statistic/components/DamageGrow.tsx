@@ -52,7 +52,7 @@ const DamageGrow = () => {
             return (
               <Row key={`guild-${idx}`}>
                 <TableCell align="center">{date}</TableCell>
-                <TableCell align="center">{guildTotal}</TableCell>
+                <TableCell align="center">{(guildTotal / 1000000000).toFixed(2)}млд</TableCell>
                 <TableCell align="center">
                   <ChangeText value={percentageChange}>{changeText}</ChangeText>
                 </TableCell>
@@ -67,8 +67,8 @@ const DamageGrow = () => {
 
 const Container = styled(TableContainer)<{component: ElementType}>`
   &.MuiPaper-root {
-    margin: 0 2rem;
-    width: calc(100% - 4rem);
+    margin: 0 1rem;
+    width: calc(100% - 2rem);
   }
 `;
 

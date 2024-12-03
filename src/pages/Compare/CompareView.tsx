@@ -1,20 +1,17 @@
 import React, {useCallback, useMemo} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
 import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import Button from '@mui/material/Button';
-import SvgIcon from '@mui/material/SvgIcon';
+import BackBtn from 'components/GeneralComponents/BackBtn';
 import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
 import {DamageByDayProps, TransformedDataItemProps} from 'pages/Compare/CompareUtils';
 import {latestZveks} from '../../DATA';
-import Arrow from 'assets/icons/arrow.svg';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 const CompareView = () => {
-  const navigate = useNavigate();
   const {id} = useParams<{id: string}>();
 
   const damageData = useMemo(() => {
@@ -59,9 +56,11 @@ const CompareView = () => {
       datasets: damageData
         ? damageData.map((item, index) => ({
             label: item.name || `Data ${index + 1}`,
-            data: transformedData.map((dataItem) => dataItem[`data${index + 1}`] || 0),
+            data: transformedData.map((dataItem) => (dataItem[`data${index + 1}`] as number) / 1000000000 || 0),
             backgroundColor: backgroundColor[index % backgroundColor.length],
             hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
+            borderWidth: 1,
+            borderRadius: 4,
           }))
         : [],
     }),
@@ -88,7 +87,7 @@ const CompareView = () => {
             const maxValue = maxValuesByDate[dateIndex];
 
             if (maxValue) {
-              const percentage = (value / maxValue) * 100;
+              const percentage = ((value * 1000000000) / maxValue) * 100;
               return `${percentage.toFixed(1)}%`;
             }
 
@@ -101,36 +100,34 @@ const CompareView = () => {
   ) as any;
 
   return (
-    <div>
-      <Button>
-        <Icon onClick={() => navigate('/')}>
-          <Arrow />
-        </Icon>
-      </Button>
+    <Wrapper>
+      <BackBtn />
       <Charts>
         <div>
-          <Bar options={getOptions('Сравнение урона последних трех ЗВЭК')} data={data} />
+          <Bar options={getOptions('Сравнение урона последних трех ЗВЭК, млд')} data={data} />
         </div>
         <div>
-          <Bar options={getOptions('Сравнение урона последнего ЗВЭК (в работе)')} data={data} />
+          <Bar options={getOptions('Сравнение урона последнего ЗВЭК, млд  (в работе)')} data={data} />
         </div>
       </Charts>
-    </div>
+    </Wrapper>
   );
 };
 
-const Icon = styled(SvgIcon)`
-  &.MuiSvgIcon-root {
-    cursor: pointer;
-    fill: ${({theme}) => theme.colors.gray090};
-    transform: rotate(90deg);
-  }
+const Wrapper = styled.div`
+  height: 100%;
+  padding: 1rem 1rem 1.5rem;
 `;
 
 const Charts = styled.div`
   display: grid;
   grid-template-columns: calc(50% - 0.5rem) calc(50% - 0.5rem);
   grid-column-gap: 1rem;
+
+  @media ${({theme}) => theme.breakpoints.maxLtg} {
+    grid-template-columns: 100%;
+    grid-template-rows: inherit;
+  }
 `;
 
 export default CompareView;

@@ -10,6 +10,7 @@ const PageLayout: FC = () => (
 
 const Wrapper = styled.div`
   height: 100vh;
+  overflow: auto;
   background-color: ${({theme}) => theme.colors.gray050};
 `;
 

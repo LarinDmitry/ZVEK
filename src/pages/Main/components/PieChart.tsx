@@ -1,4 +1,5 @@
 import React, {FC} from 'react';
+import styled from 'styled-components';
 import {Pie} from 'react-chartjs-2';
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
@@ -42,10 +43,15 @@ const PieChart: FC<Props> = ({data, total}) => {
   } as any;
 
   return (
-    <div>
+    <Wrapper>
       <Pie data={chartData} options={options} />
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  justify-content: center;
+  display: flex;
+`;
 
 export default PieChart;

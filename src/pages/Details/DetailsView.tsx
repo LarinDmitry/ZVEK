@@ -1,16 +1,13 @@
 import React, {useMemo} from 'react';
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
+import BackBtn from 'components/GeneralComponents/BackBtn';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
-import Button from '@mui/material/Button';
-import SvgIcon from '@mui/material/SvgIcon';
 import {zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
-import Arrow from 'assets/icons/arrow.svg';
 
 const DetailsView = () => {
-  const navigate = useNavigate();
   const {id} = useParams<{id: string}>();
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
@@ -36,12 +33,8 @@ const DetailsView = () => {
   const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
 
   return (
-    <div>
-      <Button onClick={() => navigate('/')}>
-        <Icon>
-          <Arrow />
-        </Icon>
-      </Button>
+    <Wrapper>
+      <BackBtn />
       {!latestZvekValues || damageByDayData.length === 0 ? (
         <div>Нет данных для отображения</div>
       ) : (
@@ -66,9 +59,14 @@ const DetailsView = () => {
           </BarChartContainer>
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  height: 100%;
+  padding: 1rem 1rem 1.5rem;
+`;
 
 const Charts = styled.div`
   display: grid;
@@ -76,21 +74,23 @@ const Charts = styled.div`
   grid-template-rows: 20rem;
   grid-column-gap: 1rem;
   padding: 0 4rem;
+
+  @media ${({theme}) => theme.breakpoints.maxLtg} {
+    grid-template-columns: 100%;
+    grid-template-rows: inherit;
+    padding: 0;
+  }
 `;
 
 const BarChartContainer = styled.div`
   margin-top: 1rem;
-  height: calc(100vh - 23.5rem);
+  height: calc(100vh - 24.5rem);
   display: flex;
   justify-content: center;
   overflow: hidden;
-`;
 
-const Icon = styled(SvgIcon)`
-  &.MuiSvgIcon-root {
-    cursor: pointer;
-    fill: ${({theme}) => theme.colors.gray090};
-    transform: rotate(90deg);
+  @media ${({theme}) => theme.breakpoints.maxLtg} {
+    height: fit-content;
   }
 `;
 
