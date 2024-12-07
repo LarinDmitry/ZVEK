@@ -99,6 +99,60 @@ const CompareView = () => {
     [maxValuesByDate]
   ) as any;
 
+  console.log(damageData, 'damageData');
+
+  const dataCompareByDays = useMemo(() => {
+    if (!id) return null;
+
+    return id.split('^').map((item) => {
+      const entry = latestZveks.find(({name}) => name === item);
+      return {
+        name: entry?.name,
+        value: entry?.info?.[entry.info.length - 1].damageByDay || [], // Берем массив из 6 значений для последнего ивента
+      };
+    });
+  }, [id]);
+
+  const chartData = useMemo(() => {
+    if (!dataCompareByDays) return null;
+
+    const labels = Array.from({length: 6}, (_, i) => `Day ${i + 1}`); // Метки для дней
+
+    return {
+      labels,
+      datasets: dataCompareByDays.map((item, index) => ({
+        label: item.name || `Data ${index + 1}`,
+        data: item.value.map((damage) => damage / 1000000), // Преобразуем значения в миллионы
+        backgroundColor: backgroundColor[index % backgroundColor.length],
+        hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
+        borderWidth: 1,
+        borderRadius: 4,
+      })),
+    };
+  }, [dataCompareByDays]) as any;
+
+  const getOptionsByDays = useCallback(
+    (text: string) => ({
+      responsive: true,
+      scales: {
+        x: {stacked: false},
+        y: {stacked: false},
+      },
+      plugins: {
+        legend: {position: 'top'},
+        title: {display: true, text},
+        datalabels: {
+          display: true,
+          color: 'rgb(0, 0, 0)',
+          align: 'end',
+          anchor: 'end',
+          formatter: (value: number) => `${value.toFixed(1)}M`, // Отображаем значения в миллионах
+        },
+      },
+    }),
+    []
+  ) as any;
+
   return (
     <Wrapper>
       <BackBtn />
@@ -107,7 +161,7 @@ const CompareView = () => {
           <Bar options={getOptions('Сравнение урона последних трех ЗВЭК, млд')} data={data} />
         </div>
         <div>
-          <Bar options={getOptions('Сравнение урона последнего ЗВЭК, млд  (в работе)')} data={data} />
+          <Bar options={getOptionsByDays('Сравнение урона последнего ЗВЭК (по дням)')} data={chartData} />
         </div>
       </Charts>
     </Wrapper>
