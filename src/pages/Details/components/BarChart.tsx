@@ -18,7 +18,7 @@ const BarChart: FC<Props> = ({data, title}) => {
       labels: data[0]?.damageByDay.map((_item: number, idx: number) => `День ${idx + 1}`),
       datasets: data.map(({damageByDay, date}, i) => ({
         label: date,
-        data: damageByDay.map((item) => item / 1000000000),
+        data: damageByDay.map((item) => item / 1e9),
         backgroundColor: `rgba(${50 + i * 50}, 99, 160, 0.9)`,
         borderColor: `rgba(${50 + i * 50}, 99, 160, 1)`,
         borderWidth: 1,

@@ -31,7 +31,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => 
       datasets: [
         {
           label: 'Урон в ЗВЭК',
-          data: data?.map((item) => item.damage / 1000000000) || [],
+          data: data?.map((item) => item.damage / 1e9) || [],
           borderColor: 'rgb(72, 99, 235)',
           backgroundColor: 'rgb(68, 217, 38)',
           fill: false,
@@ -65,8 +65,8 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => 
             ? {
                 line1: {
                   type: 'line',
-                  yMin: average / 1000000000,
-                  yMax: average / 1000000000,
+                  yMin: average / 1e9,
+                  yMax: average / 1e9,
                   borderColor: 'rgb(235, 72, 99)',
                   borderDash: [10],
                   borderWidth: 2,
@@ -92,7 +92,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => 
     <div>
       <Line data={chartData} options={options} />
       <SubInfo>
-        {averageTitle} <b>{((average || 0) / 1000000000).toFixed(2)} млд</b>
+        {averageTitle} <b>{((average || 0) / 1e9).toFixed(2)} млд</b>
       </SubInfo>
     </div>
   );

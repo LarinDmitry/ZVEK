@@ -5,8 +5,7 @@ import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import BackBtn from 'components/GeneralComponents/BackBtn';
-import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
-import {DamageByDayProps, TransformedDataItemProps} from 'pages/Compare/CompareUtils';
+import {backgroundColor, hoverBackgroundColor, zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
@@ -14,65 +13,93 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 const CompareView = () => {
   const {id} = useParams<{id: string}>();
 
-  const damageData = useMemo(() => {
+  const prepareChartData = useCallback(
+    (extractor: (entry: any) => number[] | undefined, labelPrefix: string, days: number, useZvekDays = false) => {
+      if (!id) return null;
+
+      const parsedData = id.split('^').map((item) => {
+        const entry = latestZveks.find(({name}) => name === item);
+        return {
+          name: entry?.name,
+          value: extractor(entry)?.slice(-days),
+        };
+      });
+
+      const labels = useZvekDays ? zvekDaysOptions.slice(-days) : Array.from({length: days}, (_, i) => `Day ${i + 1}`);
+
+      return {
+        labels,
+        datasets: parsedData.map((item, index) => ({
+          label: item.name || `${labelPrefix} ${index + 1}`,
+          data: item.value || [],
+          backgroundColor: backgroundColor[index % backgroundColor.length],
+          hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
+          borderWidth: 1,
+          borderRadius: 4,
+        })),
+      };
+    },
+    [id]
+  );
+
+  const dataLastThreeEvents = useMemo(() => {
     if (!id) return null;
 
-    return id.split('^').map((item) => {
+    const parsedData = id.split('^').map((item) => {
       const entry = latestZveks.find(({name}) => name === item);
-      return {name: entry?.name, damageByDay: entry?.info};
+      return {
+        name: entry?.name,
+        damageByDay: entry?.info?.map(({damage, date}) => ({damage, date})).slice(-3),
+      };
     });
-  }, [id]);
 
-  const transformedData: TransformedDataItemProps[] = useMemo(() => {
-    if (!damageData) return [];
+    const labels = parsedData[0]?.damageByDay?.map(({date}) => date) || [];
 
-    return damageData.reduce((acc: TransformedDataItemProps[], {damageByDay}, index) => {
-      damageByDay?.forEach(({date, damage}: DamageByDayProps) => {
-        const existingDate = acc.find((item) => item.date === date);
-        if (existingDate) {
-          existingDate[`data${index + 1}`] = damage;
-        } else {
-          acc.push({date, [`data${index + 1}`]: damage});
-        }
-      });
-      return acc;
-    }, []);
-  }, [damageData]);
+    const maxValuesByDate = labels.map((_, index) =>
+      Math.max(...parsedData.map((data) => data.damageByDay?.[index]?.damage || 0))
+    );
 
-  const maxValuesByDate = useMemo(
-    () =>
-      transformedData.map((dataItem) => {
-        const values = Object.keys(dataItem)
-          .filter((key) => key !== 'date')
-          .map((key) => dataItem[key] as number);
-        return Math.max(...values);
-      }),
-    [transformedData]
-  );
+    return {
+      labels,
+      datasets: parsedData.map((item, index) => ({
+        label: item.name || `Data ${index + 1}`,
+        data: item.damageByDay?.map(({damage}) => damage) || [],
+        backgroundColor: backgroundColor[index % backgroundColor.length],
+        hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
+        borderWidth: 1,
+        borderRadius: 4,
+        maxValues: maxValuesByDate,
+      })),
+    };
+  }, [id]) as any;
 
-  const data = useMemo(
-    () => ({
-      labels: transformedData.map(({date}) => date),
-      datasets: damageData
-        ? damageData.map((item, index) => ({
-            label: item.name || `Data ${index + 1}`,
-            data: transformedData.map((dataItem) => (dataItem[`data${index + 1}`] as number) / 1000000000 || 0),
-            backgroundColor: backgroundColor[index % backgroundColor.length],
-            hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
-            borderWidth: 1,
-            borderRadius: 4,
-          }))
-        : [],
-    }),
-    [damageData, transformedData]
-  );
+  const dataLastEventByDays = useMemo(
+    () => prepareChartData((entry) => entry?.info?.[entry.info.length - 1]?.damageByDay || [], 'Day', 6, true),
+    [prepareChartData]
+  ) as any;
+
+  const maxValuesByDayForSecondGraph = useMemo(() => {
+    if (!dataLastEventByDays) return [];
+    return dataLastEventByDays.labels.map((_: any, idx: number) =>
+      Math.max(...dataLastEventByDays.datasets.map((dataset: any) => dataset.data[idx] || 0))
+    );
+  }, [dataLastEventByDays]);
 
   const getOptions = useCallback(
-    (text: string) => ({
+    (text: string, maxValuesByDate?: number[]) => ({
       responsive: true,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
       scales: {
         x: {stacked: false},
-        y: {stacked: false},
+        y: {
+          stacked: false,
+          ticks: {
+            callback: (value: number) => `${(value / 1e9).toFixed(2)}`,
+          },
+        },
       },
       plugins: {
         legend: {position: 'top'},
@@ -83,70 +110,28 @@ const CompareView = () => {
           align: 'end',
           anchor: 'end',
           formatter: (value: number, context: any) => {
-            const dateIndex = context.dataIndex;
-            const maxValue = maxValuesByDate[dateIndex];
+            if (maxValuesByDate) {
+              const dayIndex = context.dataIndex;
+              const maxValue = maxValuesByDate[dayIndex];
 
-            if (maxValue) {
-              const percentage = ((value * 1000000000) / maxValue) * 100;
-              return `${percentage.toFixed(1)}%`;
+              if (!maxValue || maxValue === 0) return '';
+
+              const percentage = (value / maxValue) * 100;
+              return `${Math.round(percentage)}%`;
             }
 
-            return '';
+            return `${(value / 1e9).toFixed(2)}`;
           },
         },
-      },
-    }),
-    [maxValuesByDate]
-  ) as any;
-
-  console.log(damageData, 'damageData');
-
-  const dataCompareByDays = useMemo(() => {
-    if (!id) return null;
-
-    return id.split('^').map((item) => {
-      const entry = latestZveks.find(({name}) => name === item);
-      return {
-        name: entry?.name,
-        value: entry?.info?.[entry.info.length - 1].damageByDay || [], // Берем массив из 6 значений для последнего ивента
-      };
-    });
-  }, [id]);
-
-  const chartData = useMemo(() => {
-    if (!dataCompareByDays) return null;
-
-    const labels = Array.from({length: 6}, (_, i) => `Day ${i + 1}`); // Метки для дней
-
-    return {
-      labels,
-      datasets: dataCompareByDays.map((item, index) => ({
-        label: item.name || `Data ${index + 1}`,
-        data: item.value.map((damage) => damage / 1000000), // Преобразуем значения в миллионы
-        backgroundColor: backgroundColor[index % backgroundColor.length],
-        hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
-        borderWidth: 1,
-        borderRadius: 4,
-      })),
-    };
-  }, [dataCompareByDays]) as any;
-
-  const getOptionsByDays = useCallback(
-    (text: string) => ({
-      responsive: true,
-      scales: {
-        x: {stacked: false},
-        y: {stacked: false},
-      },
-      plugins: {
-        legend: {position: 'top'},
-        title: {display: true, text},
-        datalabels: {
-          display: true,
-          color: 'rgb(0, 0, 0)',
-          align: 'end',
-          anchor: 'end',
-          formatter: (value: number) => `${value.toFixed(1)}M`, // Отображаем значения в миллионах
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            label: (context: any) => {
+              const value = context.raw || 0;
+              return `${context.dataset.label}: ${(value / 1e9).toFixed(2)}`;
+            },
+          },
         },
       },
     }),
@@ -158,10 +143,19 @@ const CompareView = () => {
       <BackBtn />
       <Charts>
         <div>
-          <Bar options={getOptions('Сравнение урона последних трех ЗВЭК, млд')} data={data} />
+          <Bar
+            options={getOptions(
+              'Сравнение урона последних трех ЗВЭК, млд',
+              dataLastThreeEvents?.datasets[0]?.maxValues
+            )}
+            data={dataLastThreeEvents}
+          />
         </div>
         <div>
-          <Bar options={getOptionsByDays('Сравнение урона последнего ЗВЭК (по дням)')} data={chartData} />
+          <Bar
+            options={getOptions('Сравнение урона последнего ЗВЭК (по дням), млд', maxValuesByDayForSecondGraph)}
+            data={dataLastEventByDays}
+          />
         </div>
       </Charts>
     </Wrapper>
