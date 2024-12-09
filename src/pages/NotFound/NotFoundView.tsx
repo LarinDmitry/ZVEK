@@ -12,7 +12,7 @@ const NotFoundView = () => {
       <Number>404</Number>
       <Title>Страница не найдена!</Title>
       <SubTitle>Такая страница не найдена или не существует</SubTitle>
-      <BackBtn onClick={() => navigate('/')}>На главную</BackBtn>
+      <BackBtn onClick={() => navigate('/main')}>На главную</BackBtn>
     </Wrapper>
   );
 };

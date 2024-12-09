@@ -10,7 +10,7 @@ const BackBtn = () => {
   const navigate = useNavigate();
 
   return (
-    <Wrapper onClick={() => navigate('/')}>
+    <Wrapper onClick={() => navigate('/main')}>
       <Icon>
         <Arrow />
       </Icon>
