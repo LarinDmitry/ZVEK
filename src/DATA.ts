@@ -797,8 +797,8 @@ export const teamDetails = [
     name: 'модератор',
     damageDealer: 'aspen',
     quality: 'a-',
-    stars: 9,
-    temple: 8,
+    stars: 12,
+    temple: 10,
   },
   {
     name: 'Iga',
