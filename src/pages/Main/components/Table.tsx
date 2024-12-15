@@ -180,7 +180,7 @@ const Wrapper = styled.div`
 const Header = styled.div`
   ${font_body_4_bold};
   display: grid;
-  grid-template-columns: 4rem 1.5rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
+  grid-template-columns: 4rem 2.25rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
   color: ${({theme}) => theme.colors.gray090};
   height: 3rem;
   align-items: center;

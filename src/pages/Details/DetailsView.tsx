@@ -6,6 +6,7 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import {zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
+import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
 
 const DetailsView = () => {
   const {id} = useParams<{id: string}>();
@@ -34,7 +35,12 @@ const DetailsView = () => {
 
   return (
     <Wrapper>
-      <BackBtn />
+      <Header>
+        <BackBtn />
+        <NickName>
+          ЗВЭК статистика игрока <b>{id}</b>
+        </NickName>
+      </Header>
       {!latestZvekValues || damageByDayData.length === 0 ? (
         <div>Нет данных для отображения</div>
       ) : (
@@ -46,12 +52,15 @@ const DetailsView = () => {
               average={averageAllZveks || 0}
               averageTitle="Ваш средний урон последних трех звэков:"
               stepped
+              withCheckbox={false}
             />
             <LineChart
               data={damageByDayData}
               title="Урон последнего ЗВЭК, млд"
               average={averageLatestZveks}
               averageTitle="Средний урон последнего звэка по гильдии:"
+              stepped={false}
+              withCheckbox
             />
           </Charts>
           <BarChartContainer>
@@ -66,6 +75,20 @@ const DetailsView = () => {
 const Wrapper = styled.div`
   height: 100%;
   padding: 1rem 1rem 1.5rem;
+`;
+
+const Header = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const NickName = styled.span`
+  ${font_header_6_reg};
+  margin-left: 1rem;
+
+  @media ${({theme}) => theme.breakpoints.maxLtg} {
+    ${font_body_2_reg};
+  }
 `;
 
 const Charts = styled.div`

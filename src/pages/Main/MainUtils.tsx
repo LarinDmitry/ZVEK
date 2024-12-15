@@ -10,6 +10,7 @@ import Aspen from 'assets/images/heroes/aspen.png';
 import Vulkan from 'assets/images/heroes/vulkan.png';
 import Mokman from 'assets/images/heroes/mokman.png';
 import Vesa from 'assets/images/heroes/vesa.png';
+import Nataly from 'assets/images/heroes/nataly.png';
 
 export const backgroundColor = [
   'rgb(255, 99, 132)',
@@ -75,4 +76,5 @@ export const heroImages: {[key: string]: string} = {
   mokman: Mokman,
   vulkan: Vulkan,
   aspen: Aspen,
+  nataly: Nataly,
 };

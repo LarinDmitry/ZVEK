@@ -26,7 +26,7 @@ const DamageGrow = () => {
     []
   );
 
-  const headerValues = ['Дата', 'Урон гильдии', 'Изменение'];
+  const headerValues = ['Дата', 'Урон гильдии, млд', 'Изменение'];
 
   return (
     <Container component={Paper}>
@@ -52,7 +52,7 @@ const DamageGrow = () => {
             return (
               <Row key={`guild-${idx}`}>
                 <TableCell align="center">{date}</TableCell>
-                <TableCell align="center">{(guildTotal / 1e9).toFixed(2)}млд</TableCell>
+                <TableCell align="center">{(guildTotal / 1e9).toFixed(2)}</TableCell>
                 <TableCell align="center">
                   <ChangeText value={percentageChange}>{changeText}</ChangeText>
                 </TableCell>

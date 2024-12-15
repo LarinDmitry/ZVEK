@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import styled from 'styled-components';
 import {Line} from 'react-chartjs-2';
 import {
@@ -12,6 +12,8 @@ import {
   Legend,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import SvgIcon from '@mui/material/SvgIcon';
+import Average from 'assets/icons/average.svg';
 import {font_body_4_reg} from 'theme/fonts';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, annotationPlugin);
@@ -21,10 +23,13 @@ interface Props {
   title: string;
   averageTitle: string;
   average: number;
-  stepped?: boolean;
+  stepped: boolean;
+  withCheckbox: boolean;
 }
 
-const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => {
+const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, withCheckbox}) => {
+  const [isAverage, setIsAverage] = useState<boolean>(false);
+
   const chartData = useMemo(
     () => ({
       labels: data?.map((item) => item.date) || [],
@@ -48,10 +53,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => 
       responsive: true,
       plugins: {
         datalabels: {
-          display: true,
-          align: 'end',
-          anchor: 'end',
-          formatter: (value: number) => value.toFixed(2),
+          display: false,
         },
         legend: {
           position: 'top' as const,
@@ -61,18 +63,19 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => 
           text: title,
         },
         annotation: {
-          annotations: average
-            ? {
-                line1: {
-                  type: 'line',
-                  yMin: average / 1e9,
-                  yMax: average / 1e9,
-                  borderColor: 'rgb(235, 72, 99)',
-                  borderDash: [10],
-                  borderWidth: 2,
-                },
-              }
-            : {},
+          annotations:
+            isAverage && average
+              ? {
+                  line1: {
+                    type: 'line',
+                    yMin: average / 1e9,
+                    yMax: average / 1e9,
+                    borderColor: 'rgb(235, 72, 99)',
+                    borderDash: [10],
+                    borderWidth: 2,
+                  },
+                }
+              : {},
         },
       },
       scales: {
@@ -80,23 +83,54 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped}) => 
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Демаг',
+            text: 'Урон',
           },
         },
       },
     }),
-    [title, average]
+    [title, isAverage, average]
   ) as any;
 
   return (
-    <div>
+    <Wrapper>
+      {withCheckbox && (
+        <CheckboxContainer>
+          <Icon isaverage={+isAverage} onClick={() => setIsAverage((prev) => !prev)}>
+            <Average />
+          </Icon>
+        </CheckboxContainer>
+      )}
       <Line data={chartData} options={options} />
       <SubInfo>
         {averageTitle} <b>{((average || 0) / 1e9).toFixed(2)} млд</b>
       </SubInfo>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  position: relative;
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+`;
+
+const Icon = styled(SvgIcon)<{isaverage: number}>`
+  &.MuiSvgIcon-root {
+    cursor: pointer;
+    fill: ${({
+      isaverage,
+      theme: {
+        colors: {blue100, gray090},
+      },
+    }) => (isaverage ? blue100 : gray090)};
+  }
+`;
 
 const SubInfo = styled.div`
   ${font_body_4_reg};

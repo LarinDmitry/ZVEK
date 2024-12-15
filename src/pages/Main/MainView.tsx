@@ -5,16 +5,22 @@ import Table from './components/Table';
 import PieChart from './components/PieChart';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
+import Tooltip from '@mui/material/Tooltip';
 import {useAppSelector} from 'services/hooks';
+import useQuery from 'services/useQuery';
 import {selectUserConfiguration} from 'store/userSlice';
 import {latestZveks} from '../../DATA';
-import Info from 'assets/icons/info.svg';
-import {font_header_5_bold, font_body_2_reg, font_body_1_reg} from 'theme/fonts';
+import Statistic from 'assets/icons/statistic.svg';
+import Contacts from 'assets/icons/contacts.svg';
+import Compare from 'assets/icons/compare.svg';
+import {font_header_5_bold, font_body_2_reg} from 'theme/fonts';
 
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 
 const MainView = () => {
   const navigate = useNavigate();
+  const [isMobile, ,] = useQuery();
+
   const {selectedItems} = useAppSelector(selectUserConfiguration);
 
   const pieChartData = useMemo(
@@ -41,15 +47,32 @@ const MainView = () => {
         <Title>
           Последний ЗВЭК - {date}
           <Icon onClick={() => navigate('/statistic')}>
-            <Info />
+            <Statistic />
+          </Icon>
+          <Icon onClick={() => navigate('/contacts')}>
+            <Contacts />
           </Icon>
         </Title>
-
-        {selectedItems.length > 1 && (
-          <Compare variant="contained" onClick={() => navigate(`/compare/${selectedItems.join('^')}`)}>
-            Сравнить
-          </Compare>
-        )}
+        <Tooltip
+          title="Для сравнения нужно выбирать двое и больше игроков"
+          disableHoverListener={selectedItems.length >= 2}
+        >
+          <span>
+            <CompareBtn
+              variant="contained"
+              onClick={() => navigate(`/compare/${selectedItems.join('^')}`)}
+              disabled={selectedItems.length <= 1}
+            >
+              {isMobile ? (
+                <Icon>
+                  <Compare />
+                </Icon>
+              ) : (
+                'Сравнить'
+              )}
+            </CompareBtn>
+          </span>
+        </Tooltip>
       </Header>
       <Content>
         <Table data={tableData} total={guildTotal} />
@@ -76,7 +99,15 @@ const Content = styled.div`
   }
 `;
 
-const Compare = styled(Button)`
+const Icon = styled(SvgIcon)`
+  &.MuiSvgIcon-root {
+    font-size: 2rem;
+    cursor: pointer;
+    fill: ${({theme}) => theme.colors.blue100};
+  }
+`;
+
+const CompareBtn = styled(Button)`
   &.MuiButtonBase-root {
     ${font_body_2_reg};
     color: ${({theme}) => theme.colors.gray000};
@@ -84,8 +115,18 @@ const Compare = styled(Button)`
     border-radius: 16px;
     text-transform: inherit;
 
+    ${Icon} {
+      fill: ${({theme}) => theme.colors.gray000};
+    }
+
     &:hover {
       background: ${({theme}) => theme.colors.blue100};
+    }
+
+    &:disabled {
+      ${Icon} {
+        fill: ${({theme}) => theme.colors.gray090};
+      }
     }
   }
 `;
@@ -100,7 +141,7 @@ const Header = styled.div`
   height: 2.5rem;
 
   @media ${({theme}) => theme.breakpoints.maxLtg} {
-    ${font_body_1_reg};
+    ${font_body_2_reg};
     font-weight: bold;
     width: 100%;
   }
@@ -110,13 +151,6 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   column-gap: 1rem;
-`;
-
-const Icon = styled(SvgIcon)`
-  &.MuiSvgIcon-root {
-    cursor: pointer;
-    fill: ${({theme}) => theme.colors.gray090};
-  }
 `;
 
 export default MainView;

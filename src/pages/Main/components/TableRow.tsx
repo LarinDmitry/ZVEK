@@ -9,6 +9,8 @@ import {toggleItemSelection} from 'store/userSlice';
 import {heroImages, qualityImages} from 'pages/Main/MainUtils';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
+import Up from 'assets/icons/grow_up.svg';
+import Down from 'assets/icons/grow_down.svg';
 import X from 'assets/images/quality/x.png';
 
 const TableRow = ({
@@ -60,7 +62,11 @@ const TableRow = ({
       : [
           {
             key: 'expand',
-            content: <ExpandIcon onClick={() => toggleRowExpansion(name)}>{isExpanded ? '−' : '+'}</ExpandIcon>,
+            content: (
+              <ExpandIcon isexpanded={+isExpanded} onClick={() => toggleRowExpansion(name)}>
+                {isExpanded ? <Down /> : <Up />}
+              </ExpandIcon>
+            ),
           },
         ];
 
@@ -146,13 +152,16 @@ const Icon = styled(SvgIcon)<{direction?: string}>`
   }
 `;
 
-const ExpandIcon = styled.div`
-  cursor: pointer;
-  font-size: 1.5rem;
-  line-height: 1;
-  text-align: center;
-  padding: 0.2rem;
-  user-select: none;
+const ExpandIcon = styled(SvgIcon)<{isexpanded: number}>`
+  &.MuiSvgIcon-root {
+    cursor: pointer;
+    fill: ${({
+      isexpanded,
+      theme: {
+        colors: {gray090, blue090},
+      },
+    }) => (isexpanded ? gray090 : blue090)};
+  }
 `;
 
 const Block = styled.div`
@@ -199,7 +208,7 @@ const Collapsible = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 4rem 1.5rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
+  grid-template-columns: 4rem 2.25rem auto 6rem 6rem 6rem 6rem 7rem 7rem 3rem;
   border-bottom: 1px solid rgb(224, 224, 224);
   align-items: center;
 

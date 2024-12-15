@@ -32,6 +32,9 @@ const BarChart: FC<Props> = ({data, title}) => {
     () => ({
       responsive: true,
       plugins: {
+        datalabels: {
+          display: false,
+        },
         legend: {
           position: 'top',
         },
