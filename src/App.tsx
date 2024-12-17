@@ -7,13 +7,11 @@ import {router} from 'components/GeneralComponents/Routers';
 import ErrorFallback from 'components/GeneralComponents/ErrorFallback';
 import {reduxStore} from 'services/reduxStore';
 import MainTheme from 'theme/index';
-import {OverrideStyles} from 'theme/overrideStyles';
 
 const App = () => (
   <Provider store={reduxStore}>
     <ThemeProvider theme={MainTheme}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <OverrideStyles />
         <Suspense>
           <RouterProvider router={router} />
         </Suspense>

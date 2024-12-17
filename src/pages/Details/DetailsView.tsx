@@ -64,7 +64,7 @@ const DetailsView = () => {
             />
           </Charts>
           <BarChartContainer>
-            <BarChart data={latestDamageByDayValues} title="Сравнение урона по дням, млд" />
+            <BarChart data={latestDamageByDayValues} title="Сравнение урона по дням последних 3-х ЗВЕК, млд" />
           </BarChartContainer>
         </>
       )}

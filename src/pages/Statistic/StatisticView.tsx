@@ -118,7 +118,7 @@ const List = styled.ul`
 const Hint = styled(SvgIcon)`
   &.MuiSvgIcon-root {
     cursor: pointer;
-    fill: ${({theme}) => theme.colors.gray090};
+    fill: ${({theme}) => theme.colors.blue090};
     height: 1rem;
     width: 1rem;
     margin-left: 0.5rem;

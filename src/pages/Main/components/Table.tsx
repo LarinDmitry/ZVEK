@@ -108,9 +108,9 @@ const Table: FC<Props> = ({data, total}) => {
       if (key && key !== '№' && key !== 'more') {
         dispatch(
           setSortConfig(
-            sortConfig?.key === key && sortConfig.direction === 'asc'
-              ? {key, direction: 'desc'}
-              : {key, direction: 'asc'}
+            sortConfig?.key === key && sortConfig.direction === 'desc'
+              ? {key, direction: 'asc'}
+              : {key, direction: 'desc'}
           )
         );
       }

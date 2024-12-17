@@ -72,9 +72,9 @@ export const qualityImages: {[key: string]: string} = {
 };
 
 export const heroImages: {[key: string]: string} = {
-  vesa: Vesa,
-  mokman: Mokman,
-  vulkan: Vulkan,
   aspen: Aspen,
+  mokman: Mokman,
   nataly: Nataly,
+  vesa: Vesa,
+  vulkan: Vulkan,
 };

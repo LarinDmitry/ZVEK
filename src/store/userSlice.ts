@@ -8,8 +8,8 @@ export interface UserState {
 
 const initialState: UserState = {
   sortConfig: {
-    key: 'name',
-    direction: 'asc',
+    key: 'damage',
+    direction: 'desc',
   },
   selectedItems: [],
 };

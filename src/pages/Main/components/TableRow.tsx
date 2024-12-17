@@ -53,10 +53,10 @@ const TableRow = ({
             key: 'hero',
             content: getImageComponent(damageDealer || '', heroImages, ''),
           },
-          {key: 'damage', content: (damage / 1_000_000_000).toFixed(3)},
+          {key: 'damage', content: (Math.floor((damage / 1_000_000_000) * 1000) / 1000).toFixed(3)},
           {
             key: 'influence',
-            content: ((damage / total) * 100).toFixed(3),
+            content: `${(Math.floor((damage / total) * 100 * 1000) / 1000).toFixed(3)}`,
           },
         ]
       : [
@@ -100,11 +100,11 @@ const TableRow = ({
       },
       {
         title: 'Урон',
-        value: `${(damage / 1_000_000_000).toFixed(3)} млд`,
+        value: `${(Math.floor((damage / 1_000_000_000) * 1000) / 1000).toFixed(3)} млд`,
       },
       {
         title: 'Влияние',
-        value: `${((damage / total) * 100).toFixed(3)} %`,
+        value: `${(Math.floor((damage / total) * 100 * 1000) / 1000).toFixed(3)} %`,
       },
     ],
     [damage, stars, temple, total]

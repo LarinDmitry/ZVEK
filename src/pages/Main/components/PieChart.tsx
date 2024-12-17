@@ -1,10 +1,10 @@
 import React, {FC, useMemo} from 'react';
 import styled from 'styled-components';
 import {Pie} from 'react-chartjs-2';
-import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
+import {Chart as ChartJS, ArcElement, Tooltip, Legend, Title} from 'chart.js';
 import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 interface Props {
   total: number;
@@ -22,7 +22,7 @@ const PieChart: FC<Props> = ({data, total}) => {
       labels: sortedData.map(({name}) => name),
       datasets: [
         {
-          label: 'Damage',
+          label: 'Урон',
           data: sortedData.map(({damage}) => damage),
           backgroundColor,
           hoverBackgroundColor,
@@ -36,6 +36,10 @@ const PieChart: FC<Props> = ({data, total}) => {
     () => ({
       plugins: {
         datalabels: false,
+        title: {
+          display: true,
+          text: 'Диаграмма влияния, %',
+        },
         tooltip: {
           callbacks: {
             label: ({label, raw}: any) => `${label}: ${raw.toLocaleString()} (${((raw / total) * 100).toFixed(3)}%)`,

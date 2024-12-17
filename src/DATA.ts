@@ -23,7 +23,7 @@ export const latestZveks = [
     ],
   },
   {
-    name: 'ph',
+    name: 'Ph',
     info: [
       {
         damage: 12583748929367,
@@ -414,7 +414,7 @@ export const latestZveks = [
     ],
   },
   {
-    name: 'модератор',
+    name: 'Модератор',
     info: [
       {
         damage: 199537004167,
@@ -629,7 +629,7 @@ export const latestZveks = [
     ],
   },
   {
-    name: 'архара',
+    name: 'Архара',
     info: [
       {damage: 0, date: '10.24', guildTotal: 0, damageByDay: [0, 0, 0, 0, 0, 0]},
       {
@@ -675,7 +675,7 @@ export const teamDetails = [
     temple: 13,
   },
   {
-    name: 'ph',
+    name: 'Ph',
     damageDealer: 'nataly',
     quality: 'a-',
     stars: 12,
@@ -794,7 +794,7 @@ export const teamDetails = [
     temple: 6,
   },
   {
-    name: 'модератор',
+    name: 'Модератор',
     damageDealer: 'aspen',
     quality: 'a-',
     stars: 12,
@@ -871,7 +871,7 @@ export const teamDetails = [
     temple: 7,
   },
   {
-    name: 'архара',
+    name: 'Архара',
     damageDealer: 'aspen',
     quality: 'a',
     stars: 10,
