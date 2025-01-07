@@ -12,8 +12,8 @@ const WelcomeView = () => {
     <Wrapper>
       <Leaves>
         {Array.from({length: 25}).map((_, index) => {
-          const is3DAnimation = Math.random() > 0.5; // Случайный выбор анимации
-          const animationDuration = 10 + Math.random() * 8; // Длительность от 10 до 18 секунд
+          const is3DAnimation = Math.random() > 0.5;
+          const animationDuration = 10 + Math.random() * 8;
 
           return (
             <Leaf
@@ -22,7 +22,7 @@ const WelcomeView = () => {
               style={{
                 animationDelay: `${Math.random() * 10}s`,
                 animationDuration: `${animationDuration}s`,
-                left: `${Math.random() * 150 - 50}%`, // Стартовая позиция по X (выходит за границы экрана)
+                left: `${Math.random() * 150 - 50}%`,
               }}
             />
           );
@@ -47,18 +47,17 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  perspective: 800px; /* Добавляем перспективу для 3D-эффекта */
+  perspective: 800px;
 `;
 
 const Leaves = styled.div`
   position: absolute;
-  top: -20%; /* Расширяем начальную позицию листьев */
+  top: -20%;
   width: 100%;
   text-align: center;
   z-index: 0;
 `;
 
-// Анимация 2D падения с ротацией и расширенным движением
 const falling2D = keyframes`
     0% {
         transform: translate3d(0, 0, 0) rotate(0deg);
@@ -82,7 +81,6 @@ const falling2D = keyframes`
     }
 `;
 
-// Анимация 3D падения с вращением и расширенным движением
 const falling3D = keyframes`
     0% {
         transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
@@ -106,7 +104,6 @@ const falling3D = keyframes`
     }
 `;
 
-// Листочек с CSS-формой и рандомным выбором анимации
 const Leaf = styled.div<{is3DAnimation: boolean}>`
   display: inline-block;
   width: 20px;

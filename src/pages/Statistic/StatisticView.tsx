@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
 
-// Игроки, чей урон снижается от ивента к ивенту?
+// TODO Игроки, чей урон снижается от ивента к ивенту?
 
 const StatisticView = () => {
   const arrValues = useMemo(
