@@ -2,6 +2,7 @@ import React, {Fragment, useMemo} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import DamageGrow from './components/DamageGrow';
+import DamageDecrease from './components/DamageDecrease';
 import TopPlayers from './components/TopPlayers';
 import Djinni from './components/Djinni';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -15,6 +16,7 @@ const StatisticView = () => {
   const arrValues = useMemo(
     () => [
       {title: 'Звэк движение', value: <DamageGrow />},
+      {title: 'Cнижение урона', value: <DamageDecrease />},
       {title: 'Топ игроки последних Звэк', value: <TopPlayers />},
       {
         title: (
