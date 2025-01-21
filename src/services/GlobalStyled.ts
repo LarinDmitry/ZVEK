@@ -1,19 +1,26 @@
-import styled, {css} from 'styled-components';
-import {FormHelperText} from '@mui/material';
-import {font_body_4_reg} from 'theme/fonts';
+import {css} from 'styled-components';
 
-export const helperText = css`
-  ${font_body_4_reg};
-  color: ${({theme}) => theme.colors.dark080};
-  margin: 0.5rem 1rem 0;
+export const welcomeTitleStyles = css`
+  font-size: 3rem;
+  font-weight: bold;
+  color: ${({theme}) => theme.colors.gray000};
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, rgb(141, 252, 253), rgb(201, 254, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  animation: glow 2s infinite alternate;
 
-  &.Mui-error {
-    color: ${({theme}) => theme.colors.error100};
-  }
-`;
-
-export const HelperTextStyled = styled(FormHelperText)`
-  &.MuiFormHelperText-root {
-    ${helperText};
+  @keyframes glow {
+    0% {
+      text-shadow:
+        0 0 5px rgb(141, 252, 253),
+        0 0 10px rgb(201, 254, 255);
+    }
+    100% {
+      text-shadow:
+        0 0 10px rgb(141, 252, 253),
+        0 0 20px rgb(201, 254, 255);
+    }
   }
 `;

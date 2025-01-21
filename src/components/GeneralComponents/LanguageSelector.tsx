@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import {useAppDispatch} from 'services/hooks';
+import {welcomeTitleStyles} from 'services/GlobalStyled';
 import {setLanguage} from 'store/userSlice';
 import {languageOptions} from 'services/GlobalUtils';
 
@@ -18,7 +19,7 @@ const LanguageSelector: FC<Props> = ({language}) => {
       {languageOptions.map(({value, label, img}) => (
         <MenuItem key={value} value={value}>
           <Image>{img}</Image>
-          <div>{label}</div>
+          <Label>{label}</Label>
         </MenuItem>
       ))}
     </Wrapper>
@@ -31,6 +32,8 @@ const Image = styled.div`
   align-items: center;
   margin-right: 0.5rem;
 `;
+
+const Label = styled.div``;
 
 const Wrapper = styled(Select)`
   &.MuiInputBase-root {
@@ -45,7 +48,7 @@ const Wrapper = styled(Select)`
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 5rem;
+      min-width: 7rem;
     }
 
     & > fieldset {
@@ -54,6 +57,12 @@ const Wrapper = styled(Select)`
 
     ${Image} {
       margin-right: 0;
+    }
+
+    ${Label} {
+      ${welcomeTitleStyles};
+      margin: 0;
+      font-size: 1rem;
     }
   }
 `;
