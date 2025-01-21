@@ -37,6 +37,7 @@ const Label = styled.div``;
 
 const Wrapper = styled(Select)`
   &.MuiInputBase-root {
+    z-index: 1;
     position: absolute;
     top: 0;
     right: 0;
