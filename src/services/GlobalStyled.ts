@@ -1,8 +1,8 @@
 import {css} from 'styled-components';
+import {font_header_1_bold} from 'theme/fonts';
 
 export const welcomeTitleStyles = css`
-  font-size: 3rem;
-  font-weight: bold;
+  ${font_header_1_bold};
   color: ${({theme}) => theme.colors.gray000};
   margin-bottom: 1rem;
   background: linear-gradient(to right, rgb(141, 252, 253), rgb(201, 254, 255));
