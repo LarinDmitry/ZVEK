@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {zeroDamagePlayers} from '../StatisticUtils';
+import { allPlayersDamaged } from '../StatisticConsts';
 
 export interface ZeroDamagePlayer {
   name: string;
@@ -35,7 +36,7 @@ const ZeroDamagePlayers = () => {
           {zeroDamagePlayers.length === 0 ? (
             <AllDamagedRow>
               <StyledTableCell>
-                <AllDamagedText>Все игроки нанесли урон во все дни</AllDamagedText>
+                <AllDamagedText>{allPlayersDamaged}</AllDamagedText>
               </StyledTableCell>
             </AllDamagedRow>
           ) : (

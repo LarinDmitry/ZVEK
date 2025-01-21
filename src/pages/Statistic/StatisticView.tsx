@@ -5,6 +5,7 @@ import DamageGrow from './components/DamageGrow';
 import TopPlayers from './components/TopPlayers';
 import ZeroDamage from './components/ZeroDamage';
 import Djinni from './components/Djinni';
+import {guildGrow, topPlayers, zeroDamage} from './StatisticConsts';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
 import Info from 'assets/icons/hint.svg';
@@ -15,9 +16,9 @@ import {font_body_2_bold} from 'theme/fonts';
 const StatisticView = () => {
   const arrValues = useMemo(
     () => [
-      {title: 'Звэк движение', value: <DamageGrow />},
-      {title: 'Топ игроки последних Звэк', value: <TopPlayers />},
-      {title: 'Нулевой дамаг последнего Звэк', value: <ZeroDamage />},
+      {title: guildGrow, value: <DamageGrow />},
+      {title: topPlayers, value: <TopPlayers />},
+      {title: zeroDamage, value: <ZeroDamage />},
       {
         title: (
           <Fragment>

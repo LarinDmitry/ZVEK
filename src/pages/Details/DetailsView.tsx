@@ -4,6 +4,15 @@ import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
+import {
+  zvekStats,
+  noData,
+  avGuildTitle,
+  daysCompareTitle,
+  lastTitle,
+  threeLastTitle,
+  avPlayerTitle,
+} from './DetailsConsts';
 import {zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
 import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
@@ -38,33 +47,33 @@ const DetailsView = () => {
       <Header>
         <BackBtn />
         <NickName>
-          ЗВЭК статистика игрока <b>{id}</b>
+          {zvekStats} <b>{id}</b>
         </NickName>
       </Header>
       {!latestZvekValues || damageByDayData.length === 0 ? (
-        <div>Нет данных для отображения</div>
+        <div>{noData}</div>
       ) : (
         <>
           <Charts>
             <LineChart
               data={latestZvekValues}
-              title="Урон последних 3х ЗВЭК, млд"
+              title={threeLastTitle}
               average={averageAllZveks || 0}
-              averageTitle="Ваш средний урон последних трех звэков:"
+              averageTitle={avPlayerTitle}
               stepped
               withCheckbox={false}
             />
             <LineChart
               data={damageByDayData}
-              title="Урон последнего ЗВЭК, млд"
+              title={lastTitle}
               average={averageLatestZveks}
-              averageTitle="Средний урон последнего звэка по гильдии:"
+              averageTitle={avGuildTitle}
               stepped={false}
               withCheckbox
             />
           </Charts>
           <BarChartContainer>
-            <BarChart data={latestDamageByDayValues} title="Сравнение урона по дням последних 3-х ЗВЕК, млд" />
+            <BarChart data={latestDamageByDayValues} title={daysCompareTitle} />
           </BarChartContainer>
         </>
       )}

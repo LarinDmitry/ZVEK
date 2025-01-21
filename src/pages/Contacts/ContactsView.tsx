@@ -1,6 +1,7 @@
 import React, {ElementType} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
+import {askThem} from './ContactsConsts';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
@@ -41,7 +42,7 @@ const ContactsView = () => {
   return (
     <Wrapper>
       <BackBtn />
-      <Title>Те, к кому можно обратиться:</Title>
+      <Title>{askThem}</Title>
       <Container component={Paper}>
         <Table>
           <TableBody>

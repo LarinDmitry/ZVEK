@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Pie} from 'react-chartjs-2';
 import {Chart as ChartJS, ArcElement, Tooltip, Legend, Title} from 'chart.js';
 import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
+import {impactDiagram} from '../MainConsts';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -38,7 +39,7 @@ const PieChart: FC<Props> = ({data, total}) => {
         datalabels: false,
         title: {
           display: true,
-          text: 'Диаграмма влияния, %',
+          text: {impactDiagram},
         },
         tooltip: {
           callbacks: {

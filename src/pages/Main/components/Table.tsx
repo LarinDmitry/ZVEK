@@ -8,6 +8,7 @@ import useQuery from 'services/useQuery';
 import {selectUserConfiguration, setSortConfig, selectAllItems, clearSelection} from 'store/userSlice';
 import {heroImages, qualityImages} from 'pages/Main/MainUtils';
 import {teamDetails} from '../../../DATA';
+import { titleArr } from '../MainConsts';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
 import {font_body_4_bold} from 'theme/fonts';
@@ -134,7 +135,7 @@ const Table: FC<Props> = ({data, total}) => {
             '№',
             'name',
             'quality',
-            ...(!isLaptop ? ['more', ''] : ['gey', 'temple', 'hero', 'damage', 'influence']),
+            ...(!isLaptop ? ['more', ''] : titleArr),
             '',
           ][idx];
 

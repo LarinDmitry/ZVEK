@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
+import {notFoundTitle, notFoundSubTitle, notFoundBackBtn} from './NotFoundConsts';
 import Button from '@mui/material/Button';
 import {font_body_1_reg, font_header_4_bold, mediumWeight} from 'theme/fonts';
 
@@ -10,9 +11,9 @@ const NotFoundView = () => {
   return (
     <Wrapper>
       <Number>404</Number>
-      <Title>Страница не найдена!</Title>
-      <SubTitle>Такая страница не найдена или не существует</SubTitle>
-      <BackBtn onClick={() => navigate('/main')}>На главную</BackBtn>
+      <Title>{notFoundTitle}</Title>
+      <SubTitle>{notFoundSubTitle}</SubTitle>
+      <BackBtn onClick={() => navigate('/main')}>{notFoundBackBtn}</BackBtn>
     </Wrapper>
   );
 };

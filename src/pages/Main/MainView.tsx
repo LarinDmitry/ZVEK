@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Table from './components/Table';
 import PieChart from './components/PieChart';
+import {lastZvek, compareAmount} from './MainConsts';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
@@ -45,7 +46,7 @@ const MainView = () => {
     <Wrapper>
       <Header>
         <Title>
-          Последний ЗВЭК - {date}
+          {lastZvek + date}
           <Icon onClick={() => navigate('/statistic')}>
             <Statistic />
           </Icon>
@@ -53,10 +54,7 @@ const MainView = () => {
             <Contacts />
           </Icon>
         </Title>
-        <Tooltip
-          title="Для сравнения нужно выбирать двое и больше игроков"
-          disableHoverListener={selectedItems.length >= 2}
-        >
+        <Tooltip title={compareAmount} disableHoverListener={selectedItems.length >= 2}>
           <span>
             <CompareBtn
               variant="contained"

@@ -5,6 +5,7 @@ import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import BackBtn from 'components/GeneralComponents/BackBtn';
+import {damageDaysCompare, damageZveksCompare} from './CompareConsts';
 import {backgroundColor, hoverBackgroundColor, zvekDaysOptions} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
 
@@ -144,18 +145,12 @@ const CompareView = () => {
       <Charts>
         <div>
           <Bar
-            options={getOptions(
-              'Сравнение урона последних трех ЗВЭК, млд',
-              dataLastThreeEvents?.datasets[0]?.maxValues
-            )}
+            options={getOptions(damageZveksCompare, dataLastThreeEvents?.datasets[0]?.maxValues)}
             data={dataLastThreeEvents}
           />
         </div>
         <div>
-          <Bar
-            options={getOptions('Сравнение урона последнего ЗВЭК (по дням), млд', maxValuesByDayForSecondGraph)}
-            data={dataLastEventByDays}
-          />
+          <Bar options={getOptions(damageDaysCompare, maxValuesByDayForSecondGraph)} data={dataLastEventByDays} />
         </div>
       </Charts>
     </Wrapper>
