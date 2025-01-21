@@ -1,3 +1,23 @@
+import {ZeroDamagePlayer} from './components/ZeroDamage';
+import {latestZveks} from 'src/DATA';
+
 export const calculateGini = (damages: number[]) =>
   damages.reduce((sum, x) => sum + damages.reduce((innerSum, y) => innerSum + Math.abs(x - y), 0), 0) /
   ((2 * damages.length ** 2 * damages.reduce((sum, damage) => sum + damage, 0)) / damages.length);
+
+export const calculateZeroDamagePlayers = (): ZeroDamagePlayer[] =>
+  latestZveks.reduce<ZeroDamagePlayer[]>((acc, {name, info}) => {
+    const lastEvent = info[info.length - 1];
+    if (!lastEvent) return acc;
+
+    const zeroDays = lastEvent.damageByDay.reduce<number[]>((days, damage, idx) => {
+      damage === 0 && days.push(idx + 1);
+      return days;
+    }, []);
+
+    zeroDays.length > 0 && acc.push({name, zeroDays});
+
+    return acc;
+  }, []);
+
+export const zeroDamagePlayers: ZeroDamagePlayer[] = calculateZeroDamagePlayers();
