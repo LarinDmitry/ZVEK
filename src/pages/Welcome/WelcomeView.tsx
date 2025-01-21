@@ -1,15 +1,22 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled, {keyframes} from 'styled-components';
+import LanguageSelector from 'components/GeneralComponents/LanguageSelector';
 import Button from '@mui/material/Button';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './WelcomeUtils';
 import Background from 'assets/images/background.webp';
 import {font_body_2_reg, font_header_6_bold} from 'theme/fonts';
 
 const WelcomeView = () => {
   const navigate = useNavigate();
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {WELCOME, COME} = localization(language);
 
   return (
     <Wrapper>
+      <LanguageSelector language={language} />
       <Leaves>
         {Array.from({length: 25}).map((_, index) => {
           const is3DAnimation = Math.random() > 0.5;
@@ -29,9 +36,9 @@ const WelcomeView = () => {
         })}
       </Leaves>
       <Content>
-        <Title>Welcome</Title>
+        <Title>{WELCOME}</Title>
         <Inside variant="contained" onClick={() => navigate('/main')}>
-          Come inside
+          {COME}
         </Inside>
       </Content>
     </Wrapper>

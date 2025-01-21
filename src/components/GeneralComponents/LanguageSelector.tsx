@@ -1,0 +1,61 @@
+import React, {FC} from 'react';
+import styled from 'styled-components';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import {useAppDispatch} from 'services/hooks';
+import {setLanguage} from 'store/userSlice';
+import {languageOptions} from 'services/GlobalUtils';
+
+interface Props {
+  language: string;
+}
+
+const LanguageSelector: FC<Props> = ({language}) => {
+  const dispatch = useAppDispatch();
+
+  return (
+    <Wrapper value={language} onChange={({target: {value}}) => dispatch(setLanguage(value as string))}>
+      {languageOptions.map(({value, label, img}) => (
+        <MenuItem key={value} value={value}>
+          <Image>{img}</Image>
+          <div>{label}</div>
+        </MenuItem>
+      ))}
+    </Wrapper>
+  );
+};
+
+const Image = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+`;
+
+const Wrapper = styled(Select)`
+  &.MuiInputBase-root {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    outline: none;
+
+    & > div.MuiSelect-select {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 5rem;
+    }
+
+    & > fieldset {
+      border: none;
+    }
+
+    ${Image} {
+      margin-right: 0;
+    }
+  }
+`;
+
+export default LanguageSelector;
