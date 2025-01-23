@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
 
 interface TopPlayerData {
@@ -39,8 +42,10 @@ const calculateTopPlayersData = (): TopPlayerData[] =>
     .filter((item) => item !== null);
 
 const TopPlayers = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {HEADERDATA, HEADERTOP, HEADERPERC} = localization(language);
   const topPlayersData: TopPlayerData[] = useMemo(() => calculateTopPlayersData(), []);
-  const headerValues = ['Дата', 'Топ 1,2,3', '% от всего урона'];
+  const headerValues = [HEADERDATA, HEADERTOP, HEADERPERC];
 
   return (
     <Container component={Paper}>

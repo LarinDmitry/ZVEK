@@ -1,1 +1,5 @@
-export default {}
+export default {
+  NOPAGE: 'Страница не найдена!',
+  NOTEXIST: 'Такая страница не найдена или не существует',
+  MAIN: 'На главную',
+};

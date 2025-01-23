@@ -5,12 +5,16 @@ import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import BackBtn from 'components/GeneralComponents/BackBtn';
-import {backgroundColor, hoverBackgroundColor, zvekDaysOptions} from 'pages/Main/MainUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {backgroundColor, hoverBackgroundColor, zvekDaysOptions, localization} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 const CompareView = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {COMPARE3, COMPAREDAYS} = localization(language);
   const {id} = useParams<{id: string}>();
 
   const prepareChartData = useCallback(
@@ -143,19 +147,10 @@ const CompareView = () => {
       <BackBtn />
       <Charts>
         <div>
-          <Bar
-            options={getOptions(
-              'Сравнение урона последних трех ЗВЭК, млд',
-              dataLastThreeEvents?.datasets[0]?.maxValues
-            )}
-            data={dataLastThreeEvents}
-          />
+          <Bar options={getOptions(COMPARE3, dataLastThreeEvents?.datasets[0]?.maxValues)} data={dataLastThreeEvents} />
         </div>
         <div>
-          <Bar
-            options={getOptions('Сравнение урона последнего ЗВЭК (по дням), млд', maxValuesByDayForSecondGraph)}
-            data={dataLastEventByDays}
-          />
+          <Bar options={getOptions(COMPAREDAYS, maxValuesByDayForSecondGraph)} data={dataLastEventByDays} />
         </div>
       </Charts>
     </Wrapper>

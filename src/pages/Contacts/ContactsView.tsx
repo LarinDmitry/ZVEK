@@ -7,32 +7,37 @@ import Table from '@mui/material/Table';
 import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './ContactsUtils';
 import {font_body_2_bold} from 'theme/fonts';
 
 const ContactsView = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {LEADER, COLEADER, ADMIN, SUGG, WRITETHEM} = localization(language);
   const arrValues = [
     {
-      position: 'Глава',
+      position: LEADER,
       name: 'Артем',
       link: 'Artem_Chuvanov',
     },
     {
-      position: 'Зам. главы',
+      position: COLEADER,
       name: 'Марина',
       link: 'MarVik3108',
     },
     {
-      position: 'Администратор',
+      position: ADMIN,
       name: 'Роман',
       link: 'Matpockyx',
     },
     {
-      position: 'Администратор',
+      position: ADMIN,
       name: 'Санта',
       link: 'ErbolSanta',
     },
     {
-      position: 'Предложения по сайту',
+      position: SUGG,
       name: 'Дмитрий',
       link: 'Larin_Dmytro',
     },
@@ -41,7 +46,7 @@ const ContactsView = () => {
   return (
     <Wrapper>
       <BackBtn />
-      <Title>Те, к кому можно обратиться:</Title>
+      <Title>{WRITETHEM}</Title>
       <Container component={Paper}>
         <Table>
           <TableBody>

@@ -6,23 +6,30 @@ import TopPlayers from './components/TopPlayers';
 import Djinni from './components/Djinni';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './StatisticUtils';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
 
 const StatisticView = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {ZVEKCH, TOPPLAYERS, DISBALCOEF, EQ, WHERE, AM, PLAYERDAM, AVDAM, AVAR, EVENLY, UNEQ, VERYUNEQ} =
+    localization(language);
+
   const arrValues = useMemo(
     () => [
-      {title: 'Звэк движение', value: <DamageGrow />},
-      {title: 'Топ игроки последних Звэк', value: <TopPlayers />},
+      {title: `${ZVEKCH}`, value: <DamageGrow />},
+      {title: `${TOPPLAYERS}`, value: <TopPlayers />},
       {
         title: (
           <Fragment>
-            Коэффициент дисбаланса
+            {DISBALCOEF}
             <Tooltip
               title={
                 <List>
                   <li>
-                    Формула:
+                    {EQ}
                     <Formula>
                       G=
                       <span>
@@ -37,32 +44,26 @@ const StatisticView = () => {
                       </span>
                       /
                       <span>
-                        2n<sup>2</sup>μ, где:
+                        2n<sup>2</sup>μ, {WHERE}:
                       </span>
                     </Formula>
                     <List>
                       <li>
-                        <b>n</b> — количество игроков.
+                        <b>n</b> {AM}
                       </li>
                       <li>
                         <b>
                           x<sub>i</sub>
                         </b>
-                        — урон игрока <i>i</i>.
+                        {PLAYERDAM} <i>i</i>.
                       </li>
                       <li>
-                        <b>μ</b> — средний урон (<i>среднее арифметическое</i>).
+                        <b>μ</b> {AVDAM} (<i>{AVAR}</i>).
                       </li>
                     </List>
-                    <li>0.2−0.3: Урон распределён довольно равномерно.</li>
-                    <li>
-                      0.5: Умеренное неравенство. Есть несколько игроков с заметно большим вкладом, но остальные тоже
-                      вносят ощутимый вклад.
-                    </li>
-                    <li>
-                      0.8−1.0: Сильное неравенство. Урон в основном сосредоточен у одного или нескольких "топовых"
-                      игроков, остальные почти не влияют на общий результат.
-                    </li>
+                    <li>{EVENLY}</li>
+                    <li>{UNEQ}</li>
+                    <li>{VERYUNEQ}</li>
                   </li>
                 </List>
               }
@@ -76,7 +77,7 @@ const StatisticView = () => {
         value: <Djinni />,
       },
     ],
-    []
+    [ZVEKCH, TOPPLAYERS, DISBALCOEF, EQ, WHERE, AM, PLAYERDAM, AVDAM, AVAR, EVENLY, UNEQ, VERYUNEQ]
   );
 
   return (

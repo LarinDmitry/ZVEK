@@ -7,10 +7,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
 import {calculateGini} from '../StatisticUtils';
+import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
 
 const Djinni = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {HEADERDATA, HEADERDJINNI} = localization(language);
   const uniqueDates = useMemo(
     () =>
       Array.from(new Set(latestZveks.flatMap(({info}) => info.map(({date}) => date)))).filter(
@@ -28,7 +33,7 @@ const Djinni = () => {
     [uniqueDates]
   );
 
-  const headerValues = ['Дата', 'Коэффициент Джинни'];
+  const headerValues = [HEADERDATA, HEADERDJINNI];
 
   return (
     <Container component={Paper}>

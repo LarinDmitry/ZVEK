@@ -4,11 +4,15 @@ import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
-import {zvekDaysOptions} from 'pages/Main/MainUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {zvekDaysOptions, localization} from 'pages/Main/MainUtils';
 import {latestZveks} from '../../DATA';
 import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
 
 const DetailsView = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {PLAYERSTAT, NODATA, LAST3ZVEKS, AVLAST3ZV, LASTZVEK, AVGUILD, DAYSCOMPARE} = localization(language);
   const {id} = useParams<{id: string}>();
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
@@ -38,33 +42,34 @@ const DetailsView = () => {
       <Header>
         <BackBtn />
         <NickName>
-          ЗВЭК статистика игрока <b>{id}</b>
+          {PLAYERSTAT}
+          <b>{id}</b>
         </NickName>
       </Header>
       {!latestZvekValues || damageByDayData.length === 0 ? (
-        <div>Нет данных для отображения</div>
+        <div>{NODATA}</div>
       ) : (
         <>
           <Charts>
             <LineChart
               data={latestZvekValues}
-              title="Урон последних 3х ЗВЭК, млд"
+              title={LAST3ZVEKS}
               average={averageAllZveks || 0}
-              averageTitle="Ваш средний урон последних трех звэков:"
+              averageTitle={AVLAST3ZV}
               stepped
               withCheckbox={false}
             />
             <LineChart
               data={damageByDayData}
-              title="Урон последнего ЗВЭК, млд"
+              title={LASTZVEK}
               average={averageLatestZveks}
-              averageTitle="Средний урон последнего звэка по гильдии:"
+              averageTitle={AVGUILD}
               stepped={false}
               withCheckbox
             />
           </Charts>
           <BarChartContainer>
-            <BarChart data={latestDamageByDayValues} title="Сравнение урона по дням последних 3-х ЗВЕК, млд" />
+            <BarChart data={latestDamageByDayValues} title={DAYSCOMPARE} />
           </BarChartContainer>
         </>
       )}

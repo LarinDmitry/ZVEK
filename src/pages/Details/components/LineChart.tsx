@@ -13,6 +13,9 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import SvgIcon from '@mui/material/SvgIcon';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from '../DetailsUtils';
 import Average from 'assets/icons/average.svg';
 import {font_body_4_reg} from 'theme/fonts';
 
@@ -28,6 +31,8 @@ interface Props {
 }
 
 const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, withCheckbox}) => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {DAMAGEINZVEK, DAMAGE} = localization(language);
   const [isAverage, setIsAverage] = useState<boolean>(false);
 
   const chartData = useMemo(
@@ -35,7 +40,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
       labels: data?.map((item) => item.date) || [],
       datasets: [
         {
-          label: 'Урон в ЗВЭК',
+          label: DAMAGEINZVEK,
           data: data?.map((item) => item.damage / 1e9) || [],
           borderColor: 'rgb(72, 99, 235)',
           backgroundColor: 'rgb(68, 217, 38)',
@@ -45,7 +50,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
         },
       ],
     }),
-    [data, stepped]
+    [data, stepped, DAMAGEINZVEK]
   );
 
   const options = useMemo(
@@ -83,12 +88,12 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Урон',
+            text: DAMAGE,
           },
         },
       },
     }),
-    [title, isAverage, average]
+    [title, isAverage, average, DAMAGE]
   ) as any;
 
   return (

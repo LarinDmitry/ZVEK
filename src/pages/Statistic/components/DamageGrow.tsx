@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
 
 interface GuildData {
@@ -16,6 +19,8 @@ interface GuildData {
 }
 
 const DamageGrow = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {HEADERDATA, HEADERGUILDDAM, HEADERCHANGE, NODATA, GROW, DECREASE} = localization(language);
   const guildData: GuildData[] = useMemo(
     () =>
       latestZveks[0].info.map(({guildTotal, date}, index, arr) => {
@@ -26,7 +31,7 @@ const DamageGrow = () => {
     []
   );
 
-  const headerValues = ['Дата', 'Урон гильдии, млд', 'Изменение'];
+  const headerValues = [HEADERDATA, HEADERGUILDDAM, HEADERCHANGE];
 
   return (
     <Container component={Paper}>
@@ -45,8 +50,8 @@ const DamageGrow = () => {
             const changeText =
               idx > 0
                 ? percentageChange === null
-                  ? 'Нет данных'
-                  : `${percentageChange > 0 ? 'увеличился' : 'уменьшился'} на ${Math.abs(percentageChange).toFixed(2)}%`
+                  ? `${NODATA}`
+                  : `${percentageChange > 0 ? `${GROW}` : `${DECREASE}`} ${Math.abs(percentageChange).toFixed(2)}%`
                 : '—';
 
             return (

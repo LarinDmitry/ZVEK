@@ -6,7 +6,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import {useAppDispatch, useAppSelector} from 'services/hooks';
 import useQuery from 'services/useQuery';
 import {selectUserConfiguration, setSortConfig, selectAllItems, clearSelection} from 'store/userSlice';
-import {heroImages, qualityImages} from 'pages/Main/MainUtils';
+import {heroImages, qualityImages, localization} from 'pages/Main/MainUtils';
 import {teamDetails} from '../../../DATA';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
@@ -21,6 +21,8 @@ interface Props {
 }
 
 const Table: FC<Props> = ({data, total}) => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {NICKNAME, QUALITY, TEMPLE, HERO, DAMAGEB, IMPACT, MORE} = localization(language);
   const dispatch = useAppDispatch();
   const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
   const [, , isLaptop] = useQuery();
@@ -95,12 +97,24 @@ const Table: FC<Props> = ({data, total}) => {
         onChange={({target: {checked}}) => toggleSelectAll(checked)}
       />,
       '№',
-      'Никнейм',
-      'Качество',
-      ...(isLaptop ? [<img src={Gey} alt="gey" />, 'Храм', 'Герой', 'Урон, млд', 'Влияние, %'] : ['Больше']),
+      `${NICKNAME}`,
+      `${QUALITY}`,
+      ...(isLaptop ? [<img src={Gey} alt="gey" />, `${TEMPLE}`, `${HERO}`, `${DAMAGEB}`, `${IMPACT}, %`] : [`${MORE}`]),
       '',
     ],
-    [data.length, isLaptop, selectedItems.length, toggleSelectAll]
+    [
+      data.length,
+      isLaptop,
+      selectedItems.length,
+      toggleSelectAll,
+      NICKNAME,
+      QUALITY,
+      TEMPLE,
+      HERO,
+      DAMAGEB,
+      IMPACT,
+      MORE,
+    ]
   );
 
   const requestSort = useCallback(
