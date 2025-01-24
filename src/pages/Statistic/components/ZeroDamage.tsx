@@ -7,52 +7,42 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {zeroDamagePlayers} from '../StatisticUtils';
+import {PlugCellStyles} from 'services/GlobalStyled';
+import {zeroDamagePlayers, zeroHeaderValues} from '../StatisticUtils';
+import {boldWeight} from 'theme/fonts';
 
 export interface ZeroDamagePlayer {
   name: string;
   zeroDays: number[];
 }
 
-const ZeroDamagePlayers = () => {
-  const headerValues = ['Игрок', 'День'];
-
-  return (
-    <Container component={Paper}>
+const ZeroDamagePlayers = () => (
+  <Container component={Paper}>
+    {zeroDamagePlayers().length === 0 ? (
+      <Plug>Все игроки нанесли урон во все дни</Plug>
+    ) : (
       <Table>
         <TableHead>
-          {zeroDamagePlayers.length > 0 && (
-            <Row>
-              {headerValues.map((value) => (
-                <StyledTableCell key={value}>
-                  <b>{value}</b>
-                </StyledTableCell>
-              ))}
-            </Row>
-          )}
+          <Row>
+            {zeroHeaderValues.map((value) => (
+              <HCell key={value}>{value}</HCell>
+            ))}
+          </Row>
         </TableHead>
         <TableBody>
-          {zeroDamagePlayers.length === 0 ? (
-            <AllDamagedRow>
-              <StyledTableCell>
-                <AllDamagedText>Все игроки нанесли урон во все дни</AllDamagedText>
-              </StyledTableCell>
-            </AllDamagedRow>
-          ) : (
-            zeroDamagePlayers.map(({name, zeroDays}, idx) => (
-              <Row key={idx}>
-                <TableCell align="center">{name}</TableCell>
-                <TableCell align="center">
-                  <SkippedDay>{zeroDays.map((day) => `${day}й`).join(', ')}</SkippedDay>
-                </TableCell>
-              </Row>
-            ))
-          )}
+          {zeroDamagePlayers().map(({name, zeroDays}) => (
+            <Row key={name}>
+              <TableCell align="center">{name}</TableCell>
+              <TableCell align="center">
+                <Skipped>{zeroDays.map((day) => `${day}й`).join(', ')}</Skipped>
+              </TableCell>
+            </Row>
+          ))}
         </TableBody>
       </Table>
-    </Container>
-  );
-};
+    )}
+  </Container>
+);
 
 const Container = styled(TableContainer)<{component: ElementType}>`
   &.MuiPaper-root {
@@ -68,27 +58,20 @@ const Row = styled(TableRow)`
   }
 `;
 
-const StyledTableCell = styled(TableCell)`
+const HCell = styled(TableCell)`
   &.MuiTableCell-root {
-    font-weight: bold;
+    ${boldWeight};
     text-align: center;
   }
 `;
 
-const AllDamagedRow = styled(TableRow)`
-  &.MuiTableCell-root {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-`;
-
-const AllDamagedText = styled.span`
+const Plug = styled.div`
+  ${PlugCellStyles};
   color: ${({theme}) => theme.colors.green100};
-  font-weight: bold;
-  font-family: 'Manrope', sans-serif;
+  text-align: center;
 `;
 
-const SkippedDay = styled.span`
+const Skipped = styled.div`
   color: ${({theme}) => theme.colors.red100};
 `;
 
