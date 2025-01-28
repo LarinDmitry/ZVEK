@@ -18,6 +18,7 @@ interface Props {
 
 const PieChart: FC<Props> = ({data, total}) => {
   const sortedData = useMemo(() => [...data].sort((a, b) => b.damage - a.damage), [data]);
+  
   const {language} = useAppSelector(selectUserConfiguration);
   const {DAMAGE, DIAGRAM} = localization(language);
 

@@ -24,8 +24,6 @@ const TableRow = ({
   isExpanded,
   toggleRowExpansion,
 }: any) => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {TEMPLE, DAMAGE, IMPACT} = localization(language);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [, , isLaptop] = useQuery();
@@ -90,6 +88,9 @@ const TableRow = ({
     dispatch,
     toggleRowExpansion,
   ]);
+
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {TEMPLE, DAMAGE, IMPACT} = localization(language);
 
   const expandValues = useMemo(
     () => [

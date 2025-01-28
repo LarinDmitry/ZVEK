@@ -1,4 +1,4 @@
-import React, {ElementType} from 'react';
+import React, {ElementType, useMemo} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import TableCell from '@mui/material/TableCell';
@@ -14,15 +14,16 @@ import {font_body_2_bold} from 'theme/fonts';
 
 const ContactsView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {LEADER, COLEADER, ADMIN, SUGG, WRITETHEM} = localization(language);
-  const arrValues = [
+  const {LEADER, CO_LEADER, ADMIN, WEB, SUPPORT} = localization(language);
+
+  const arrValues = useMemo(() => [
     {
       position: LEADER,
       name: 'Артем',
       link: 'Artem_Chuvanov',
     },
     {
-      position: COLEADER,
+      position: CO_LEADER,
       name: 'Марина',
       link: 'MarVik3108',
     },
@@ -37,16 +38,16 @@ const ContactsView = () => {
       link: 'ErbolSanta',
     },
     {
-      position: SUGG,
+      position: WEB,
       name: 'Дмитрий',
       link: 'Larin_Dmytro',
     },
-  ];
+  ], [LEADER, CO_LEADER, ADMIN, WEB]);
 
   return (
     <Wrapper>
       <BackBtn />
-      <Title>{WRITETHEM}</Title>
+      <Title>{SUPPORT}</Title>
       <Container component={Paper}>
         <Table>
           <TableBody>

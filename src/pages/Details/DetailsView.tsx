@@ -6,13 +6,12 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
-import {zvekDaysOptions, localization} from 'pages/Main/MainUtils';
+import {zvekDaysOptions} from 'pages/Main/MainUtils';
+import {localization} from './DetailsUtils';
 import {latestZveks} from '../../DATA';
 import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
 
 const DetailsView = () => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {PLAYERSTAT, NODATA, LAST3ZVEKS, AVLAST3ZV, LASTZVEK, AVGUILD, DAYSCOMPARE} = localization(language);
   const {id} = useParams<{id: string}>();
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
@@ -37,39 +36,42 @@ const DetailsView = () => {
 
   const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
 
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {STATISTIC, NO_DATA, LAST_ZVEKS, AVARAGE_ZVEKS, LAST_ZVEK, AVARAGE_GUILD, DAYS_COMPARE} = localization(language);
+
   return (
     <Wrapper>
       <Header>
         <BackBtn />
         <NickName>
-          {PLAYERSTAT}
+          {STATISTIC}
           <b>{id}</b>
         </NickName>
       </Header>
       {!latestZvekValues || damageByDayData.length === 0 ? (
-        <div>{NODATA}</div>
+        <div>{NO_DATA}</div>
       ) : (
         <>
           <Charts>
             <LineChart
               data={latestZvekValues}
-              title={LAST3ZVEKS}
+              title={LAST_ZVEKS}
               average={averageAllZveks || 0}
-              averageTitle={AVLAST3ZV}
+              averageTitle={AVARAGE_ZVEKS}
               stepped
               withCheckbox={false}
             />
             <LineChart
               data={damageByDayData}
-              title={LASTZVEK}
+              title={LAST_ZVEK}
               average={averageLatestZveks}
-              averageTitle={AVGUILD}
+              averageTitle={AVARAGE_GUILD}
               stepped={false}
               withCheckbox
             />
           </Charts>
           <BarChartContainer>
-            <BarChart data={latestDamageByDayValues} title={DAYSCOMPARE} />
+            <BarChart data={latestDamageByDayValues} title={DAYS_COMPARE} />
           </BarChartContainer>
         </>
       )}

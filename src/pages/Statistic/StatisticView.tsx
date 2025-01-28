@@ -14,22 +14,22 @@ import {font_body_2_bold} from 'theme/fonts';
 
 const StatisticView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {ZVEKCH, TOPPLAYERS, DISBALCOEF, EQ, WHERE, AM, PLAYERDAM, AVDAM, AVAR, EVENLY, UNEQ, VERYUNEQ} =
+  const {GROW, TOP_PLAYERS, JUNNI_COEF, FORMULA, WHERE, COUNT, DAMAGE, AVARAGE_DAMAGE, AVARAGE_COUNT, SMALL, MEDIUM, HARD} =
     localization(language);
 
   const arrValues = useMemo(
     () => [
-      {title: `${ZVEKCH}`, value: <DamageGrow />},
-      {title: `${TOPPLAYERS}`, value: <TopPlayers />},
+      {title: `${GROW}`, value: <DamageGrow />},
+      {title: `${TOP_PLAYERS}`, value: <TopPlayers />},
       {
         title: (
           <Fragment>
-            {DISBALCOEF}
+            {JUNNI_COEF}
             <Tooltip
               title={
                 <List>
                   <li>
-                    {EQ}
+                    {FORMULA}
                     <Formula>
                       G=
                       <span>
@@ -49,21 +49,21 @@ const StatisticView = () => {
                     </Formula>
                     <List>
                       <li>
-                        <b>n</b> {AM}
+                        <b>n</b> {COUNT}
                       </li>
                       <li>
                         <b>
                           x<sub>i</sub>
                         </b>
-                        {PLAYERDAM} <i>i</i>.
+                        {DAMAGE} <i>i</i>.
                       </li>
                       <li>
-                        <b>μ</b> {AVDAM} (<i>{AVAR}</i>).
+                        <b>μ</b> {AVARAGE_DAMAGE} (<i>{AVARAGE_COUNT}</i>).
                       </li>
                     </List>
-                    <li>{EVENLY}</li>
-                    <li>{UNEQ}</li>
-                    <li>{VERYUNEQ}</li>
+                    <li>{SMALL}</li>
+                    <li>{MEDIUM}</li>
+                    <li>{HARD}</li>
                   </li>
                 </List>
               }
@@ -77,7 +77,7 @@ const StatisticView = () => {
         value: <Djinni />,
       },
     ],
-    [ZVEKCH, TOPPLAYERS, DISBALCOEF, EQ, WHERE, AM, PLAYERDAM, AVDAM, AVAR, EVENLY, UNEQ, VERYUNEQ]
+    [GROW, TOP_PLAYERS, JUNNI_COEF, FORMULA, WHERE, COUNT, DAMAGE, AVARAGE_DAMAGE, AVARAGE_COUNT, SMALL, MEDIUM, HARD]
   );
 
   return (

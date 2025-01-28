@@ -14,8 +14,6 @@ import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
 
 const Djinni = () => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {HEADERDATA, HEADERDJINNI} = localization(language);
   const uniqueDates = useMemo(
     () =>
       Array.from(new Set(latestZveks.flatMap(({info}) => info.map(({date}) => date)))).filter(
@@ -33,7 +31,10 @@ const Djinni = () => {
     [uniqueDates]
   );
 
-  const headerValues = [HEADERDATA, HEADERDJINNI];
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {DATE, JINNI} = localization(language);
+  
+  const headerValues = [DATE, JINNI];
 
   return (
     <Container component={Paper}>

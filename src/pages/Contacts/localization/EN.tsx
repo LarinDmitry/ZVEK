@@ -1,7 +1,7 @@
 export default {
   LEADER: 'Leader',
-  COLEADER: 'Co-leader',
+  CO_LEADER: 'Co-leader',
   ADMIN: 'Administrator',
-  SUGG: 'Suggestions for website',
-  WRITETHEM: 'You can contact them:',
+  WEB: 'Suggestions for website',
+  SUPPORT: 'You can contact them:',
 };

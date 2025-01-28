@@ -21,8 +21,6 @@ interface Props {
 }
 
 const Table: FC<Props> = ({data, total}) => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {NICKNAME, QUALITY, TEMPLE, HERO, DAMAGEB, IMPACT, MORE} = localization(language);
   const dispatch = useAppDispatch();
   const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
   const [, , isLaptop] = useQuery();
@@ -89,6 +87,9 @@ const Table: FC<Props> = ({data, total}) => {
     [dispatch, sortedData]
   );
 
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {NICKNAME, QUALITY, TEMPLE, HERO, DAMAGEB, IMPACT, MORE} = localization(language);
+
   const headerArr = useMemo(
     () => [
       <Checkbox
@@ -97,8 +98,8 @@ const Table: FC<Props> = ({data, total}) => {
         onChange={({target: {checked}}) => toggleSelectAll(checked)}
       />,
       '№',
-      `${NICKNAME}`,
-      `${QUALITY}`,
+      NICKNAME,
+      QUALITY,
       ...(isLaptop ? [<img src={Gey} alt="gey" />, `${TEMPLE}`, `${HERO}`, `${DAMAGEB}`, `${IMPACT}, %`] : [`${MORE}`]),
       '',
     ],

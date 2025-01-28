@@ -9,14 +9,15 @@ import {font_body_1_reg, font_header_4_bold, mediumWeight} from 'theme/fonts';
 
 const NotFoundView = () => {
   const navigate = useNavigate();
+  
   const {language} = useAppSelector(selectUserConfiguration);
-  const {NOPAGE, NOTEXIST, MAIN} = localization(language);
+  const {NO_DATA, SUB_INFO, MAIN} = localization(language);
 
   return (
     <Wrapper>
       <Number>404</Number>
-      <Title>{NOPAGE}</Title>
-      <SubTitle>{NOTEXIST}</SubTitle>
+      <Title>{NO_DATA}</Title>
+      <SubTitle>{SUB_INFO}</SubTitle>
       <BackBtn onClick={() => navigate('/main')}>{MAIN}</BackBtn>
     </Wrapper>
   );

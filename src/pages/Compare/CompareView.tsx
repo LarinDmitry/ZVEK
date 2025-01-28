@@ -13,8 +13,6 @@ import {latestZveks} from '../../DATA';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 const CompareView = () => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {COMPARE3, COMPAREDAYS} = localization(language);
   const {id} = useParams<{id: string}>();
 
   const prepareChartData = useCallback(
@@ -142,15 +140,18 @@ const CompareView = () => {
     []
   ) as any;
 
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {COMPARE_ZVEK, COMPARE_DAYS} = localization(language);
+
   return (
     <Wrapper>
       <BackBtn />
       <Charts>
         <div>
-          <Bar options={getOptions(COMPARE3, dataLastThreeEvents?.datasets[0]?.maxValues)} data={dataLastThreeEvents} />
+          <Bar options={getOptions(COMPARE_ZVEK, dataLastThreeEvents?.datasets[0]?.maxValues)} data={dataLastThreeEvents} />
         </div>
         <div>
-          <Bar options={getOptions(COMPAREDAYS, maxValuesByDayForSecondGraph)} data={dataLastEventByDays} />
+          <Bar options={getOptions(COMPARE_DAYS, maxValuesByDayForSecondGraph)} data={dataLastEventByDays} />
         </div>
       </Charts>
     </Wrapper>

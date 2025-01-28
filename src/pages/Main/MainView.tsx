@@ -19,8 +19,6 @@ import {font_header_5_bold, font_body_2_reg} from 'theme/fonts';
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 
 const MainView = () => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {LAST, MINTWO, COMPARE} = localization(language);
   const navigate = useNavigate();
   const [isMobile, ,] = useQuery();
 
@@ -44,12 +42,14 @@ const MainView = () => {
     []
   );
 
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {LAST, MIN, COMPARE} = localization(language);
+
   return (
     <Wrapper>
       <Header>
         <Title>
-          {LAST}
-          {date}
+        {`${LAST} - ${date}`}
           <Icon onClick={() => navigate('/statistic')}>
             <Statistic />
           </Icon>
@@ -57,7 +57,7 @@ const MainView = () => {
             <Contacts />
           </Icon>
         </Title>
-        <Tooltip title={MINTWO} disableHoverListener={selectedItems.length >= 2}>
+        <Tooltip title={MIN} disableHoverListener={selectedItems.length >= 2}>
           <span>
             <CompareBtn
               variant="contained"
@@ -69,7 +69,7 @@ const MainView = () => {
                   <Compare />
                 </Icon>
               ) : (
-                `${COMPARE}`
+                COMPARE
               )}
             </CompareBtn>
           </span>

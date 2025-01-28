@@ -42,10 +42,12 @@ const calculateTopPlayersData = (): TopPlayerData[] =>
     .filter((item) => item !== null);
 
 const TopPlayers = () => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {HEADERDATA, HEADERTOP, HEADERPERC} = localization(language);
   const topPlayersData: TopPlayerData[] = useMemo(() => calculateTopPlayersData(), []);
-  const headerValues = [HEADERDATA, HEADERTOP, HEADERPERC];
+  
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {DATE, TOP, PERCENT} = localization(language);
+  
+  const headerValues = [DATE, TOP, PERCENT];
 
   return (
     <Container component={Paper}>

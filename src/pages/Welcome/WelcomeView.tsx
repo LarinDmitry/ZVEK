@@ -11,6 +11,7 @@ import {font_body_2_reg, font_header_6_bold} from 'theme/fonts';
 
 const WelcomeView = () => {
   const navigate = useNavigate();
+  
   const {language} = useAppSelector(selectUserConfiguration);
   const {WELCOME, COME} = localization(language);
 

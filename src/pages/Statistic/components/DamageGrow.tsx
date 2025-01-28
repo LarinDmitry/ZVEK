@@ -19,8 +19,6 @@ interface GuildData {
 }
 
 const DamageGrow = () => {
-  const {language} = useAppSelector(selectUserConfiguration);
-  const {HEADERDATA, HEADERGUILDDAM, HEADERCHANGE, NODATA, GROW, DECREASE} = localization(language);
   const guildData: GuildData[] = useMemo(
     () =>
       latestZveks[0].info.map(({guildTotal, date}, index, arr) => {
@@ -31,7 +29,10 @@ const DamageGrow = () => {
     []
   );
 
-  const headerValues = [HEADERDATA, HEADERGUILDDAM, HEADERCHANGE];
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {DATE, DAMAGE_GUILD, CHANGES, NO_DATA, INCREASE, DECREASE} = localization(language);
+
+  const headerValues = [DATE, DAMAGE_GUILD, CHANGES];
 
   return (
     <Container component={Paper}>
@@ -50,8 +51,8 @@ const DamageGrow = () => {
             const changeText =
               idx > 0
                 ? percentageChange === null
-                  ? `${NODATA}`
-                  : `${percentageChange > 0 ? `${GROW}` : `${DECREASE}`} ${Math.abs(percentageChange).toFixed(2)}%`
+                  ? NO_DATA
+                  : `${percentageChange > 0 ? INCREASE : DECREASE} ${Math.abs(percentageChange).toFixed(2)}%`
                 : '—';
 
             return (
