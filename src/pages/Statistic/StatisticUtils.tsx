@@ -7,6 +7,8 @@ export const calculateGini = (damages: number[]) =>
 
 export const zeroHeaderValues = ['Игрок', 'День'];
 
+export const headerValues = ['Никнейм', 'Урон прошлого ЗВЭК (млрд)', 'Урон последнего ЗВЭК (млрд)', '< на'];
+
 export const zeroDamagePlayers = () =>
   latestZveks.reduce((acc: ZeroDamagePlayer[], {name, info}) => {
     const zeroDays = info[info.length - 1]?.damageByDay.reduce<number[]>((days, damage, idx) => {
