@@ -52,6 +52,10 @@ const Wrapper = styled(Select)`
       min-width: 7rem;
     }
 
+    .MuiSvgIcon-root.MuiSelect-icon {
+      display: none;
+    }
+
     & > fieldset {
       border: none;
     }

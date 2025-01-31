@@ -14,7 +14,6 @@ export const PlugCellStyles = css`
 export const welcomeTitleStyles = css`
   ${font_header_1_bold};
   color: ${({theme}) => theme.colors.gray000};
-  margin-bottom: 1rem;
   background: linear-gradient(to right, rgb(141, 252, 253), rgb(201, 254, 255));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

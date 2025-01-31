@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled, {keyframes} from 'styled-components';
+import LanguageSelector from 'components/GeneralComponents/LanguageSelector';
 import Button from '@mui/material/Button';
 import {useAppSelector} from 'services/hooks';
 import {welcomeTitleStyles} from 'services/GlobalStyled';
@@ -16,6 +17,7 @@ const WelcomeView = () => {
 
   return (
     <Wrapper>
+      <LanguageSelector language={language} />
       <Leaves>
         {Array.from({length: 25}).map((_, index) => {
           const is3DAnimation = Math.random() > 0.5;
