@@ -18,7 +18,7 @@ export interface ZeroDamagePlayer {
 
 const ZeroDamagePlayers = () => (
   <Container component={Paper}>
-    {zeroDamagePlayers().length === 0 ? (
+    {!zeroDamagePlayers().length ? (
       <Plug>Все игроки нанесли урон во все дни</Plug>
     ) : (
       <Table>

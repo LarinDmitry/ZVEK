@@ -46,7 +46,7 @@ const DamageGrow = () => {
               idx > 0
                 ? percentageChange === null
                   ? 'Нет данных'
-                  : `${percentageChange > 0 ? 'увеличился' : 'уменьшился'} на ${Math.abs(percentageChange).toFixed(2)}%`
+                  : `${percentageChange > 0 ? '>' : '<'} на ${Math.abs(percentageChange).toFixed(2)}%`
                 : '—';
 
             return (

@@ -10,12 +10,12 @@ import Paper from '@mui/material/Paper';
 import {PlugCellStyles} from 'services/GlobalStyled';
 import {headerValues} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
-import {font_header_6_bold} from 'theme/fonts';
+import {boldWeight} from 'theme/fonts';
 
 interface PlayerData {
   name: string;
   damageLastZvek: number;
-  damagePreviousZvek: number; //before last
+  damagePreviousZvek: number;
   percentageChange: number | null;
 }
 
@@ -23,10 +23,7 @@ const DamageDecrease = () => {
   const playerData: PlayerData[] = useMemo(
     () =>
       latestZveks.reduce<PlayerData[]>((acc, {name, info}) => {
-        const lastTwoZveks = info.slice(-2);
-        if (lastTwoZveks.length < 2) return acc;
-
-        const [previousZvek, lastZvek] = lastTwoZveks;
+        const [previousZvek, lastZvek] = info.slice(-2);
         const percentageChange = ((lastZvek.damage - previousZvek.damage) / previousZvek.damage) * 100;
 
         percentageChange < 0 &&
@@ -42,40 +39,38 @@ const DamageDecrease = () => {
     []
   );
 
-  const allPlayersDamageGrow = playerData.length === 0;
-
   return (
     <Container component={Paper}>
-      {!allPlayersDamageGrow ? (
+      {!playerData.length ? (
+        <Plug>У всех игроков урон вырос</Plug>
+      ) : (
         <Table>
           <TableHead>
             <Row>
               {headerValues.map((value) => (
-                <TableCell align="center" key={value}>
-                  <b>{value}</b>
-                </TableCell>
+                <HCell align="center" key={value}>
+                  {value}
+                </HCell>
               ))}
             </Row>
           </TableHead>
           <TableBody>
-            {playerData.map(({name, damagePreviousZvek, damageLastZvek, percentageChange}, idx) => {
-              const changeText = `уменьшился на ${Math.abs(percentageChange!).toFixed(2)}%`;
+            {playerData.map(({name, damagePreviousZvek, damageLastZvek, percentageChange}) => {
+              const changeText = `< на ${Math.abs(percentageChange!).toFixed(2)}%`;
 
               return (
-                <Row key={`player-${idx}`}>
+                <Row key={name}>
                   <TableCell align="center">{name}</TableCell>
                   <TableCell align="center">{(damagePreviousZvek / 1e9).toFixed(2)}</TableCell>
                   <TableCell align="center">{(damageLastZvek / 1e9).toFixed(2)}</TableCell>
                   <TableCell align="center">
-                    <ChangeText value={percentageChange}>{changeText}</ChangeText>
+                    <ChangeText percentage={percentageChange}>{changeText}</ChangeText>
                   </TableCell>
                 </Row>
               );
             })}
           </TableBody>
         </Table>
-      ) : (
-        <Plug>У всех игроков урон вырос</Plug>
       )}
     </Container>
   );
@@ -95,15 +90,22 @@ const Row = styled(TableRow)`
   }
 `;
 
-const ChangeText = styled.span<{value: number | null}>`
+const HCell = styled(TableCell)`
+  &.MuiTableCell-root {
+    ${boldWeight};
+    text-align: center;
+  }
+`;
+
+const ChangeText = styled.span<{percentage: number | null}>`
   color: ${({
-    value,
+    percentage,
     theme: {
       colors: {red100, green100, gray100},
     },
   }) => {
-    if (value === null || value === 0) return gray100;
-    return value > 0 ? green100 : red100;
+    if (percentage === null || percentage === 0) return gray100;
+    return percentage > 0 ? green100 : red100;
     return gray100;
   }};
 `;
@@ -112,7 +114,6 @@ const Plug = styled.div`
   ${PlugCellStyles};
   color: ${({theme}) => theme.colors.green100};
   text-align: center;
-  ${font_header_6_bold}
 `;
 
 export default DamageDecrease;

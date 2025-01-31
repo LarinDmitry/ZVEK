@@ -11,14 +11,12 @@ import Tooltip from '@mui/material/Tooltip';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
 
-// TODO Игроки, чей урон снижается от ивента к ивенту?
-
 const StatisticView = () => {
   const arrValues = useMemo(
     () => [
       {title: 'Звэк движение', value: <DamageGrow />},
-      {title: 'Cнижение урона', value: <DamageDecrease />},
       {title: 'Топ игроки последних Звэк', value: <TopPlayers />},
+      {title: 'Снижение урона', value: <DamageDecrease />},
       {title: 'Нулевой дамаг последнего Звэк', value: <ZeroDamage />},
       {
         title: (
