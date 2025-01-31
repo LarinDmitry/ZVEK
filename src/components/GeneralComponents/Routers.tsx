@@ -10,6 +10,8 @@ const Statistic = lazy(() => import('pages/Statistic/StatisticView'));
 const Contacts = lazy(() => import('pages/Contacts/ContactsView'));
 const NotFound = lazy(() => import('pages/NotFound/NotFoundView'));
 
+//TODO Archive? (guild total balance per every event)
+
 const Routers = () => (
   <Fragment>
     <Route element={<PageLayout />}>

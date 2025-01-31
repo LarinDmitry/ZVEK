@@ -2,7 +2,9 @@ import React, {Fragment, useMemo} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import DamageGrow from './components/DamageGrow';
+import DamageDecrease from './components/DamageDecrease';
 import TopPlayers from './components/TopPlayers';
+import ZeroDamage from './components/ZeroDamage';
 import Djinni from './components/Djinni';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
@@ -14,6 +16,8 @@ const StatisticView = () => {
     () => [
       {title: 'Звэк движение', value: <DamageGrow />},
       {title: 'Топ игроки последних Звэк', value: <TopPlayers />},
+      {title: 'Снижение урона', value: <DamageDecrease />},
+      {title: 'Нулевой дамаг последнего Звэк', value: <ZeroDamage />},
       {
         title: (
           <Fragment>
