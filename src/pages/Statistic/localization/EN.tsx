@@ -1,7 +1,9 @@
 export default {
   GROW: 'ZVEK change',
   TOP_PLAYERS: 'Top players of last ZVEKs',
-  JUNNI_COEF: 'Disbalance factor',
+  DAMAGE_DECREASE: 'Damage decrease',
+  ZERO_DAMAGE: 'Zero damage at last ZVEK',
+  JINNI_COEF: 'Disbalance factor',
   FORMULA: 'Equation:',
   WHERE: 'where',
   COUNT: '— number of players.',

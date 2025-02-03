@@ -2,7 +2,9 @@ import React, {Fragment, useMemo} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import DamageGrow from './components/DamageGrow';
+import DamageDecrease from './components/DamageDecrease';
 import TopPlayers from './components/TopPlayers';
+import ZeroDamage from './components/ZeroDamage';
 import Djinni from './components/Djinni';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
@@ -14,17 +16,19 @@ import {font_body_2_bold} from 'theme/fonts';
 
 const StatisticView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {GROW, TOP_PLAYERS, JUNNI_COEF, FORMULA, WHERE, COUNT, DAMAGE, AVARAGE_DAMAGE, AVARAGE_COUNT, SMALL, MEDIUM, HARD} =
+  const {GROW, TOP_PLAYERS, DAMAGE_DECREASE, ZERO_DAMAGE, JINNI_COEF, FORMULA, WHERE, COUNT, DAMAGE, AVARAGE_DAMAGE, AVARAGE_COUNT, SMALL, MEDIUM, HARD} =
     localization(language);
 
   const arrValues = useMemo(
     () => [
       {title: `${GROW}`, value: <DamageGrow />},
       {title: `${TOP_PLAYERS}`, value: <TopPlayers />},
+      {title: `${DAMAGE_DECREASE}`, value: <DamageDecrease />},
+      {title: `${ZERO_DAMAGE}`, value: <ZeroDamage />},
       {
         title: (
           <Fragment>
-            {JUNNI_COEF}
+            {JINNI_COEF}
             <Tooltip
               title={
                 <List>

@@ -1,7 +1,9 @@
 export default {
   GROW: 'Звек рух',
   TOP_PLAYERS: 'Топ гравці останніх Звек',
-  JUNNI_COEF: 'Коефіцієнт дисбалансу',
+  DAMAGE_DECREASE: 'Зниження урону',
+  ZERO_DAMAGE: 'Нульовий урон останнього ЗВЕК',
+  JINNI_COEF: 'Коефіцієнт дисбалансу',
   FORMULA: 'Формула:',
   WHERE: 'де',
   COUNT: '— кількість гравців.',
