@@ -19,6 +19,8 @@ interface GuildData {
 }
 
 const DamageGrow = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  
   const guildData: GuildData[] = useMemo(
     () =>
       latestZveks[0].info.map(({guildTotal, date}, index, arr) => {
@@ -29,7 +31,6 @@ const DamageGrow = () => {
     []
   );
 
-  const {language} = useAppSelector(selectUserConfiguration);
   const {DATE, DAMAGE_GUILD, CHANGES, NO_DATA, INCREASE, DECREASE} = localization(language);
 
   const headerValues = [DATE, DAMAGE_GUILD, CHANGES];

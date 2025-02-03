@@ -27,6 +27,7 @@ const TableRow = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [, , isLaptop] = useQuery();
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const getImageComponent = useCallback(
     (type: string, images: Record<string, string>, fallback = X) => (
@@ -89,7 +90,6 @@ const TableRow = ({
     toggleRowExpansion,
   ]);
 
-  const {language} = useAppSelector(selectUserConfiguration);
   const {TEMPLE, DAMAGE, IMPACT} = localization(language);
 
   const expandValues = useMemo(

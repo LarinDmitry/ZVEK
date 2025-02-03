@@ -24,6 +24,7 @@ const Table: FC<Props> = ({data, total}) => {
   const dispatch = useAppDispatch();
   const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
   const [, , isLaptop] = useQuery();
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
@@ -87,7 +88,6 @@ const Table: FC<Props> = ({data, total}) => {
     [dispatch, sortedData]
   );
 
-  const {language} = useAppSelector(selectUserConfiguration);
   const {NICKNAME, QUALITY, TEMPLE, HERO, DAMAGEB, IMPACT, MORE} = localization(language);
 
   const headerArr = useMemo(

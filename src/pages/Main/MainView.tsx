@@ -23,6 +23,7 @@ const MainView = () => {
   const [isMobile, ,] = useQuery();
 
   const {selectedItems} = useAppSelector(selectUserConfiguration);
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const pieChartData = useMemo(
     () =>
@@ -42,7 +43,6 @@ const MainView = () => {
     []
   );
 
-  const {language} = useAppSelector(selectUserConfiguration);
   const {LAST, MIN, COMPARE} = localization(language);
 
   return (

@@ -13,6 +13,7 @@ import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
 
 const DetailsView = () => {
   const {id} = useParams<{id: string}>();
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
 
@@ -36,7 +37,6 @@ const DetailsView = () => {
 
   const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
 
-  const {language} = useAppSelector(selectUserConfiguration);
   const {STATISTIC, NO_DATA, LAST_ZVEKS, AVARAGE_ZVEKS, LAST_ZVEK, AVARAGE_GUILD, DAYS_COMPARE} = localization(language);
 
   return (

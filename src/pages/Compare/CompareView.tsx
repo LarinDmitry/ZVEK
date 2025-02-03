@@ -14,6 +14,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 
 const CompareView = () => {
   const {id} = useParams<{id: string}>();
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const prepareChartData = useCallback(
     (extractor: (entry: any) => number[] | undefined, labelPrefix: string, days: number, useZvekDays = false) => {
@@ -140,7 +141,6 @@ const CompareView = () => {
     []
   ) as any;
 
-  const {language} = useAppSelector(selectUserConfiguration);
   const {COMPARE_ZVEK, COMPARE_DAYS} = localization(language);
 
   return (
