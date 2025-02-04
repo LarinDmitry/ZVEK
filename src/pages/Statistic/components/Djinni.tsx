@@ -12,6 +12,7 @@ import {selectUserConfiguration} from 'store/userSlice';
 import {calculateGini} from '../StatisticUtils';
 import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
+import {boldWeight} from 'theme/fonts';
 
 const Djinni = () => {
   const {language} = useAppSelector(selectUserConfiguration);
@@ -34,7 +35,7 @@ const Djinni = () => {
   );
 
   const {DATE, JINNI} = localization(language);
-  
+
   const headerValues = [DATE, JINNI];
 
   return (
@@ -43,9 +44,7 @@ const Djinni = () => {
         <TableHead>
           <Row>
             {headerValues.map((value) => (
-              <TableCell align="center" key={value}>
-                <b>{value}</b>
-              </TableCell>
+              <HCell key={value}>{value}</HCell>
             ))}
           </Row>
         </TableHead>
@@ -73,6 +72,13 @@ const Row = styled(TableRow)`
   &.MuiTableRow-root {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const HCell = styled(TableCell)`
+  &.MuiTableCell-root {
+    ${boldWeight};
+    text-align: center;
   }
 `;
 

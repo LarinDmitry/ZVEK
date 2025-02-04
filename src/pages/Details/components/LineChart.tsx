@@ -16,6 +16,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from '../DetailsUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 import Average from 'assets/icons/average.svg';
 import {font_body_4_reg} from 'theme/fonts';
 
@@ -32,9 +33,10 @@ interface Props {
 
 const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, withCheckbox}) => {
   const [isAverage, setIsAverage] = useState<boolean>(false);
-  
   const {language} = useAppSelector(selectUserConfiguration);
-  const {DAMAGE_ZVEK, DAMAGE} = localization(language);
+
+  const {DAMAGE_ZVEK} = localization(language);
+  const {DAMAGE, BILLION} = globalLocalization(language);
 
   const chartData = useMemo(
     () => ({
@@ -108,7 +110,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
       )}
       <Line data={chartData} options={options} />
       <SubInfo>
-        {averageTitle} <b>{((average || 0) / 1e9).toFixed(2)} млд</b>
+        {averageTitle} <b>{((average || 0) / 1e9).toFixed(2)} {BILLION}</b>
       </SubInfo>
     </Wrapper>
   );

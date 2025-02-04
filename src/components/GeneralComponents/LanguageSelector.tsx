@@ -41,7 +41,7 @@ const Wrapper = styled(Select)`
     position: absolute;
     top: 0;
     right: 0;
-    color: white;
+    color: ${({theme}) => theme.colors.gray000};
     outline: none;
 
     & > div.MuiSelect-select {

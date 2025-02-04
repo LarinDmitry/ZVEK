@@ -7,6 +7,7 @@ import useQuery from 'services/useQuery';
 import {useAppDispatch, useAppSelector} from 'services/hooks';
 import {toggleItemSelection} from 'store/userSlice';
 import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
 import {localization, heroImages, qualityImages} from 'pages/Main/MainUtils';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
@@ -90,7 +91,8 @@ const TableRow = ({
     toggleRowExpansion,
   ]);
 
-  const {TEMPLE, DAMAGE, IMPACT} = localization(language);
+  const {TEMPLE, IMPACT} = localization(language);
+  const {DAMAGE, BILLION} = globalLocalization(language);
 
   const expandValues = useMemo(
     () => [
@@ -104,14 +106,14 @@ const TableRow = ({
       },
       {
         title: DAMAGE,
-        value: `${(Math.floor((damage / 1_000_000_000) * 1000) / 1000).toFixed(3)} млд`,
+        value: `${(Math.floor((damage / 1_000_000_000) * 1000) / 1000).toFixed(3)} ${BILLION}`,
       },
       {
         title: IMPACT,
         value: `${(Math.floor((damage / total) * 100 * 1000) / 1000).toFixed(3)} %`,
       },
     ],
-    [damage, stars, temple, total, TEMPLE, DAMAGE, IMPACT]
+    [stars, TEMPLE, temple, DAMAGE, damage, BILLION, IMPACT, total]
   );
 
   return (

@@ -3,18 +3,23 @@ import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
 import Arrow from 'assets/icons/arrow.svg';
 import {font_body_4_reg} from 'theme/fonts';
 
 const BackBtn = () => {
   const navigate = useNavigate();
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {BACK} = globalLocalization(language);
 
   return (
     <Wrapper onClick={() => navigate('/main')}>
       <Icon>
         <Arrow />
       </Icon>
-      Назад
+      {BACK}
     </Wrapper>
   );
 };

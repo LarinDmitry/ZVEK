@@ -21,9 +21,7 @@ const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 const MainView = () => {
   const navigate = useNavigate();
   const [isMobile, ,] = useQuery();
-
-  const {selectedItems} = useAppSelector(selectUserConfiguration);
-  const {language} = useAppSelector(selectUserConfiguration);
+  const {language, selectedItems} = useAppSelector(selectUserConfiguration);
 
   const pieChartData = useMemo(
     () =>
@@ -49,7 +47,7 @@ const MainView = () => {
     <Wrapper>
       <Header>
         <Title>
-        {`${LAST} - ${date}`}
+          {LAST} - {date}
           <Icon onClick={() => navigate('/statistic')}>
             <Statistic />
           </Icon>

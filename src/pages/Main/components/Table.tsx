@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector} from 'services/hooks';
 import useQuery from 'services/useQuery';
 import {selectUserConfiguration, setSortConfig, selectAllItems, clearSelection} from 'store/userSlice';
 import {heroImages, qualityImages, localization} from 'pages/Main/MainUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 import {teamDetails} from '../../../DATA';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
@@ -22,9 +23,8 @@ interface Props {
 
 const Table: FC<Props> = ({data, total}) => {
   const dispatch = useAppDispatch();
-  const {sortConfig, selectedItems} = useAppSelector(selectUserConfiguration);
   const [, , isLaptop] = useQuery();
-  const {language} = useAppSelector(selectUserConfiguration);
+  const {sortConfig, selectedItems, language} = useAppSelector(selectUserConfiguration);
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
@@ -88,7 +88,8 @@ const Table: FC<Props> = ({data, total}) => {
     [dispatch, sortedData]
   );
 
-  const {NICKNAME, QUALITY, TEMPLE, HERO, DAMAGEB, IMPACT, MORE} = localization(language);
+  const {QUALITY, TEMPLE, HERO, DAMAGE_TITLE, IMPACT, MORE} = localization(language);
+  const {NICKNAME} = globalLocalization(language);
 
   const headerArr = useMemo(
     () => [
@@ -100,7 +101,7 @@ const Table: FC<Props> = ({data, total}) => {
       '№',
       NICKNAME,
       QUALITY,
-      ...(isLaptop ? [<img src={Gey} alt="gey" />, `${TEMPLE}`, `${HERO}`, `${DAMAGEB}`, `${IMPACT}, %`] : [`${MORE}`]),
+      ...(isLaptop ? [<img src={Gey} alt="gey" />, TEMPLE, HERO, DAMAGE_TITLE, `${IMPACT}, %`] : [MORE]),
       '',
     ],
     [
@@ -112,7 +113,7 @@ const Table: FC<Props> = ({data, total}) => {
       QUALITY,
       TEMPLE,
       HERO,
-      DAMAGEB,
+      DAMAGE_TITLE,
       IMPACT,
       MORE,
     ]

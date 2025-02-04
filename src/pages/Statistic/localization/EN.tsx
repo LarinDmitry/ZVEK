@@ -8,8 +8,8 @@ export default {
   WHERE: 'where',
   COUNT: '— number of players.',
   DAMAGE: '— player`s damage',
-  AVARAGE_DAMAGE: '— avarage damage',
-  AVARAGE_COUNT: 'arithmetic average',
+  AVERAGE_DAMAGE: '— avarage damage',
+  AVERAGE_COUNT: 'arithmetic average',
   SMALL: '0.2−0.3: Damage is distributed fairly evenly.',
   MEDIUM: '0.5: Moderate inequality. There are a few players with significantly larger contributions, but the others also make a noticeable impact.',
   HARD:
@@ -21,6 +21,8 @@ export default {
   DAMAGE_GUILD: 'Guild damage, B',
   CHANGES: 'Changes',
   NO_DATA: 'No data',
-  INCREASE: 'increased by',
-  DECREASE: 'decreased by',
+  INCREASE: 'Increased by',
+  DECREASE: 'Decreased by',
+  DAY: 'Day',
+  LAST_ZVEK: 'Last ZVEK Damage, B',
 };

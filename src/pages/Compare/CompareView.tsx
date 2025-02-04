@@ -7,7 +7,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
-import {backgroundColor, hoverBackgroundColor, zvekDaysOptions, localization} from 'pages/Main/MainUtils';
+import {backgroundColor, hoverBackgroundColor, zvekDaysOptions} from 'pages/Main/MainUtils';
+import {localization} from './CompareUtils';
 import {latestZveks} from '../../DATA';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
@@ -148,7 +149,10 @@ const CompareView = () => {
       <BackBtn />
       <Charts>
         <div>
-          <Bar options={getOptions(COMPARE_ZVEK, dataLastThreeEvents?.datasets[0]?.maxValues)} data={dataLastThreeEvents} />
+          <Bar
+            options={getOptions(COMPARE_ZVEK, dataLastThreeEvents?.datasets[0]?.maxValues)}
+            data={dataLastThreeEvents}
+          />
         </div>
         <div>
           <Bar options={getOptions(COMPARE_DAYS, maxValuesByDayForSecondGraph)} data={dataLastEventByDays} />

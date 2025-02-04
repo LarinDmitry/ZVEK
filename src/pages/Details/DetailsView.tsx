@@ -7,6 +7,7 @@ import BarChart from './components/BarChart';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {zvekDaysOptions} from 'pages/Main/MainUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 import {localization} from './DetailsUtils';
 import {latestZveks} from '../../DATA';
 import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
@@ -37,7 +38,8 @@ const DetailsView = () => {
 
   const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
 
-  const {STATISTIC, NO_DATA, LAST_ZVEKS, AVARAGE_ZVEKS, LAST_ZVEK, AVARAGE_GUILD, DAYS_COMPARE} = localization(language);
+  const {STATISTIC, NO_DATA, LAST_ZVEKS, AVERAGE_ZVEKS, AVERAGE_GUILD, DAYS_COMPARE} = localization(language);
+  const {LATEST_ZVEK} = globalLocalization(language);
 
   return (
     <Wrapper>
@@ -45,7 +47,7 @@ const DetailsView = () => {
         <BackBtn />
         <NickName>
           {STATISTIC}
-          <b>{id}</b>
+          <b>“{id}”</b>
         </NickName>
       </Header>
       {!latestZvekValues || damageByDayData.length === 0 ? (
@@ -57,15 +59,15 @@ const DetailsView = () => {
               data={latestZvekValues}
               title={LAST_ZVEKS}
               average={averageAllZveks || 0}
-              averageTitle={AVARAGE_ZVEKS}
+              averageTitle={AVERAGE_ZVEKS}
               stepped
               withCheckbox={false}
             />
             <LineChart
               data={damageByDayData}
-              title={LAST_ZVEK}
+              title={LATEST_ZVEK}
               average={averageLatestZveks}
-              averageTitle={AVARAGE_GUILD}
+              averageTitle={AVERAGE_GUILD}
               stepped={false}
               withCheckbox
             />

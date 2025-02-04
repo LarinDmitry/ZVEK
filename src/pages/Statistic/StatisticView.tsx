@@ -16,15 +16,29 @@ import {font_body_2_bold} from 'theme/fonts';
 
 const StatisticView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {GROW, TOP_PLAYERS, DAMAGE_DECREASE, ZERO_DAMAGE, JINNI_COEF, FORMULA, WHERE, COUNT, DAMAGE, AVARAGE_DAMAGE, AVARAGE_COUNT, SMALL, MEDIUM, HARD} =
-    localization(language);
+  const {
+    GROW,
+    TOP_PLAYERS,
+    DAMAGE_DECREASE,
+    ZERO_DAMAGE,
+    JINNI_COEF,
+    FORMULA,
+    WHERE,
+    COUNT,
+    DAMAGE,
+    AVERAGE_DAMAGE,
+    AVERAGE_COUNT,
+    SMALL,
+    MEDIUM,
+    HARD,
+  } = localization(language);
 
   const arrValues = useMemo(
     () => [
-      {title: `${GROW}`, value: <DamageGrow />},
-      {title: `${TOP_PLAYERS}`, value: <TopPlayers />},
-      {title: `${DAMAGE_DECREASE}`, value: <DamageDecrease />},
-      {title: `${ZERO_DAMAGE}`, value: <ZeroDamage />},
+      {title: GROW, value: <DamageGrow />},
+      {title: TOP_PLAYERS, value: <TopPlayers />},
+      {title: DAMAGE_DECREASE, value: <DamageDecrease />},
+      {title: ZERO_DAMAGE, value: <ZeroDamage />},
       {
         title: (
           <Fragment>
@@ -62,7 +76,7 @@ const StatisticView = () => {
                         {DAMAGE} <i>i</i>.
                       </li>
                       <li>
-                        <b>μ</b> {AVARAGE_DAMAGE} (<i>{AVARAGE_COUNT}</i>).
+                        <b>μ</b> {AVERAGE_DAMAGE} (<i>{AVERAGE_COUNT}</i>).
                       </li>
                     </List>
                     <li>{SMALL}</li>
@@ -81,7 +95,22 @@ const StatisticView = () => {
         value: <Djinni />,
       },
     ],
-    [GROW, TOP_PLAYERS, JUNNI_COEF, FORMULA, WHERE, COUNT, DAMAGE, AVARAGE_DAMAGE, AVARAGE_COUNT, SMALL, MEDIUM, HARD]
+    [
+      GROW,
+      TOP_PLAYERS,
+      DAMAGE_DECREASE,
+      ZERO_DAMAGE,
+      JINNI_COEF,
+      FORMULA,
+      WHERE,
+      COUNT,
+      DAMAGE,
+      AVERAGE_DAMAGE,
+      AVERAGE_COUNT,
+      SMALL,
+      MEDIUM,
+      HARD,
+    ]
   );
 
   return (

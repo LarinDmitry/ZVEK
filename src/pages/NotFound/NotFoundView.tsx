@@ -9,7 +9,6 @@ import {font_body_1_reg, font_header_4_bold, mediumWeight} from 'theme/fonts';
 
 const NotFoundView = () => {
   const navigate = useNavigate();
-  
   const {language} = useAppSelector(selectUserConfiguration);
   const {NO_DATA, SUB_INFO, MAIN} = localization(language);
 

@@ -5,6 +5,7 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend, Title} from 'chart.js';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {backgroundColor, hoverBackgroundColor, localization} from 'pages/Main/MainUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -18,9 +19,9 @@ interface Props {
 
 const PieChart: FC<Props> = ({data, total}) => {
   const sortedData = useMemo(() => [...data].sort((a, b) => b.damage - a.damage), [data]);
-  
   const {language} = useAppSelector(selectUserConfiguration);
-  const {DAMAGE, DIAGRAM} = localization(language);
+  const {DIAGRAM} = localization(language);
+  const {DAMAGE} = globalLocalization(language);
 
   const chartData = useMemo(
     () => ({

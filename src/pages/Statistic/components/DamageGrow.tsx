@@ -11,6 +11,7 @@ import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
+import {boldWeight} from 'theme/fonts';
 
 interface GuildData {
   guildTotal: number;
@@ -20,7 +21,7 @@ interface GuildData {
 
 const DamageGrow = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  
+
   const guildData: GuildData[] = useMemo(
     () =>
       latestZveks[0].info.map(({guildTotal, date}, index, arr) => {
@@ -31,7 +32,7 @@ const DamageGrow = () => {
     []
   );
 
-  const {DATE, DAMAGE_GUILD, CHANGES, NO_DATA, INCREASE, DECREASE} = localization(language);
+  const {DATE, DAMAGE_GUILD, CHANGES, NO_DATA} = localization(language);
 
   const headerValues = [DATE, DAMAGE_GUILD, CHANGES];
 
@@ -41,9 +42,7 @@ const DamageGrow = () => {
         <TableHead>
           <Row>
             {headerValues.map((value) => (
-              <TableCell align="center" key={value}>
-                <b>{value}</b>
-              </TableCell>
+              <HCell key={value}>{value}</HCell>
             ))}
           </Row>
         </TableHead>
@@ -53,7 +52,7 @@ const DamageGrow = () => {
               idx > 0
                 ? percentageChange === null
                   ? NO_DATA
-                  : `${percentageChange > 0 ? INCREASE : DECREASE} ${Math.abs(percentageChange).toFixed(2)}%`
+                  : `${percentageChange > 0 ? '>' : '<'} ${Math.abs(percentageChange).toFixed(2)}%`
                 : '—';
 
             return (
@@ -83,6 +82,13 @@ const Row = styled(TableRow)`
   &.MuiTableRow-root {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+const HCell = styled(TableCell)`
+  &.MuiTableCell-root {
+    ${boldWeight};
+    text-align: center;
   }
 `;
 

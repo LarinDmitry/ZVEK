@@ -1,4 +1,4 @@
-import React, {ElementType} from 'react';
+import React, {ElementType, useMemo} from 'react';
 import styled from 'styled-components';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,7 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {PlugCellStyles} from 'services/GlobalStyled';
-import {zeroDamagePlayers, zeroHeaderValues} from '../StatisticUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
+import {zeroDamagePlayers, localization} from '../StatisticUtils';
 import {boldWeight} from 'theme/fonts';
 
 export interface ZeroDamagePlayer {
@@ -16,33 +19,41 @@ export interface ZeroDamagePlayer {
   zeroDays: number[];
 }
 
-const ZeroDamagePlayers = () => (
-  <Container component={Paper}>
-    {!zeroDamagePlayers().length ? (
-      <Plug>Все игроки нанесли урон во все дни</Plug>
-    ) : (
-      <Table>
-        <TableHead>
-          <Row>
-            {zeroHeaderValues.map((value) => (
-              <HCell key={value}>{value}</HCell>
-            ))}
-          </Row>
-        </TableHead>
-        <TableBody>
-          {zeroDamagePlayers().map(({name, zeroDays}) => (
-            <Row key={name}>
-              <TableCell align="center">{name}</TableCell>
-              <TableCell align="center">
-                <Skipped>{zeroDays.map((day) => `${day}й`).join(', ')}</Skipped>
-              </TableCell>
+const ZeroDamagePlayers = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {DAY} = localization(language);
+  const {NICKNAME} = globalLocalization(language);
+
+  const zeroHeaderValues = useMemo(() => [NICKNAME, DAY], [DAY, NICKNAME]);
+
+  return (
+    <Container component={Paper}>
+      {!zeroDamagePlayers().length ? (
+        <Plug>Все игроки нанесли урон во все дни</Plug>
+      ) : (
+        <Table>
+          <TableHead>
+            <Row>
+              {zeroHeaderValues.map((value) => (
+                <HCell key={value}>{value}</HCell>
+              ))}
             </Row>
-          ))}
-        </TableBody>
-      </Table>
-    )}
-  </Container>
-);
+          </TableHead>
+          <TableBody>
+            {zeroDamagePlayers().map(({name, zeroDays}) => (
+              <Row key={name}>
+                <TableCell align="center">{name}</TableCell>
+                <TableCell align="center">
+                  <Skipped>{zeroDays.map((day) => `${day}й`).join(', ')}</Skipped>
+                </TableCell>
+              </Row>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </Container>
+  );
+};
 
 const Container = styled(TableContainer)<{component: ElementType}>`
   &.MuiPaper-root {
