@@ -5,42 +5,18 @@ import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import BackBtn from 'components/GeneralComponents/BackBtn';
-import {backgroundColor, hoverBackgroundColor, zvekDaysOptions} from 'pages/Main/MainUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
+import {globalLocalization} from 'services/GlobalUtils';
+import {localization} from './CompareUtils';
 import {latestZveks} from '../../DATA';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 const CompareView = () => {
   const {id} = useParams<{id: string}>();
-
-  const prepareChartData = useCallback(
-    (extractor: (entry: any) => number[] | undefined, labelPrefix: string, days: number, useZvekDays = false) => {
-      if (!id) return null;
-
-      const parsedData = id.split('^').map((item) => {
-        const entry = latestZveks.find(({name}) => name === item);
-        return {
-          name: entry?.name,
-          value: extractor(entry)?.slice(-days),
-        };
-      });
-
-      const labels = useZvekDays ? zvekDaysOptions.slice(-days) : Array.from({length: days}, (_, i) => `Day ${i + 1}`);
-
-      return {
-        labels,
-        datasets: parsedData.map((item, index) => ({
-          label: item.name || `${labelPrefix} ${index + 1}`,
-          data: item.value || [],
-          backgroundColor: backgroundColor[index % backgroundColor.length],
-          hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
-          borderWidth: 1,
-          borderRadius: 4,
-        })),
-      };
-    },
-    [id]
-  );
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const dataLastThreeEvents = useMemo(() => {
     if (!id) return null;
@@ -72,18 +48,6 @@ const CompareView = () => {
       })),
     };
   }, [id]) as any;
-
-  const dataLastEventByDays = useMemo(
-    () => prepareChartData((entry) => entry?.info?.[entry.info.length - 1]?.damageByDay || [], 'Day', 6, true),
-    [prepareChartData]
-  ) as any;
-
-  const maxValuesByDayForSecondGraph = useMemo(() => {
-    if (!dataLastEventByDays) return [];
-    return dataLastEventByDays.labels.map((_: any, idx: number) =>
-      Math.max(...dataLastEventByDays.datasets.map((dataset: any) => dataset.data[idx] || 0))
-    );
-  }, [dataLastEventByDays]);
 
   const getOptions = useCallback(
     (text: string, maxValuesByDate?: number[]) => ({
@@ -138,24 +102,64 @@ const CompareView = () => {
     []
   ) as any;
 
+  const {COMPARE_ZVEK, COMPARE_DAYS} = localization(language);
+  const {TUE, WED, THU, FRI, SAT, SUN} = globalLocalization(language);
+
+  const zvekDaysOptions = useMemo(() => [TUE, WED, THU, FRI, SAT, SUN], [FRI, SAT, SUN, THU, TUE, WED]);
+
+  const prepareChartData = useCallback(
+    (extractor: (entry: any) => number[] | undefined, labelPrefix: string, days: number, useZvekDays = false) => {
+      if (!id) return null;
+
+      const parsedData = id.split('^').map((item) => {
+        const entry = latestZveks.find(({name}) => name === item);
+        return {
+          name: entry?.name,
+          value: extractor(entry)?.slice(-days),
+        };
+      });
+
+      const labels = useZvekDays ? zvekDaysOptions.slice(-days) : Array.from({length: days}, (_, i) => `Day ${i + 1}`);
+
+      return {
+        labels,
+        datasets: parsedData.map((item, index) => ({
+          label: item.name || `${labelPrefix} ${index + 1}`,
+          data: item.value || [],
+          backgroundColor: backgroundColor[index % backgroundColor.length],
+          hoverBackgroundColor: hoverBackgroundColor[index % hoverBackgroundColor.length],
+          borderWidth: 1,
+          borderRadius: 4,
+        })),
+      };
+    },
+    [id, zvekDaysOptions]
+  );
+
+  const dataLastEventByDays = useMemo(
+    () => prepareChartData((entry) => entry?.info?.[entry.info.length - 1]?.damageByDay || [], 'Day', 6, true),
+    [prepareChartData]
+  ) as any;
+
+  const maxValuesByDayForSecondGraph = useMemo(() => {
+    if (!dataLastEventByDays) return [];
+    return dataLastEventByDays.labels.map((_: any, idx: number) =>
+      Math.max(...dataLastEventByDays.datasets.map((dataset: any) => dataset.data[idx] || 0))
+    );
+  }, [dataLastEventByDays]);
+
   return (
     <Wrapper>
       <BackBtn />
       <Charts>
         <div>
           <Bar
-            options={getOptions(
-              'Сравнение урона последних трех ЗВЭК, млд',
-              dataLastThreeEvents?.datasets[0]?.maxValues
-            )}
+            options={getOptions(COMPARE_ZVEK, dataLastThreeEvents?.datasets[0]?.maxValues)}
             data={dataLastThreeEvents}
           />
         </div>
         <div>
-          <Bar
-            options={getOptions('Сравнение урона последнего ЗВЭК (по дням), млд', maxValuesByDayForSecondGraph)}
-            data={dataLastEventByDays}
-          />
+          <Bar options={getOptions(COMPARE_DAYS, maxValuesByDayForSecondGraph)} data={dataLastEventByDays} />
         </div>
       </Charts>
     </Wrapper>

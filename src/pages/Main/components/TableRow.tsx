@@ -4,9 +4,11 @@ import {useNavigate} from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import SvgIcon from '@mui/material/SvgIcon';
 import useQuery from 'services/useQuery';
-import {useAppDispatch} from 'services/hooks';
+import {useAppDispatch, useAppSelector} from 'services/hooks';
 import {toggleItemSelection} from 'store/userSlice';
-import {heroImages, qualityImages} from 'pages/Main/MainUtils';
+import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
+import {localization, heroImages, qualityImages} from 'pages/Main/MainUtils';
 import Gey from 'assets/images/gey.png';
 import Arrow from 'assets/icons/arrow.svg';
 import Up from 'assets/icons/grow_up.svg';
@@ -26,6 +28,7 @@ const TableRow = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [, , isLaptop] = useQuery();
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const getImageComponent = useCallback(
     (type: string, images: Record<string, string>, fallback = X) => (
@@ -88,6 +91,9 @@ const TableRow = ({
     toggleRowExpansion,
   ]);
 
+  const {TEMPLE, IMPACT} = localization(language);
+  const {DAMAGE, BILLION} = globalLocalization(language);
+
   const expandValues = useMemo(
     () => [
       {
@@ -95,19 +101,19 @@ const TableRow = ({
         value: stars,
       },
       {
-        title: 'Храм',
+        title: TEMPLE,
         value: temple,
       },
       {
-        title: 'Урон',
-        value: `${(Math.floor((damage / 1_000_000_000) * 1000) / 1000).toFixed(3)} млд`,
+        title: DAMAGE,
+        value: `${(Math.floor((damage / 1_000_000_000) * 1000) / 1000).toFixed(3)} ${BILLION}`,
       },
       {
-        title: 'Влияние',
+        title: IMPACT,
         value: `${(Math.floor((damage / total) * 100 * 1000) / 1000).toFixed(3)} %`,
       },
     ],
-    [damage, stars, temple, total]
+    [stars, TEMPLE, temple, DAMAGE, damage, BILLION, IMPACT, total]
   );
 
   return (

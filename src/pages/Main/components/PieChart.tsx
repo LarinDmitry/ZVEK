@@ -2,7 +2,10 @@ import React, {FC, useMemo} from 'react';
 import styled from 'styled-components';
 import {Pie} from 'react-chartjs-2';
 import {Chart as ChartJS, ArcElement, Tooltip, Legend, Title} from 'chart.js';
-import {backgroundColor, hoverBackgroundColor} from 'pages/Main/MainUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {backgroundColor, hoverBackgroundColor, localization} from 'pages/Main/MainUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -16,20 +19,23 @@ interface Props {
 
 const PieChart: FC<Props> = ({data, total}) => {
   const sortedData = useMemo(() => [...data].sort((a, b) => b.damage - a.damage), [data]);
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {DIAGRAM} = localization(language);
+  const {DAMAGE} = globalLocalization(language);
 
   const chartData = useMemo(
     () => ({
       labels: sortedData.map(({name}) => name),
       datasets: [
         {
-          label: 'Урон',
+          label: DAMAGE,
           data: sortedData.map(({damage}) => damage),
           backgroundColor,
           hoverBackgroundColor,
         },
       ],
     }),
-    [sortedData]
+    [sortedData, DAMAGE]
   );
 
   const options = useMemo(
@@ -38,7 +44,7 @@ const PieChart: FC<Props> = ({data, total}) => {
         datalabels: false,
         title: {
           display: true,
-          text: 'Диаграмма влияния, %',
+          text: DIAGRAM,
         },
         tooltip: {
           callbacks: {
@@ -51,7 +57,7 @@ const PieChart: FC<Props> = ({data, total}) => {
         },
       },
     }),
-    [total]
+    [total, DIAGRAM]
   ) as any;
 
   return (

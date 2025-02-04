@@ -13,6 +13,10 @@ import {
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import SvgIcon from '@mui/material/SvgIcon';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from '../DetailsUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 import Average from 'assets/icons/average.svg';
 import {font_body_4_reg} from 'theme/fonts';
 
@@ -29,13 +33,17 @@ interface Props {
 
 const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, withCheckbox}) => {
   const [isAverage, setIsAverage] = useState<boolean>(false);
+  const {language} = useAppSelector(selectUserConfiguration);
+
+  const {DAMAGE_ZVEK} = localization(language);
+  const {DAMAGE, BILLION} = globalLocalization(language);
 
   const chartData = useMemo(
     () => ({
       labels: data?.map((item) => item.date) || [],
       datasets: [
         {
-          label: 'Урон в ЗВЭК',
+          label: DAMAGE_ZVEK,
           data: data?.map((item) => item.damage / 1e9) || [],
           borderColor: 'rgb(72, 99, 235)',
           backgroundColor: 'rgb(68, 217, 38)',
@@ -45,7 +53,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
         },
       ],
     }),
-    [data, stepped]
+    [data, stepped, DAMAGE_ZVEK]
   );
 
   const options = useMemo(
@@ -83,12 +91,12 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Урон',
+            text: DAMAGE,
           },
         },
       },
     }),
-    [title, isAverage, average]
+    [title, isAverage, average, DAMAGE]
   ) as any;
 
   return (
@@ -102,7 +110,7 @@ const LineChart: FC<Props> = ({data, title, averageTitle, average, stepped, with
       )}
       <Line data={chartData} options={options} />
       <SubInfo>
-        {averageTitle} <b>{((average || 0) / 1e9).toFixed(2)} млд</b>
+        {averageTitle} <b>{((average || 0) / 1e9).toFixed(2)} {BILLION}</b>
       </SubInfo>
     </Wrapper>
   );

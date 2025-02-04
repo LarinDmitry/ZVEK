@@ -8,25 +8,46 @@ import ZeroDamage from './components/ZeroDamage';
 import Djinni from './components/Djinni';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './StatisticUtils';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
 
 const StatisticView = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {
+    GROW,
+    TOP_PLAYERS,
+    DAMAGE_DECREASE,
+    ZERO_DAMAGE,
+    JINNI_COEF,
+    FORMULA,
+    WHERE,
+    COUNT,
+    DAMAGE,
+    AVERAGE_DAMAGE,
+    AVERAGE_COUNT,
+    SMALL,
+    MEDIUM,
+    HARD,
+  } = localization(language);
+
   const arrValues = useMemo(
     () => [
-      {title: 'Звэк движение', value: <DamageGrow />},
-      {title: 'Топ игроки последних Звэк', value: <TopPlayers />},
-      {title: 'Снижение урона', value: <DamageDecrease />},
-      {title: 'Нулевой дамаг последнего Звэк', value: <ZeroDamage />},
+      {title: GROW, value: <DamageGrow />},
+      {title: TOP_PLAYERS, value: <TopPlayers />},
+      {title: DAMAGE_DECREASE, value: <DamageDecrease />},
+      {title: ZERO_DAMAGE, value: <ZeroDamage />},
       {
         title: (
           <Fragment>
-            Коэффициент дисбаланса
+            {JINNI_COEF}
             <Tooltip
               title={
                 <List>
                   <li>
-                    Формула:
+                    {FORMULA}
                     <Formula>
                       G=
                       <span>
@@ -41,32 +62,26 @@ const StatisticView = () => {
                       </span>
                       /
                       <span>
-                        2n<sup>2</sup>μ, где:
+                        2n<sup>2</sup>μ, {WHERE}:
                       </span>
                     </Formula>
                     <List>
                       <li>
-                        <b>n</b> — количество игроков.
+                        <b>n</b> {COUNT}
                       </li>
                       <li>
                         <b>
                           x<sub>i</sub>
                         </b>
-                        — урон игрока <i>i</i>.
+                        {DAMAGE} <i>i</i>.
                       </li>
                       <li>
-                        <b>μ</b> — средний урон (<i>среднее арифметическое</i>).
+                        <b>μ</b> {AVERAGE_DAMAGE} (<i>{AVERAGE_COUNT}</i>).
                       </li>
                     </List>
-                    <li>0.2−0.3: Урон распределён довольно равномерно.</li>
-                    <li>
-                      0.5: Умеренное неравенство. Есть несколько игроков с заметно большим вкладом, но остальные тоже
-                      вносят ощутимый вклад.
-                    </li>
-                    <li>
-                      0.8−1.0: Сильное неравенство. Урон в основном сосредоточен у одного или нескольких "топовых"
-                      игроков, остальные почти не влияют на общий результат.
-                    </li>
+                    <li>{SMALL}</li>
+                    <li>{MEDIUM}</li>
+                    <li>{HARD}</li>
                   </li>
                 </List>
               }
@@ -80,7 +95,22 @@ const StatisticView = () => {
         value: <Djinni />,
       },
     ],
-    []
+    [
+      GROW,
+      TOP_PLAYERS,
+      DAMAGE_DECREASE,
+      ZERO_DAMAGE,
+      JINNI_COEF,
+      FORMULA,
+      WHERE,
+      COUNT,
+      DAMAGE,
+      AVERAGE_DAMAGE,
+      AVERAGE_COUNT,
+      SMALL,
+      MEDIUM,
+      HARD,
+    ]
   );
 
   return (

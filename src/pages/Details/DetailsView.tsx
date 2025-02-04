@@ -4,22 +4,18 @@ import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
-import {zvekDaysOptions} from 'pages/Main/MainUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
+import {localization} from './DetailsUtils';
 import {latestZveks} from '../../DATA';
 import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
 
 const DetailsView = () => {
   const {id} = useParams<{id: string}>();
+  const {language} = useAppSelector(selectUserConfiguration);
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
-
-  const damageByDayData = useMemo(() => {
-    const {damageByDay = [], date} = latestZvekValues.slice(-1)[0] || {};
-    return damageByDay.map((damage, idx) => ({
-      damage,
-      date: zvekDaysOptions[idx] || date,
-    }));
-  }, [latestZvekValues]);
 
   const averageAllZveks = useMemo(
     () => latestZvekValues.reduce((acc, {damage}) => acc + damage, 0) / 3 || 0,
@@ -33,38 +29,52 @@ const DetailsView = () => {
 
   const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
 
+  const {STATISTIC, NO_DATA, LAST_ZVEKS, AVERAGE_ZVEKS, AVERAGE_GUILD, DAYS_COMPARE} = localization(language);
+  const {LATEST_ZVEK, TUE, WED, THU, FRI, SAT, SUN} = globalLocalization(language);
+
+  const zvekDaysOptions = useMemo(() => [TUE, WED, THU, FRI, SAT, SUN], [FRI, SAT, SUN, THU, TUE, WED]);
+
+  const damageByDayData = useMemo(() => {
+    const {damageByDay = [], date} = latestZvekValues.slice(-1)[0] || {};
+    return damageByDay.map((damage, idx) => ({
+      damage,
+      date: zvekDaysOptions[idx] || date,
+    }));
+  }, [latestZvekValues, zvekDaysOptions]);
+
   return (
     <Wrapper>
       <Header>
         <BackBtn />
         <NickName>
-          ЗВЭК статистика игрока <b>{id}</b>
+          {STATISTIC}
+          <b>“{id}”</b>
         </NickName>
       </Header>
       {!latestZvekValues || damageByDayData.length === 0 ? (
-        <div>Нет данных для отображения</div>
+        <div>{NO_DATA}</div>
       ) : (
         <>
           <Charts>
             <LineChart
               data={latestZvekValues}
-              title="Урон последних 3х ЗВЭК, млд"
+              title={LAST_ZVEKS}
               average={averageAllZveks || 0}
-              averageTitle="Ваш средний урон последних трех звэков:"
+              averageTitle={AVERAGE_ZVEKS}
               stepped
               withCheckbox={false}
             />
             <LineChart
               data={damageByDayData}
-              title="Урон последнего ЗВЭК, млд"
+              title={LATEST_ZVEK}
               average={averageLatestZveks}
-              averageTitle="Средний урон последнего звэка по гильдии:"
+              averageTitle={AVERAGE_GUILD}
               stepped={false}
               withCheckbox
             />
           </Charts>
           <BarChartContainer>
-            <BarChart data={latestDamageByDayValues} title="Сравнение урона по дням последних 3-х ЗВЕК, млд" />
+            <BarChart data={latestDamageByDayValues} title={DAYS_COMPARE} />
           </BarChartContainer>
         </>
       )}

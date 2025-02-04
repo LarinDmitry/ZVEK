@@ -9,6 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {useAppSelector} from 'services/hooks';
 import useQuery from 'services/useQuery';
 import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './MainUtils';
 import {latestZveks} from '../../DATA';
 import Statistic from 'assets/icons/statistic.svg';
 import Contacts from 'assets/icons/contacts.svg';
@@ -20,8 +21,7 @@ const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 const MainView = () => {
   const navigate = useNavigate();
   const [isMobile, ,] = useQuery();
-
-  const {selectedItems} = useAppSelector(selectUserConfiguration);
+  const {language, selectedItems} = useAppSelector(selectUserConfiguration);
 
   const pieChartData = useMemo(
     () =>
@@ -41,11 +41,13 @@ const MainView = () => {
     []
   );
 
+  const {LAST, MIN, COMPARE} = localization(language);
+
   return (
     <Wrapper>
       <Header>
         <Title>
-          Последний ЗВЭК - {date}
+          {LAST} - {date}
           <Icon onClick={() => navigate('/statistic')}>
             <Statistic />
           </Icon>
@@ -53,10 +55,7 @@ const MainView = () => {
             <Contacts />
           </Icon>
         </Title>
-        <Tooltip
-          title="Для сравнения нужно выбирать двое и больше игроков"
-          disableHoverListener={selectedItems.length >= 2}
-        >
+        <Tooltip title={MIN} disableHoverListener={selectedItems.length >= 2}>
           <span>
             <CompareBtn
               variant="contained"
@@ -68,7 +67,7 @@ const MainView = () => {
                   <Compare />
                 </Icon>
               ) : (
-                'Сравнить'
+                COMPARE
               )}
             </CompareBtn>
           </span>

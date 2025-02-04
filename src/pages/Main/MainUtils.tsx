@@ -1,3 +1,7 @@
+import en from './localization/EN';
+import uk from './localization/UK';
+import ru from './localization/RU';
+import {LocalizationObjProps} from 'services/GlobalUtils';
 import X from 'assets/images/quality/x.png';
 import B from 'assets/images/quality/b+.png';
 import A_Low from 'assets/images/quality/a-.png';
@@ -11,6 +15,9 @@ import Vulkan from 'assets/images/heroes/vulkan.png';
 import Mokman from 'assets/images/heroes/mokman.png';
 import Vesa from 'assets/images/heroes/vesa.png';
 import Nataly from 'assets/images/heroes/nataly.png';
+
+const localizationObj = {en, uk, ru} as LocalizationObjProps;
+export const localization = (language: string) => localizationObj[language];
 
 export const backgroundColor = [
   'rgb(255, 99, 132)',
@@ -57,8 +64,6 @@ export const hoverBackgroundColor = [
   'rgb(255, 69, 132)',
   'rgb(54, 132, 235)',
 ];
-
-export const zvekDaysOptions = ['Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вск'];
 
 export const qualityImages: {[key: string]: string} = {
   '': X,

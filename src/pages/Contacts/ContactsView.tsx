@@ -1,4 +1,4 @@
-import React, {ElementType} from 'react';
+import React, {ElementType, useMemo} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import TableCell from '@mui/material/TableCell';
@@ -7,41 +7,47 @@ import Table from '@mui/material/Table';
 import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './ContactsUtils';
 import {font_body_2_bold} from 'theme/fonts';
 
 const ContactsView = () => {
-  const arrValues = [
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {LEADER, CO_LEADER, ADMIN, WEB, SUPPORT} = localization(language);
+
+  const arrValues = useMemo(() => [
     {
-      position: 'Глава',
+      position: LEADER,
       name: 'Артем',
       link: 'Artem_Chuvanov',
     },
     {
-      position: 'Зам. главы',
+      position: CO_LEADER,
       name: 'Марина',
       link: 'MarVik3108',
     },
     {
-      position: 'Администратор',
+      position: ADMIN,
       name: 'Роман',
       link: 'Matpockyx',
     },
     {
-      position: 'Администратор',
+      position: ADMIN,
       name: 'Санта',
       link: 'ErbolSanta',
     },
     {
-      position: 'Предложения по сайту',
+      position: WEB,
       name: 'Дмитрий',
       link: 'Larin_Dmytro',
     },
-  ];
+  ], [LEADER, CO_LEADER, ADMIN, WEB]);
 
   return (
     <Wrapper>
       <BackBtn />
-      <Title>Те, к кому можно обратиться:</Title>
+      <Title>{SUPPORT}</Title>
       <Container component={Paper}>
         <Table>
           <TableBody>

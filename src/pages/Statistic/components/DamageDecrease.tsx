@@ -8,7 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {PlugCellStyles} from 'services/GlobalStyled';
-import {headerValues} from '../StatisticUtils';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
+import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
 import {boldWeight} from 'theme/fonts';
 
@@ -20,6 +23,10 @@ interface PlayerData {
 }
 
 const DamageDecrease = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {LAST_ZVEK, DECREASE} = localization(language);
+  const {NICKNAME, LATEST_ZVEK} = globalLocalization(language);
+
   const playerData: PlayerData[] = useMemo(
     () =>
       latestZveks.reduce<PlayerData[]>((acc, {name, info}) => {
@@ -37,6 +44,11 @@ const DamageDecrease = () => {
         return acc;
       }, []),
     []
+  );
+
+  const headerValues = useMemo(
+    () => [NICKNAME, LAST_ZVEK, LATEST_ZVEK, DECREASE],
+    [NICKNAME, LAST_ZVEK, LATEST_ZVEK, DECREASE]
   );
 
   return (

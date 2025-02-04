@@ -2,17 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
 import Button from '@mui/material/Button';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
+import {localization} from './NotFoundUtils';
 import {font_body_1_reg, font_header_4_bold, mediumWeight} from 'theme/fonts';
 
 const NotFoundView = () => {
   const navigate = useNavigate();
+  const {language} = useAppSelector(selectUserConfiguration);
+  const {NO_DATA, SUB_INFO, MAIN} = localization(language);
 
   return (
     <Wrapper>
       <Number>404</Number>
-      <Title>Страница не найдена!</Title>
-      <SubTitle>Такая страница не найдена или не существует</SubTitle>
-      <BackBtn onClick={() => navigate('/main')}>На главную</BackBtn>
+      <Title>{NO_DATA}</Title>
+      <SubTitle>{SUB_INFO}</SubTitle>
+      <BackBtn onClick={() => navigate('/main')}>{MAIN}</BackBtn>
     </Wrapper>
   );
 };

@@ -7,10 +7,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useAppSelector} from 'services/hooks';
+import {selectUserConfiguration} from 'store/userSlice';
 import {calculateGini} from '../StatisticUtils';
+import {localization} from '../StatisticUtils';
 import {latestZveks} from '../../../DATA';
+import {boldWeight} from 'theme/fonts';
 
 const Djinni = () => {
+  const {language} = useAppSelector(selectUserConfiguration);
+
   const uniqueDates = useMemo(
     () =>
       Array.from(new Set(latestZveks.flatMap(({info}) => info.map(({date}) => date)))).filter(
@@ -28,7 +34,9 @@ const Djinni = () => {
     [uniqueDates]
   );
 
-  const headerValues = ['Дата', 'Коэффициент Джинни'];
+  const {DATE, JINNI} = localization(language);
+
+  const headerValues = [DATE, JINNI];
 
   return (
     <Container component={Paper}>
@@ -36,9 +44,7 @@ const Djinni = () => {
         <TableHead>
           <Row>
             {headerValues.map((value) => (
-              <TableCell align="center" key={value}>
-                <b>{value}</b>
-              </TableCell>
+              <HCell key={value}>{value}</HCell>
             ))}
           </Row>
         </TableHead>
@@ -66,6 +72,13 @@ const Row = styled(TableRow)`
   &.MuiTableRow-root {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const HCell = styled(TableCell)`
+  &.MuiTableCell-root {
+    ${boldWeight};
+    text-align: center;
   }
 `;
 
