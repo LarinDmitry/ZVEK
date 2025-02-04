@@ -15,6 +15,7 @@ import Vulkan from 'assets/images/heroes/vulkan.png';
 import Mokman from 'assets/images/heroes/mokman.png';
 import Vesa from 'assets/images/heroes/vesa.png';
 import Nataly from 'assets/images/heroes/nataly.png';
+import Williams from 'assets/images/heroes/williams.png';
 
 const localizationObj = {en, uk, ru} as LocalizationObjProps;
 export const localization = (language: string) => localizationObj[language];
@@ -82,4 +83,5 @@ export const heroImages: {[key: string]: string} = {
   nataly: Nataly,
   vesa: Vesa,
   vulkan: Vulkan,
+  williams: Williams,
 };
