@@ -6,7 +6,6 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
-import {zvekDaysOptions} from 'pages/Main/MainUtils';
 import {globalLocalization} from 'services/GlobalUtils';
 import {localization} from './DetailsUtils';
 import {latestZveks} from '../../DATA';
@@ -17,14 +16,6 @@ const DetailsView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
-
-  const damageByDayData = useMemo(() => {
-    const {damageByDay = [], date} = latestZvekValues.slice(-1)[0] || {};
-    return damageByDay.map((damage, idx) => ({
-      damage,
-      date: zvekDaysOptions[idx] || date,
-    }));
-  }, [latestZvekValues]);
 
   const averageAllZveks = useMemo(
     () => latestZvekValues.reduce((acc, {damage}) => acc + damage, 0) / 3 || 0,
@@ -39,7 +30,17 @@ const DetailsView = () => {
   const latestDamageByDayValues = latestZvekValues.map(({damageByDay, date}) => ({damageByDay, date}));
 
   const {STATISTIC, NO_DATA, LAST_ZVEKS, AVERAGE_ZVEKS, AVERAGE_GUILD, DAYS_COMPARE} = localization(language);
-  const {LATEST_ZVEK} = globalLocalization(language);
+  const {LATEST_ZVEK, TUE, WED, THU, FRI, SAT, SUN} = globalLocalization(language);
+
+  const zvekDaysOptions = useMemo(() => [TUE, WED, THU, FRI, SAT, SUN], [FRI, SAT, SUN, THU, TUE, WED]);
+
+  const damageByDayData = useMemo(() => {
+    const {damageByDay = [], date} = latestZvekValues.slice(-1)[0] || {};
+    return damageByDay.map((damage, idx) => ({
+      damage,
+      date: zvekDaysOptions[idx] || date,
+    }));
+  }, [latestZvekValues, zvekDaysOptions]);
 
   return (
     <Wrapper>

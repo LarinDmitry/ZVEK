@@ -6,4 +6,10 @@ export default {
   BACK: 'Back',
   ERROR: 'Something went wrong:',
   TRY: 'Try again',
+  TUE: 'Tue',
+  WED: 'Wed',
+  THU: 'Thu',
+  FRI: 'Fri',
+  SAT: 'Sat',
+  SUN: 'Sun',
 };

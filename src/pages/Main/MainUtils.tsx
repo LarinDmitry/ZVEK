@@ -65,8 +65,6 @@ export const hoverBackgroundColor = [
   'rgb(54, 132, 235)',
 ];
 
-export const zvekDaysOptions = ['Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-
 export const qualityImages: {[key: string]: string} = {
   '': X,
   'b+': B,
