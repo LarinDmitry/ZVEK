@@ -13,6 +13,7 @@ import {latestZveks} from '../../DATA';
 import Statistic from 'assets/icons/statistic.svg';
 import Contacts from 'assets/icons/contacts.svg';
 import Compare from 'assets/icons/compare.svg';
+import Calculate from 'assets/icons/dragon.svg' //or import Calculate from 'assets/icons/calculate.svg'
 import {font_header_5_bold, font_body_2_reg} from 'theme/fonts';
 
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
@@ -48,6 +49,9 @@ const MainView = () => {
           Последний ЗВЭК - {date}
           <Icon onClick={() => navigate('/statistic')}>
             <Statistic />
+          </Icon>
+          <Icon onClick={() => navigate('/calculator')}>
+            <Calculate />
           </Icon>
           <Icon onClick={() => navigate('/contacts')}>
             <Contacts />

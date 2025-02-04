@@ -1,0 +1,160 @@
+import React from 'react';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import { styled } from '@mui/material/styles';
+
+interface CustomizedSliderProps {
+    value: number;
+    onChange: (event: Event, newValue: number | number[]) => void;
+  }
+
+export default function CustomizedSlider({ value, onChange }: CustomizedSliderProps) {
+  return (
+    <Box sx={{ width: 320 }}>
+      <BossSlider valueLabelDisplay="auto" value={value} aria-label="pretto slider" defaultValue={100} onChange={onChange}
+          max={100} min={1} />
+    </Box>
+  );
+}
+
+export const bossHP = [
+    13875000000,
+    7564400000,
+    7475200000,
+    7422200000,
+    7282600000,
+    7213900000,
+    7161700000,
+    7080300000,
+    7007800000,
+    6844700000,
+    6775700000,
+    6488000000,
+    6213900000,
+    5873300000,
+    5517200000,
+    5175400000,
+    4809300000,
+    4465800000,
+    4060000000,
+    3814000000,
+    3452500000,
+    3263400000,
+    3091700000,
+    2919900000,
+    2727100000,
+    2491900000,
+    2353400000,
+    2212500000,
+    2061100000,
+    1844400000,
+    1717600000,
+    1631700000,
+    1500400000,
+    1406000000,
+    1374100000,
+    1288200000,
+    1119900000,
+    1069400000,
+    1022900000,
+    944680000,
+    836120000,
+    815860000,
+    767330000,
+    729290000,
+    686130000,
+    647390000,
+    601160000,
+    560250000,
+    508280000,
+    472340000,
+    438930000,
+    409730000,
+    386150000,
+    364990000,
+    343520000,
+    322050000,
+    300580000,
+    279110000,
+    257640000,
+    236170000,
+    214700000,
+    203970000,
+    193230000,
+    182500000,
+    171660000,
+    161030000,
+    150290000,
+    139560000,
+    128820000,
+    118090000,
+    107350000,
+    102580000,
+    97808000,
+    93037000,
+    88266000,
+    83494000,
+    78358000,
+    73952000,
+    69181000,
+    64410000,
+    53675000,
+    50991000,
+    48308000,
+    45624000,
+    42940000,
+    40256000,
+    37573000,
+    34489000,
+    33815000,
+    32205000,
+    26838000,
+    26390000,
+    25943000,
+    25496000,
+    25052000,
+    24601000,
+    24154000,
+    24011000,
+    23259000,
+    8712100,
+  ];
+  
+  const BossSlider = styled(Slider)({
+    color: '#52af77',
+    height: 8,
+    '& .MuiSlider-track': {
+      border: 'none',
+    },
+    '& .MuiSlider-thumb': {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+        boxShadow: 'inherit',
+      },
+      '&::before': {
+        display: 'none',
+      },
+    },
+    '& .MuiSlider-valueLabel': {
+      lineHeight: 1.2,
+      fontSize: 12,
+      background: 'unset',
+      padding: 0,
+      width: 32,
+      height: 32,
+      borderRadius: '50% 50% 50% 0',
+      backgroundColor: '#52af77',
+      transformOrigin: 'bottom left',
+      transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+      '&::before': { display: 'none' },
+      '&.MuiSlider-valueLabelOpen': {
+        transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+      },
+      '& > *': {
+        transform: 'rotate(45deg)',
+      },
+    },
+  });
