@@ -299,7 +299,7 @@ export const latestZveks = [
     ],
   },
   {
-    name: 'EJIurop',
+    name: 'EJlurop',
     info: [
       {
         damage: 0,
@@ -752,8 +752,8 @@ export const teamDetails = [
     name: 'Xalypi',
     damageDealer: 'vulkan',
     quality: 'a+',
-    stars: 12,
-    temple: 11,
+    stars: 13,
+    temple: 13,
   },
   {
     name: 'FollowMe',
@@ -784,11 +784,11 @@ export const teamDetails = [
     temple: 12,
   },
   {
-    name: 'EJIurop',
-    damageDealer: 'vulkan',
-    quality: 'a-',
-    stars: 8,
-    temple: 6,
+    name: 'EJlurop',
+    damageDealer: 'aspen',
+    quality: 'a',
+    stars: 12,
+    temple: 10,
   },
   {
     name: 'Пряник',
@@ -856,9 +856,9 @@ export const teamDetails = [
   {
     name: 'Добрый',
     damageDealer: 'vulkan',
-    quality: 'a-',
-    stars: 8,
-    temple: 6,
+    quality: 'S',
+    stars: 10,
+    temple: 8,
   },
   {
     name: 'Lucifer',
@@ -890,10 +890,10 @@ export const teamDetails = [
   },
   {
     name: 'Ilyagrol',
-    damageDealer: 'mokman',
-    quality: 'a-',
-    stars: 8,
-    temple: 7,
+    damageDealer: 'aspen',
+    quality: 'a+',
+    stars: 13,
+    temple: 13,
   },
   {
     name: 'Архара',

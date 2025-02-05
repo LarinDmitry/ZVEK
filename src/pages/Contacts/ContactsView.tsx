@@ -35,7 +35,7 @@ const ContactsView = () => {
     {
       position: ADMIN,
       name: 'Санта',
-      link: 'ErbolSanta',
+      link: 'Erbol_Santa',
     },
     {
       position: WEB,
