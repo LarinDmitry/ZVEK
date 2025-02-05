@@ -8,7 +8,7 @@ export default {
   WHERE: 'where',
   COUNT: '— number of players.',
   DAMAGE: '— player`s damage',
-  AVERAGE_DAMAGE: '— avarage damage',
+  AVERAGE_DAMAGE: '— average damage',
   AVERAGE_COUNT: 'arithmetic average',
   SMALL: '0.2−0.3: Damage is distributed fairly evenly.',
   MEDIUM: '0.5: Moderate inequality. There are a few players with significantly larger contributions, but the others also make a noticeable impact.',
@@ -25,4 +25,5 @@ export default {
   DECREASE: 'Decreased by',
   DAY: 'Day',
   LAST_ZVEK: 'Last ZVEK Damage, B',
+  ALL_PLAYERS_HAVE_DAMAGED: 'All players damaged in all days',
 };

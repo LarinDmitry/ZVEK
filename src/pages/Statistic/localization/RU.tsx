@@ -25,4 +25,5 @@ export default {
   DECREASE: 'Уменьшился на',
   DAY: 'День',
   LAST_ZVEK: 'Урон прошлого ЗВЭК (млрд)',
+  ALL_PLAYERS_HAVE_DAMAGED: 'Все игроки нанесли урон во все дни',
 };

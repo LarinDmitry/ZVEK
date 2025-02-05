@@ -21,7 +21,7 @@ export interface ZeroDamagePlayer {
 
 const ZeroDamagePlayers = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {DAY} = localization(language);
+  const {DAY, ALL_PLAYERS_HAVE_DAMAGED} = localization(language);
   const {NICKNAME} = globalLocalization(language);
 
   const zeroHeaderValues = useMemo(() => [NICKNAME, DAY], [DAY, NICKNAME]);
@@ -29,7 +29,7 @@ const ZeroDamagePlayers = () => {
   return (
     <Container component={Paper}>
       {!zeroDamagePlayers().length ? (
-        <Plug>Все игроки нанесли урон во все дни</Plug>
+        <Plug>{ALL_PLAYERS_HAVE_DAMAGED}</Plug>
       ) : (
         <Table>
           <TableHead>
