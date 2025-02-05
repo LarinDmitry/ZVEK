@@ -856,7 +856,7 @@ export const teamDetails = [
   {
     name: 'Добрый',
     damageDealer: 'vulkan',
-    quality: 'S',
+    quality: 's',
     stars: 10,
     temple: 8,
   },
@@ -891,7 +891,7 @@ export const teamDetails = [
   {
     name: 'Ilyagrol',
     damageDealer: 'aspen',
-    quality: 'a+',
+    quality: '',
     stars: 13,
     temple: 13,
   },
