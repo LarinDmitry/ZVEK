@@ -4,13 +4,13 @@ import BackBtn from 'components/GeneralComponents/BackBtn';
 import MuiInput from '@mui/material/Input';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
-import CustomizedSlider, {bossHP, localization} from './CalculatorUtils';
+import CustomizedSlider, {bossHP, localization} from './BossHPUtils';
 import {globalLocalization} from 'services/GlobalUtils';
 import {font_body_2_bold} from 'theme/fonts';
 
 const CalculatorView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {BILLION} = globalLocalization(language);
+  const {TRILLION} = globalLocalization(language);
   const [bossLevel, setBossLevel] = useState(100);
   const [remainingPercent, setRemainingPercent] = useState(100);
 
@@ -72,7 +72,7 @@ const CalculatorView = () => {
             }}
           />
         </SliderWrapper>
-        <p>{HP_REMAINING} {remainingHP.toLocaleString()} {BILLION} HP</p>
+        <p>{HP_REMAINING} {remainingHP.toLocaleString()} / {bossHP[bossLevel - 1]} {TRILLION} HP</p>
       </Calculator>
     </Wrapper>
   );

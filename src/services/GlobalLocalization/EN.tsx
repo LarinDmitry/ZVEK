@@ -3,6 +3,7 @@ export default {
   DAMAGE: 'Damage',
   NICKNAME: 'Nickname',
   BILLION: 'B',
+  TRILLION: 'T',
   BACK: 'Back',
   ERROR: 'Something went wrong:',
   TRY: 'Try again',

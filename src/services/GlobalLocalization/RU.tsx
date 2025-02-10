@@ -3,6 +3,7 @@ export default {
   DAMAGE: 'Урон',
   NICKNAME: 'Никнейм',
   BILLION: 'млд',
+  TRILLION: 'трл',
   BACK: 'Назад',
   ERROR: 'Что-то пошло не так:',
   TRY: 'Попробуйте снова',
