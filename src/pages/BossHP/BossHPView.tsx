@@ -8,11 +8,11 @@ import CustomizedSlider, {bossHP, localization} from './BossHPUtils';
 import {globalLocalization} from 'services/GlobalUtils';
 import {font_body_2_bold} from 'theme/fonts';
 
-const CalculatorView = () => {
+const BossHPView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
   const {TRILLION} = globalLocalization(language);
-  const [bossLevel, setBossLevel] = useState(100);
-  const [remainingPercent, setRemainingPercent] = useState(100);
+  const [bossLevel, setBossLevel] = useState<number>(100);
+  const [remainingPercent, setRemainingPercent] = useState<number>(100);
 
   const handleBossLevelChange = (event: Event, newValue: number | number[]) => {
     setBossLevel(newValue as number);
@@ -72,7 +72,9 @@ const CalculatorView = () => {
             }}
           />
         </SliderWrapper>
-        <p>{HP_REMAINING} {remainingHP.toLocaleString()} / {bossHP[bossLevel - 1]} {TRILLION} HP</p>
+        <p>
+          {HP_REMAINING} {remainingHP.toLocaleString()} / {bossHP[bossLevel - 1]?.toLocaleString()} {TRILLION} HP
+        </p>
       </Calculator>
     </Wrapper>
   );
@@ -110,4 +112,4 @@ const Input = styled(MuiInput)`
   margin-left: 0;
 `;
 
-export default CalculatorView;
+export default BossHPView;
