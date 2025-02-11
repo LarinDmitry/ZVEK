@@ -56,7 +56,7 @@ export const bossHP = [
 
 const BossSlider = styled(Slider)({
   color: '#40bdbb',
-  height: 24,
+  height: 20,
   '& .MuiSlider-track': {
     border: 'none',
   },
