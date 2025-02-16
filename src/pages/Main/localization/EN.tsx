@@ -1,5 +1,4 @@
 export default {
-  LAST: 'Last ZVEK',
   MIN: 'To compare, you need to select two or more players.',
   COMPARE: 'Compare',
   TEMPLE: 'Temple',

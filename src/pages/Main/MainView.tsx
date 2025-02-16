@@ -9,6 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {useAppSelector} from 'services/hooks';
 import useQuery from 'services/useQuery';
 import {selectUserConfiguration} from 'store/userSlice';
+import {globalLocalization} from 'services/GlobalUtils';
 import {localization} from './MainUtils';
 import {latestZveks} from '../../DATA';
 import Statistic from 'assets/icons/statistic.svg';
@@ -41,7 +42,8 @@ const MainView = () => {
     []
   );
 
-  const {LAST, MIN, COMPARE} = localization(language);
+  const {MIN, COMPARE} = localization(language);
+  const {LAST} = globalLocalization(language);
 
   return (
     <Wrapper>

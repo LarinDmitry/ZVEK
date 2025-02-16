@@ -12,4 +12,7 @@ export default {
   FRI: 'Пт',
   SAT: 'Сб',
   SUN: 'Нд',
+  LAST: 'Останній ЗВЕК',
+  STAT: 'Статистика',
+  CONTACTS: 'Контакти',
 }

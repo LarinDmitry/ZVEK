@@ -1,7 +1,9 @@
 import React, {Fragment, lazy} from 'react';
 import {Route, createRoutesFromChildren, createBrowserRouter} from 'react-router-dom';
 import PageLayout from './PageLayout';
+import DashboardLayout from './DashboardLayout';
 
+const Dashboard = lazy(() => import('pages/Dashboard/DashboardView'));
 const Welcome = lazy(() => import('pages/Welcome/WelcomeView'));
 const Main = lazy(() => import('pages/Main/MainView'));
 const Details = lazy(() => import('pages/Details/DetailsView'));
@@ -19,6 +21,9 @@ const Routers = () => (
       <Route path="/compare/:id" element={<Compare />} />
       <Route path="/statistic" element={<Statistic />} />
       <Route path="/contacts" element={<Contacts />} />
+    </Route>
+    <Route element={<DashboardLayout />}>
+      <Route path="/dashboard" element={<Dashboard />} />
     </Route>
     <Route path="*" element={<NotFound />} />
   </Fragment>

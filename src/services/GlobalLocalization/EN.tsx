@@ -12,4 +12,7 @@ export default {
   FRI: 'Fri',
   SAT: 'Sat',
   SUN: 'Sun',
+  LAST: 'Last ZVEK',
+  STAT: 'Statistics',
+  CONTACTS: 'Contacts',
 };
