@@ -1,95 +1,71 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
+import BossHPSlider from './components/Slider';
 import MuiInput from '@mui/material/Input';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
-import CustomizedSlider, {bossHP, localization} from './BossHPUtils';
+import {bossHP, localization} from './BossHPUtils';
 import {globalLocalization} from 'services/GlobalUtils';
 import {font_body_2_bold} from 'theme/fonts';
 
 const BossHPView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
   const {TRILLION} = globalLocalization(language);
-  const [bossLevel, setBossLevel] = useState<number>(95);
-  const [remainingPercent, setRemainingPercent] = useState<number>(95);
-
-  const handleBossLevelChange = (event: Event, newValue: number | number[]) => {
-    setBossLevel(Math.min(95, Math.max(5, newValue as number)));
-  };
-  
-  const handleRemainingPercentChange = (event: Event, newValue: number | number[]) => {
-    setRemainingPercent(Math.min(95, Math.max(5, newValue as number)));
-  };
-
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>, min: number, max: number) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = Number(event.target.value);
-    if (value >= min && value <= max) {
-      setter(unscaleValue(value));
-    }
-  };
-
-  const scaleValue = (value: number) => {
-    return ((value - 5) / 90) * 99 + 1;
-  };
-
-  const unscaleValue = (value: number) => {
-    return ((value - 1) / 99) * 90 + 5;
-  };
-
-  const remainingHP = bossHP[Math.floor(scaleValue(bossLevel)) - 1] * (scaleValue(remainingPercent) / 100);
-
   const {CALCULATOR, BOSS_LEVEL, HP_LEVEL, HP_REMAINING, LEVEL} = localization(language);
+
+  const [bossLevel, setBossLevel] = useState<number>(100);
+  const [remainingPercent, setRemainingPercent] = useState<number>(100);
+
+  const remainingHP = (bossHP[bossLevel - 1] * remainingPercent) / 100;
 
   return (
     <Wrapper>
       <BackBtn />
       <Calculator>
         <Title>{CALCULATOR}</Title>
+
         <MyWrapper>
           <TextWrapper>{BOSS_LEVEL}</TextWrapper>
           <InputGroup>
             <Input
-              value={Math.floor(scaleValue(bossLevel))}
+              value={bossLevel}
               size="small"
-              onChange={handleInputChange(setBossLevel, 1, 100)}
+              onChange={(e) => setBossLevel(Number(e.target.value))}
               inputProps={{
                 step: 1,
                 max: 100,
-                min: 1,
                 type: 'number',
               }}
             />
             <TextWrapper>{LEVEL}</TextWrapper>
           </InputGroup>
         </MyWrapper>
-        <CustomizedSlider value={bossLevel} onChange={handleBossLevelChange} />
+        <BossHPSlider value={bossLevel} onChange={setBossLevel} min={1} max={100} />
+
         <MyWrapper>
           <TextWrapper>{HP_LEVEL}</TextWrapper>
           <InputGroup>
             <Input
-              value={Math.floor(scaleValue(remainingPercent))}
+              value={remainingPercent}
               size="small"
-              onChange={handleInputChange(setRemainingPercent, 1, 100)}
+              onChange={(e) => setRemainingPercent(Number(e.target.value))}
               inputProps={{
                 step: 1,
                 max: 100,
-                min: 1,
                 type: 'number',
               }}
             />
             <TextWrapper>%</TextWrapper>
           </InputGroup>
         </MyWrapper>
-        <CustomizedSlider
-          value={typeof remainingPercent === 'number' ? remainingPercent : 0}
-          onChange={handleRemainingPercentChange}
-        />
+        <BossHPSlider value={remainingPercent} onChange={setRemainingPercent} min={0} max={100} />
+
         <TextWrapper>
-          {HP_REMAINING} {remainingHP.toLocaleString(undefined, {maximumFractionDigits: 0})} / {bossHP[Math.floor(scaleValue(bossLevel)) - 1]?.toLocaleString()} {TRILLION} HP
+          {HP_REMAINING} {remainingHP} / {bossHP[bossLevel - 1]} {TRILLION} HP
         </TextWrapper>
+
+        <MyWrapper></MyWrapper>
       </Calculator>
     </Wrapper>
   );
@@ -115,11 +91,6 @@ const Title = styled.div`
   align-items: center;
 `;
 
-const TextWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const MyWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -133,12 +104,18 @@ const InputGroup = styled.div`
   align-items: center;
   gap: 10px;
   margin-left: auto;
-  margin-bottom: 6px;
 `;
 
 const Input = styled(MuiInput)`
-  width: 42px;
-  margin-left: 0;
+  width: 44px;
+  font-size: 0.85rem;
+  justify-content: flex-end;
+  padding: 0;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default BossHPView;
