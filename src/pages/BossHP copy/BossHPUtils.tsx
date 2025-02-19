@@ -33,7 +33,7 @@ export default function CustomizedSlider({value, onChange}: CustomizedSliderProp
         </svg>
       </MyButton>
       <Box sx={{flexGrow: 1}}>
-        <BossSlider value={value} onChange={onChange} max={100} min={1} />
+        <BossSlider valueLabelDisplay="auto" value={value} onChange={onChange} max={100} min={1} />
       </Box>
       <MyButton variant="outlined" size="small" onClick={handleIncrease}>
         <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,91 +54,68 @@ export const bossHP = [
   45624, 42940, 40256, 37573, 34489, 33815, 32205, 26838, 26390, 25943, 25496, 25052, 24601, 24154, 24011, 23259, 8712,
 ];
 
+
+//слайдер у компоненти
+//стилі нормально прописати, через `
+//slider before-after
+//input над слайдером
+//р -> div!
+//Box -> div
+//border (рамочку зробити) + box-shadow зі статистики
+//звек рух додати 4 стовпчик "рейтинг" - рейтинг гільдії
+
+
+
 const BossSlider = styled(Slider)({
-  width: '260px',
-  appearance: 'none',
-  height: '20px',
-  border: '1.5px solid rgba(72, 99, 235, 0.3)',
-  borderRadius: '50px',
-  outline: 'none',
-  padding: 0,
-  boxShadow: '0px 0px 0px 4px rgba(72, 99, 235, 0.3)',
-  background: 'transparent',
-
+  color: '#40bdbb',
+  height: 20,
   '& .MuiSlider-track': {
-    background: 'rgba(72, 99, 235, 0.85)',
-    borderRadius: '50px',
+    border: 'none',
   },
-
-  '& .MuiSlider-rail': {
-    background: 'rgba(72, 99, 235, 0.3)',
-    borderRadius: '50px',
-  },
-
   '& .MuiSlider-thumb': {
-    appearance: 'none',
-    width: '20px',
-    height: '20px',
-    borderRadius: '50%',
-    background: 'rgb(182, 193, 252)',
-    border: '1.5px solid rgba(72, 99, 235, 0.9)',
-    cursor: 'pointer',
-    backgroundImage: `url(./src/assets/icons/squid.svg)`,
-    backgroundSize: '100%',
+    height: 24,
+    width: 24,
+    backgroundImage: 'url(./src/assets/icons/squid.svg)',
+    backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
+    border: 'none',
+    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+      boxShadow: 'inherit',
+    },
+    '&::before': {
+      display: 'none',
+    },
   },
-
-  '&::-webkit-slider-thumb': {
-    appearance: 'none',
-    width: '20px',
-    height: '20px',
-    borderRadius: '50%',
-    background: 'rgb(182, 193, 252)',
-    border: '1.5px solid rgba(72, 99, 235, 0.9)',
-    cursor: 'pointer',
-    backgroundImage: `url(./src/assets/icons/squid.svg)`,
-    backgroundSize: '100%',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
+  '& .MuiSlider-valueLabel': {
+    lineHeight: 1.2,
+    fontSize: 12,
+    background: 'unset',
+    padding: 0,
+    width: 32,
+    height: 32,
+    borderRadius: '50% 50% 50% 0',
+    backgroundColor: '#40bdbb',
+    transformOrigin: 'bottom left',
+    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+    '&::before': {display: 'none'},
+    '&.MuiSlider-valueLabelOpen': {
+      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+    },
+    '& > *': {
+      transform: 'rotate(45deg)',
+    },
   },
-
-  '&::-moz-range-thumb': {
-    width: '20px',
-    height: '20px',
-    borderRadius: '50%',
-    background: 'rgb(182, 193, 252)',
-    border: '1.5px solid rgba(72, 99, 235, 0.9)',
-    cursor: 'pointer',
-    backgroundImage: `url(./src/assets/icons/squid.svg)`,
-    backgroundSize: '100%',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  },
-
-  '&::-ms-thumb': {
-    width: '20px',
-    height: '20px',
-    borderRadius: '50%',
-    background: 'rgb(182, 193, 252)',
-    border: '1.5px solid rgba(72, 99, 235, 0.9)',
-    cursor: 'pointer',
-    backgroundImage: `url(./src/assets/icons/squid.svg)`,
-    backgroundSize: '100%',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  }
 });
 
 const MyButton = styled(Button)({
-  color: '#000',
+  color: '#40bdbb', //174 204 234
   height: 24,
   width: 24,
-  border: '1.5px solid rgba(72, 99, 235, 0.9)',
-  backgroundColor: 'rgb(182, 193, 252)',
   padding: 0,
   margin: 6,
   marginBottom: 8,
   minWidth: 0,
-  borderRadius: '50%',
+  borderRadius: 9999,
 });
+
