@@ -4,4 +4,3 @@ export default {
   HP_LEVEL: '% HP боса',
   HP_REMAINING: 'HP лишилося:'
 };
-        
