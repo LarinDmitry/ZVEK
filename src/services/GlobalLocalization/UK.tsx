@@ -15,4 +15,5 @@ export default {
   LAST: 'Останній ЗВЕК',
   STAT: 'Статистика',
   CONTACTS: 'Контакти',
+  NO_DATA: 'Немає даних',
 }

@@ -20,10 +20,11 @@ export default {
   JINNI: 'The Gini coefficient.',
   DAMAGE_GUILD: 'Guild damage, B',
   CHANGES: 'Changes',
-  NO_DATA: 'No data',
   INCREASE: 'Increased by',
   DECREASE: 'Decreased by',
   DAY: 'Day',
-  LAST_ZVEK: 'Last ZVEK Damage, B',
+  LAST_ZVEK: 'Last ZVEK Damage, T',
   ALL_PLAYERS_HAVE_DAMAGED: 'All players damaged in all days',
+  GUILD_RATING: 'Guild rating',
+  NEWBIES: 'Newbies',
 };

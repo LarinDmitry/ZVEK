@@ -1,4 +1,4 @@
-import React, {useMemo, ElementType} from 'react';
+import React, {ElementType} from 'react';
 import styled from 'styled-components';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,31 +10,20 @@ import Paper from '@mui/material/Paper';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from '../StatisticUtils';
-import {latestZveks} from '../../../DATA';
+import {globalLocalization } from 'services/GlobalUtils';
+import {useGuildData} from 'services/GlobalUtils';
+import {guildRate, newbies} from '../../../DATA';
 import {boldWeight} from 'theme/fonts';
-
-interface GuildData {
-  guildTotal: number;
-  percentageChange: number | null;
-  date: string;
-}
 
 const DamageGrow = () => {
   const {language} = useAppSelector(selectUserConfiguration);
 
-  const guildData: GuildData[] = useMemo(
-    () =>
-      latestZveks[0].info.map(({guildTotal, date}, index, arr) => {
-        const previous = arr[index - 1]?.guildTotal || 0;
-        const percentageChange = index > 0 && previous > 0 ? ((guildTotal - previous) / previous) * 100 : null;
-        return {guildTotal, percentageChange, date};
-      }),
-    []
-  );
+  const guildData = useGuildData();
 
-  const {DATE, DAMAGE_GUILD, CHANGES, NO_DATA} = localization(language);
+  const {DATE, DAMAGE_GUILD, CHANGES, GUILD_RATING, NEWBIES} = localization(language);
+  const {NO_DATA} = globalLocalization(language);
 
-  const headerValues = [DATE, DAMAGE_GUILD, CHANGES];
+  const headerValues = [DATE, DAMAGE_GUILD, CHANGES, GUILD_RATING, NEWBIES];
 
   return (
     <Container component={Paper}>
@@ -58,9 +47,15 @@ const DamageGrow = () => {
             return (
               <Row key={`guild-${idx}`}>
                 <TableCell align="center">{date}</TableCell>
-                <TableCell align="center">{(guildTotal / 1e9).toFixed(2)}</TableCell>
+                <TableCell align="center">{(guildTotal / 1e12).toFixed(2)}</TableCell>
                 <TableCell align="center">
                   <ChangeText value={percentageChange}>{changeText}</ChangeText>
+                </TableCell>
+                <TableCell align="center">
+                  <ChangeText value={guildRate[idx - 1] - guildRate[idx]}>{guildRate[idx]}</ChangeText>
+                </TableCell>
+                <TableCell align="center">
+                  <NewbiesText>{newbies[idx]}</NewbiesText>
                 </TableCell>
               </Row>
             );
@@ -81,7 +76,7 @@ const Container = styled(TableContainer)<{component: ElementType}>`
 const Row = styled(TableRow)`
   &.MuiTableRow-root {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 
@@ -104,6 +99,10 @@ const ChangeText = styled.span<{value: number | null}>`
     if (value < 0) return red100;
     return gray100;
   }};
+`;
+
+const NewbiesText = styled.span`
+  color: ${({theme}) => theme.colors.green100};
 `;
 
 export default DamageGrow;

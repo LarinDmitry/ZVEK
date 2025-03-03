@@ -15,4 +15,5 @@ export default {
   LAST: 'Последний ЗВЭК',
   STAT: 'Статистика',
   CONTACTS: 'Контакты',
+  NO_DATA: 'Нет данных',
 };

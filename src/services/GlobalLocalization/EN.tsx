@@ -15,4 +15,5 @@ export default {
   LAST: 'Last ZVEK',
   STAT: 'Statistics',
   CONTACTS: 'Contacts',
+  NO_DATA: 'No data',
 };
