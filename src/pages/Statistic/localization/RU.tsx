@@ -1,5 +1,4 @@
 export default {
-  GROW: 'Звэк движение',
   TOP_PLAYERS: 'Топ игроки последних Звэк',
   DAMAGE_DECREASE: 'Снижение урона',
   ZERO_DAMAGE: 'Нулевой дамаг последнего Звэк',
@@ -25,6 +24,4 @@ export default {
   DAY: 'День',
   LAST_ZVEK: 'Урон прошлого ЗВЭК (млрд)',
   ALL_PLAYERS_HAVE_DAMAGED: 'Все игроки нанесли урон во все дни',
-  GUILD_RATING: 'Место гильдии в рейтинге',
-  NEWBIES: 'Новые игроки',
 };

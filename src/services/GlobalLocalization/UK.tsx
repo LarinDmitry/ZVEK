@@ -16,4 +16,7 @@ export default {
   STAT: 'Статистика',
   CONTACTS: 'Контакти',
   NO_DATA: 'Немає даних',
+  GROW: 'Звек рух',
+  GUILD_RATING: 'Місце гільдії в рейтингу',
+  NEWBIES: 'Нові гравці',
 }

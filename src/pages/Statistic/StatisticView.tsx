@@ -11,13 +11,13 @@ import Tooltip from '@mui/material/Tooltip';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from './StatisticUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
 
 const StatisticView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
   const {
-    GROW,
     TOP_PLAYERS,
     DAMAGE_DECREASE,
     ZERO_DAMAGE,
@@ -32,6 +32,7 @@ const StatisticView = () => {
     MEDIUM,
     HARD,
   } = localization(language);
+  const {GROW} = globalLocalization(language);
 
   const arrValues = useMemo(
     () => [

@@ -1,5 +1,4 @@
 export default {
-  GROW: 'Звек рух',
   TOP_PLAYERS: 'Топ гравці останніх Звек',
   DAMAGE_DECREASE: 'Зниження урону',
   ZERO_DAMAGE: 'Нульовий урон останнього ЗВЕК',
@@ -25,6 +24,4 @@ export default {
   DAY: 'День',
   LAST_ZVEK: 'Урон прошлого ЗВЭК (млрд)',
   ALL_PLAYERS_HAVE_DAMAGED: 'Всі гравці нанесли урон у всі дні',
-  GUILD_RATING: 'Місце гільдії в рейтингу',
-  NEWBIES: 'Нові гравці',
 };

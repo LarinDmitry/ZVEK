@@ -1,5 +1,4 @@
 export default {
-  GROW: 'ZVEK change',
   TOP_PLAYERS: 'Top players of last ZVEKs',
   DAMAGE_DECREASE: 'Damage decrease',
   ZERO_DAMAGE: 'Zero damage at last ZVEK',
@@ -25,6 +24,4 @@ export default {
   DAY: 'Day',
   LAST_ZVEK: 'Last ZVEK Damage, T',
   ALL_PLAYERS_HAVE_DAMAGED: 'All players damaged in all days',
-  GUILD_RATING: 'Guild rating',
-  NEWBIES: 'Newbies',
 };

@@ -16,4 +16,7 @@ export default {
   STAT: 'Statistics',
   CONTACTS: 'Contacts',
   NO_DATA: 'No data',
+  GROW: 'ZVEK change',
+  GUILD_RATING: 'Guild rating',
+  NEWBIES: 'Newbies',
 };

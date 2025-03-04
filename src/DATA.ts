@@ -906,4 +906,4 @@ export const teamDetails = [
 
 export const guildRate = [12, 23, 14];
 
-export const newbies = [2, 3, 2];
+export const newbies = [2, 3, 4];

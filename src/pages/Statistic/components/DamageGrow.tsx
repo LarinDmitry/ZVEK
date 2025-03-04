@@ -20,8 +20,8 @@ const DamageGrow = () => {
 
   const guildData = useGuildData();
 
-  const {DATE, DAMAGE_GUILD, CHANGES, GUILD_RATING, NEWBIES} = localization(language);
-  const {NO_DATA} = globalLocalization(language);
+  const {DATE, DAMAGE_GUILD, CHANGES} = localization(language);
+  const {NO_DATA, GUILD_RATING, NEWBIES} = globalLocalization(language);
 
   const headerValues = [DATE, DAMAGE_GUILD, CHANGES, GUILD_RATING, NEWBIES];
 
