@@ -1,1 +1,0 @@
-import{r as n,a2 as o,a3 as r}from"./index-DAky5bUF.js";function s(e){return Object.keys(e).length===0}function u(e=null){const t=n.useContext(o);return!t||s(t)?e:t}const c=r();function a(e=c){return u(e)}function i(e){return e&&e.ownerDocument||document}function f(e){return typeof e=="string"}export{a,f as i,i as o,u};
