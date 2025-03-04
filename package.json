@@ -1,4 +1,5 @@
 {
+  "homepage": "https://larindmitry.github.io/zvek",
   "name": "zvek",
   "version": "0.1.0",
   "private": true,
@@ -6,6 +7,8 @@
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix",
     "format:fix": "prettier --write .",
