@@ -1,15 +1,15 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, lazy} from 'react';
 import {Route, createRoutesFromChildren, createHashRouter} from 'react-router-dom';
 import PageLayout from './PageLayout';
 
-import Welcome from 'pages/Welcome/WelcomeView';
-import Main from 'pages/Main/MainView';
-import Details from 'pages/Details/DetailsView';
-import Compare from 'pages/Compare/CompareView';
-import Statistic from 'pages/Statistic/StatisticView';
-import Contacts from 'pages/Contacts/ContactsView';
-import BossHP from 'pages/BossHP/BossHPView';
-import NotFound from 'pages/NotFound/NotFoundView';
+const Welcome = lazy(() => import('pages/Welcome/WelcomeView'));
+const Main = lazy(() => import('pages/Main/MainView'));
+const Details = lazy(() => import('pages/Details/DetailsView'));
+const Compare = lazy(() => import('pages/Compare/CompareView'));
+const Statistic = lazy(() => import('pages/Statistic/StatisticView'));
+const Contacts = lazy(() => import('pages/Contacts/ContactsView'));
+const BossHP = lazy(() => import('pages/BossHP/BossHPView'));
+const NotFound = lazy(() => import('pages/NotFound/NotFoundView'));
 
 const Routers = () => (
   <Fragment>
