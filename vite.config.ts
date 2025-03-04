@@ -20,12 +20,12 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/ZVEK",
+  base: "/ZVEK/",
   server: {
     port: 3000,
   },
   build: {
-    outDir: 'build',
+    outDir: 'dist',
   },
   resolve: {
     alias: {
