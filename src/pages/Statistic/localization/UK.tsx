@@ -1,5 +1,4 @@
 export default {
-  GROW: 'Звек рух',
   TOP_PLAYERS: 'Топ гравці останніх Звек',
   DAMAGE_DECREASE: 'Зниження урону',
   ZERO_DAMAGE: 'Нульовий урон останнього ЗВЕК',
@@ -18,9 +17,8 @@ export default {
   TOP: 'Топ 1,2,3',
   PERCENT: '% від усієї шкоди',
   JINNI: 'Коефіцієнт Джинні',
-  DAMAGE_GUILD: 'Шкода гільдії, млрд',
+  DAMAGE_GUILD: 'Шкода гільдії, T',
   CHANGES: 'Зміна',
-  NO_DATA: 'Немає даних',
   INCREASE: 'Збільшився на',
   DECREASE: 'Зменшився на',
   DAY: 'День',
