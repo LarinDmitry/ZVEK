@@ -24,9 +24,6 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  build: {
-    outDir: 'dist',
-  },
   resolve: {
     alias: {
       assets: path.resolve(__dirname, 'src/assets'),
