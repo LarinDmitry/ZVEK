@@ -1,5 +1,5 @@
 import React, {Fragment, lazy} from 'react';
-import {Route, createRoutesFromChildren, createBrowserRouter} from 'react-router-dom';
+import {Route, createRoutesFromChildren, createHashRouter} from 'react-router-dom';
 import PageLayout from './PageLayout';
 
 const Welcome = lazy(() => import('pages/Welcome/WelcomeView'));
@@ -26,4 +26,4 @@ const Routers = () => (
   </Fragment>
 );
 
-export const router = createBrowserRouter(createRoutesFromChildren(Routers()));
+export const router = createHashRouter(createRoutesFromChildren(Routers()));
