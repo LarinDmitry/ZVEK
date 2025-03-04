@@ -1,0 +1,16 @@
+{
+  "short_name": "zvek",
+  "name": "zvek",
+  "icons": [
+    {
+      "sizes": "1002x966",
+      "src": "logo.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "256x247",
+      "src": "favicon.ico",
+      "type": "image/x-icon"
+    }
+  ]
+}
