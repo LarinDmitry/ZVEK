@@ -903,3 +903,7 @@ export const teamDetails = [
     temple: 9,
   },
 ];
+
+export const guildRate = [27, 15, 9];
+
+export const newbies = [1, 2, 4];
