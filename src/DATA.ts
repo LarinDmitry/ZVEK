@@ -904,6 +904,6 @@ export const teamDetails = [
   },
 ];
 
-export const guildRate = [12, 23, 14];
+export const guildRate = [27, 15, 9];
 
-export const newbies = [2, 3, 4];
+export const newbies = [1, 2, 4];

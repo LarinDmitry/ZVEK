@@ -5,7 +5,7 @@ import {selectUserConfiguration} from 'store/userSlice';
 import {useGuildData, globalLocalization} from 'services/GlobalUtils';
 import {localization} from '../DashboardUtils';
 import {latestZveks, guildRate, newbies} from 'src/DATA';
-import {font_body_1_bold} from 'theme/fonts';
+import {font_body_2_bold} from 'theme/fonts';
 
 interface PlayerData {
   name: string;
@@ -19,7 +19,7 @@ const Bars = () => {
   const guildData = useGuildData();
   const {language} = useAppSelector(selectUserConfiguration);
 
-  const {BY} = localization(language);
+  const {BEST} = localization(language);
   const {NO_DATA, GROW, GUILD_RATING, NEWBIES} = globalLocalization(language);
 
   const changeText =
@@ -42,7 +42,7 @@ const Bars = () => {
             percentageChange,
           });
         acc.sort((a, b) => b.percentageChange! - a.percentageChange!);
-        acc = acc.slice(0, 3);
+        acc = acc.slice(0, 1);
 
         return acc;
       }, []),
@@ -70,7 +70,7 @@ const Bars = () => {
   return (
     <BarsDiv>
       <ZvekChange>
-        <NumDiv>{(guildData[2].guildTotal / 1e12).toFixed(0)} T</NumDiv>
+        <BoldDiv>{(guildData[2].guildTotal / 1e12).toFixed(0)} T</BoldDiv>
         <StyledDiv percentageChange={guildData[2].percentageChange ?? 0}>{changeText}</StyledDiv>
         <StyledDiv percentageChange={guildData[2].percentageChange ?? 0}>
           {(guildData[2].percentageChange ?? 0) > 0 ? growIcon : decreaseIcon}
@@ -78,18 +78,20 @@ const Bars = () => {
         <StyledText>{GROW}</StyledText>
       </ZvekChange>
 
-      <TopPlayers>
-        {playerData.map(({name, percentageChange}) => {
-          return (
-            <TopPlayersDiv>
-              <div>{name}</div>
-              <StyledDiv percentageChange={percentageChange!}>
-                &gt; {BY} {Math.abs(percentageChange!).toFixed(1)}%
-              </StyledDiv>
-            </TopPlayersDiv>
-          );
-        })}
-      </TopPlayers>
+      {playerData.map(({name, percentageChange}) => {
+        return (
+          <TopPlayers>
+            <BoldDiv>{name}</BoldDiv>
+            <StyledDiv percentageChange={percentageChange!}>
+              &gt; {Math.abs(percentageChange!).toFixed(2)}%
+            </StyledDiv>
+            <StyledDiv percentageChange={percentageChange!}>
+            {(percentageChange! ?? 0) > 0 ? growIcon : decreaseIcon}
+            </StyledDiv>
+            <StyledText>{BEST}</StyledText>
+          </TopPlayers>
+        );
+      })}
 
       <GuildRating>
         <ChangeText value={guildRate[1] - guildRate[2]}>{guildRate[2]}</ChangeText>
@@ -127,19 +129,20 @@ const ZvekChange = styled.div`
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 1rem;
   margin: 1rem;
-  text-align: center;
-  justify-content: center;
 `;
 
 const StyledText = styled.div`
   width: 100%;
 `;
 
-const NumDiv = styled.div`
-  ${font_body_1_bold};
+const BoldDiv = styled.div`
+  ${font_body_2_bold};
 `;
 
 const TopPlayers = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   border-radius: 6px;
   box-shadow:
     0 2px 1px -1px rgba(0, 0, 0, 0.2),
@@ -147,12 +150,6 @@ const TopPlayers = styled.div`
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 1rem 0 0.5rem 1rem;
   margin: 1rem;
-`;
-
-const TopPlayersDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 2fr);
-  grid-gap: 1px;
 `;
 
 const GuildRating = styled.div`
@@ -166,8 +163,6 @@ const GuildRating = styled.div`
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 1rem;
   margin: 1rem;
-  text-align: center;
-  justify-content: center;
 `;
 
 const ChangeText = styled.span<{value: number | null}>`
@@ -182,7 +177,7 @@ const ChangeText = styled.span<{value: number | null}>`
     if (value < 0) return red100;
     return gray100;
   }};
-  ${font_body_1_bold};
+  ${font_body_2_bold};
 `;
 
 const Newbies = styled.div`
@@ -193,12 +188,12 @@ const Newbies = styled.div`
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 1rem 0 0 1rem;
   margin: 1rem;
-  text-align: center;
+  justify-content: center;
 `;
 
 const NewbiesDiv = styled.div`
   color: ${({theme}) => theme.colors.green100};
-  ${font_body_1_bold};
+  ${font_body_2_bold};
   margin-bottom: 0.5rem;
 `;
 

@@ -1,3 +1,3 @@
 export default {
-    BY: 'на',
+    BEST: 'Лучший рост',
 };

@@ -1,4 +1,4 @@
 export default {
-    BY: 'на',
+    BEST: 'Найкращий ріст',
 };
         
