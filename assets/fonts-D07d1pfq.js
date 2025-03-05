@@ -1,4 +1,4 @@
-import{K as e}from"./index-DLuJz_lx.js";const t=e`
+import{K as e}from"./index-DwI-zSfn.js";const t=e`
   font-family: 'Manrope', sans-serif;
 `,n=e`
   font-weight: 400;
