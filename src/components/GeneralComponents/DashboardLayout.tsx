@@ -6,6 +6,8 @@ import {selectUserConfiguration} from 'store/userSlice';
 import {globalLocalization} from 'services/GlobalUtils';
 import Statistic from 'assets/icons/statistic.svg';
 import Contacts from 'assets/icons/contacts.svg';
+import Squid from 'assets/icons/squid.svg';
+import Persons from 'assets/icons/persons.svg';
 
 // TODO нужно стилизировать и адаптировать всю дашбордину
 
@@ -17,13 +19,13 @@ const DashboardLayout: FC = () => {
     () => [
       {
         to: '/main',
-        icon: <Statistic />,
+        icon: <Persons />,
         text: LAST,
       },
       {
         to: '/bossHP',
-        icon: <Statistic />,
-        text: 'Calculator',
+        icon: <Squid />,
+        text: 'BossHP',
       },
       {
         to: '/statistic',

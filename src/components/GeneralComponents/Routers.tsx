@@ -1,5 +1,5 @@
 import React, {Fragment, lazy} from 'react';
-import {Route, createRoutesFromChildren, createBrowserRouter} from 'react-router-dom';
+import {Route, createRoutesFromChildren, createHashRouter} from 'react-router-dom';
 import PageLayout from './PageLayout';
 import DashboardLayout from './DashboardLayout';
 
@@ -10,6 +10,7 @@ const Details = lazy(() => import('pages/Details/DetailsView'));
 const Compare = lazy(() => import('pages/Compare/CompareView'));
 const Statistic = lazy(() => import('pages/Statistic/StatisticView'));
 const Contacts = lazy(() => import('pages/Contacts/ContactsView'));
+const BossHP = lazy(() => import('pages/BossHP/BossHPView'));
 const NotFound = lazy(() => import('pages/NotFound/NotFoundView'));
 
 const Routers = () => (
@@ -21,6 +22,7 @@ const Routers = () => (
       <Route path="/compare/:id" element={<Compare />} />
       <Route path="/statistic" element={<Statistic />} />
       <Route path="/contacts" element={<Contacts />} />
+      <Route path="/bossHP" element={<BossHP />} />
     </Route>
     <Route element={<DashboardLayout />}>
       <Route path="/dashboard" element={<Dashboard />} />
@@ -29,4 +31,4 @@ const Routers = () => (
   </Fragment>
 );
 
-export const router = createBrowserRouter(createRoutesFromChildren(Routers()));
+export const router = createHashRouter(createRoutesFromChildren(Routers()));
