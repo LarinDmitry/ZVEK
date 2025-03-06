@@ -15,7 +15,7 @@ import {latestZveks} from '../../DATA';
 import Statistic from 'assets/icons/statistic.svg';
 import Contacts from 'assets/icons/contacts.svg';
 import Compare from 'assets/icons/compare.svg';
-import Dashboard from 'assets/icons/dashboard.svg';
+import Squid from 'assets/icons/squid.svg';
 import {font_header_5_bold, font_body_2_reg} from 'theme/fonts';
 
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
@@ -54,11 +54,11 @@ const MainView = () => {
           <Icon onClick={() => navigate('/statistic')}>
             <Statistic />
           </Icon>
+          <Icon onClick={() => navigate('/bossHP')}>
+            <Squid />
+          </Icon>
           <Icon onClick={() => navigate('/contacts')}>
             <Contacts />
-          </Icon>
-          <Icon onClick={() => navigate('/dashboard')}>
-            <Dashboard />
           </Icon>
         </Title>
         <Tooltip title={MIN} disableHoverListener={selectedItems.length >= 2}>

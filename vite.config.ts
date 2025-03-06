@@ -20,11 +20,9 @@ export default defineConfig({
       },
     }),
   ],
+  base: "/ZVEK",
   server: {
     port: 3000,
-  },
-  build: {
-    outDir: 'build',
   },
   resolve: {
     alias: {
@@ -36,8 +34,5 @@ export default defineConfig({
       store: path.resolve(__dirname, 'src/store'),
       stories: path.resolve(__dirname, 'src/stories'),
     },
-  },
-  optimizeDeps: {
-    exclude: ['storybook'],
-  },
+  }
 });
