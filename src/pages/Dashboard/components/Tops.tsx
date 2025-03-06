@@ -1,40 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Doughnut} from 'react-chartjs-2';
-import {Chart, ArcElement, Tooltip, Legend} from 'chart.js';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {calculateTopPlayersData} from 'services/GlobalUtils';
 import {localization} from '../DashboardUtils';
 
-Chart.register(ArcElement, Tooltip, Legend);
-
 const Tops = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {TOP_PLAYERS, OTHERS} = localization(language);
-
-  const total = calculateTopPlayersData(5)[2].guildTotal;
-  const top5Percentage = calculateTopPlayersData(5)[2].topDamagePercentage;
-  const other = (100 - top5Percentage) * total;
-  const top5 = top5Percentage * total;
-
-  const data = {
-    labels: [TOP_PLAYERS, OTHERS],
-    datasets: [
-      {
-        data: [top5, other],
-        backgroundColor: ['rgb(245, 200, 86)', 'rgb(54, 162, 23)'],
-        hoverOffset: 4,
-      },
-    ],
-  };
+  const {NAME, DAMAGE, PERCENT} = localization(language);
+  
+    const headerValues = [NAME, DAMAGE, PERCENT];
 
   return (
     <TopsDiv>
       <TopsTiles>
-        <Doughnut data={data} redraw />
+        Doughnut
       </TopsTiles>
-      <TopsTiles>Tops</TopsTiles>
+      <TopsTiles>
+        <Table>
+        <TableHead>
+          <Row>
+            {headerValues.map((value) => (
+              <TableCell align="center" key={value}>
+                <b>{value}</b>
+              </TableCell>
+            ))}
+          </Row>
+        </TableHead>
+        <TableBody>
+{calculateTopPlayersData(5)[2].topPlayers.map((name, idx) => (
+    <Row key={idx}>
+      <TableCell align="center">{name}</TableCell>
+      <TableCell align="center">{name}</TableCell>
+      <TableCell align="center">{calculateTopPlayersData(5)[2].topDamagePercentage.toFixed(2)}%</TableCell>
+    </Row>
+  ))}
+
+        </TableBody>
+      </Table></TopsTiles>
     </TopsDiv>
   );
 };
@@ -58,4 +66,11 @@ const TopsTiles = styled.div`
   margin: 1rem;
   height: 88%;
   background: #fff;
+`;
+
+const Row = styled(TableRow)`
+  &.MuiTableRow-root {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
