@@ -4,4 +4,7 @@ export default {
     NAME: 'Ник',
     DAMAGE: 'Урон, Т',
     PERCENT: 'Процент общего дамага',
+  TOTAL: 'Урон гильдии',
+  RATE: 'Рейтинг',
+  NEW: 'Новички',
 };
