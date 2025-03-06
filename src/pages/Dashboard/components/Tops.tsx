@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Doughnut} from 'react-chartjs-2';
-import {Chart, ArcElement, Tooltip, Legend} from 'chart.js';
+import {Chart, ArcElement, Tooltip, Legend, Plugin} from 'chart.js';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {calculateTopPlayersData} from 'services/GlobalUtils';
@@ -29,10 +29,24 @@ const Tops = () => {
     ],
   };
 
+  const centerText: Plugin = {
+    id: 'centerText',
+    beforeDraw: (chart) => {
+      const { width, height, ctx } = chart;
+      ctx.save();
+      ctx.font = "bold 0.9rem 'Manrope', sans-serif";
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.6);
+      ctx.restore();
+    },
+  };
+
   return (
     <TopsDiv>
       <TopsTiles>
-        <Doughnut data={data} redraw />
+        <Doughnut data={data} plugins={[centerText]} redraw />
       </TopsTiles>
       <TopsTiles>Tops</TopsTiles>
     </TopsDiv>
