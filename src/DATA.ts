@@ -903,3 +903,24 @@ export const teamDetails = [
     temple: 12,
   },
 ];
+
+export const guildStatistic = [
+  {
+    data: '01.25',
+    total: 2256435284074980,
+    rate: 27,
+    newbies: 4,
+  },
+  {
+    data: '02.25',
+    total: 4998122913240970,
+    rate: 15,
+    newbies: 2,
+  },
+  {
+    data: '03.25',
+    total: 1998168307709090,
+    rate: 9,
+    newbies: 1,
+  },
+];
