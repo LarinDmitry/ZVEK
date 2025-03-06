@@ -3,7 +3,7 @@ export default {
   OTHERS: 'Решта',
   NAME: 'Нік',
   DAMAGE: 'Дамаг, Т',
-  PERCENT: 'Відсоток загального дамагу',
+  IMPACT: 'Вклад',
   TOTAL: 'Урон гільдії',
   RATE: 'Рейтинг',
   NEW: 'Новачки',

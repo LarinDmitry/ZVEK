@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,40 +9,53 @@ import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {calculateTopPlayersData} from 'services/GlobalUtils';
 import {localization} from '../DashboardUtils';
+import {latestZveks} from 'src/DATA';
 
 const Tops = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {NAME, DAMAGE, PERCENT} = localization(language);
-  
-    const headerValues = [NAME, DAMAGE, PERCENT];
+  const {NAME, DAMAGE, IMPACT} = localization(language);
+
+  const tableData = useMemo(
+    () =>
+      latestZveks.map(({name, info}) => ({
+        name,
+        damage: info[info.length - 1].damage,
+        guildTotal: info[info.length - 1].guildTotal,
+      })),
+    []
+  );
+
+  const headerValues = [NAME, DAMAGE, IMPACT];
 
   return (
     <TopsDiv>
-      <TopsTiles>
-        Doughnut
-      </TopsTiles>
+      <TopsTiles>Doughnut</TopsTiles>
       <TopsTiles>
         <Table>
-        <TableHead>
-          <Row>
-            {headerValues.map((value) => (
-              <TableCell align="center" key={value}>
-                <b>{value}</b>
-              </TableCell>
-            ))}
-          </Row>
-        </TableHead>
-        <TableBody>
-{calculateTopPlayersData(5)[2].topPlayers.map((name, idx) => (
-    <Row key={idx}>
-      <TableCell align="center">{name}</TableCell>
-      <TableCell align="center">{name}</TableCell>
-      <TableCell align="center">{calculateTopPlayersData(5)[2].topDamagePercentage.toFixed(2)}%</TableCell>
-    </Row>
-  ))}
+          <TableHead>
+            <Row>
+              {headerValues.map((value) => (
+                <TableCell align="center" key={value}>
+                  <b>{value}</b>
+                </TableCell>
+              ))}
+            </Row>
+          </TableHead>
+          <TableBody>
+            {calculateTopPlayersData(5)[2].topPlayers.map((name, idx) => {
+              const player = tableData.find((p) => p.name === name) || {damage: 0, guildTotal: 1};
 
-        </TableBody>
-      </Table></TopsTiles>
+              return (
+                <Row key={idx}>
+                  <TableCell align="center">{name}</TableCell>
+                  <TableCell align="center">{(player.damage / 1e12).toFixed(2)}</TableCell>
+                  <TableCell align="center">{((player.damage / player.guildTotal) * 100).toFixed(2)}%</TableCell>
+                </Row>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TopsTiles>
     </TopsDiv>
   );
 };
@@ -72,5 +85,6 @@ const Row = styled(TableRow)`
   &.MuiTableRow-root {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    height: 2.6rem;
   }
 `;

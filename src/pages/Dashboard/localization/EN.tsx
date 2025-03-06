@@ -3,7 +3,7 @@ export default {
   OTHERS: 'Others',
   NAME: 'Nickname',
   DAMAGE: 'Damage, Т',
-  PERCENT: 'Percent of guild damage',
+  IMPACT: 'Impact',
   TOTAL: 'Guild total',
   RATE: 'Rate',
   NEW: 'Newbies',
