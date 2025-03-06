@@ -4,6 +4,7 @@ import en from './GlobalLocalization/EN';
 import uk from './GlobalLocalization/UK';
 import ru from './GlobalLocalization/RU';
 import SvgIcon from '@mui/material/SvgIcon';
+import {latestZveks} from 'src/DATA';
 import UK from 'assets/icons/language_uk.svg';
 import EN from 'assets/icons/language_en.svg';
 import RU from 'assets/icons/language_ru.svg';
@@ -14,10 +15,41 @@ export interface LocalizationObjProps {
   };
 }
 
+export interface TopPlayerData {
+  date: string;
+  topPlayers: string[];
+  topDamagePercentage: number;
+  guildTotal: number;
+}
+
 export const stateReducer = (state: any, action: any) => ({...state, ...action});
 
 const localizationObj = {en, uk, ru} as LocalizationObjProps;
 export const globalLocalization = (language: string) => localizationObj[language];
+
+export const calculateTopPlayersData = (topN: number): TopPlayerData[] =>
+  latestZveks[0].info
+    .map(({date, guildTotal}, index) => {
+      if (guildTotal === 0) return null;
+
+      const topPlayers = latestZveks
+        .map(({info, name}) => ({
+          name,
+          damage: info[index] ? info[index].damage : 0,
+        }))
+        .sort((a, b) => b.damage - a.damage)
+        .slice(0, topN);
+      const topDamageSum = topPlayers.reduce((sum, {damage}) => sum + damage, 0);
+      const topDamagePercentage = (topDamageSum / guildTotal) * 100;
+
+      return {
+        date,
+        topPlayers: topPlayers.map(({name}) => name),
+        topDamagePercentage,
+        guildTotal,
+      };
+    })
+    .filter((item) => item !== null);
 
 const Icon = styled(SvgIcon)`
   &.MuiSvgIcon-root {
