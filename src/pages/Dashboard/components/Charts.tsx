@@ -107,7 +107,7 @@ const Charts = () => {
   return (
     <Wrapper>
       {chartsConfig.map(({key, color, title}) => (
-        <div key={key}>
+        <Chart key={key}>
           <Line
             data={createChartData(
               (document.createElement('canvas') as HTMLCanvasElement).getContext('2d'),
@@ -116,7 +116,7 @@ const Charts = () => {
             )}
             options={createOptions(title)}
           />
-        </div>
+        </Chart>
       ))}
     </Wrapper>
   );
@@ -126,6 +126,12 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, calc(33% - 0.5rem));
   grid-column-gap: 1rem;
+`;
+
+const Chart = styled.div`
+  background: ${({theme}) => theme.colors.gray000};
+  border-radius: 12px;
+  padding-left: 0.5rem;
 `;
 
 export default Charts;
