@@ -39,9 +39,9 @@ const Charts = () => {
 
   const createGradient = useCallback((ctx: CanvasRenderingContext2D | null, color: string) => {
     if (!ctx) return color;
-    const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+    const gradient = ctx.createLinearGradient(0, 0, 0, 250);
     gradient.addColorStop(0, color);
-    gradient.addColorStop(1, 'white');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, .4)');
 
     return gradient;
   }, []);
