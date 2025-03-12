@@ -1,6 +1,8 @@
 import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
+import {Doughnut} from 'react-chartjs-2';
+import {Plugin} from 'chart.js';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,7 +16,7 @@ import {latestZveks} from 'src/DATA';
 
 const Tops = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {NAME, DAMAGE, IMPACT} = localization(language);
+  const {NAME, DAMAGE, IMPACT, TOP_PLAYERS, OTHERS} = localization(language);
   const navigate = useNavigate();
 
   const tableData = useMemo(
@@ -41,9 +43,39 @@ const Tops = () => {
 
   const headerValues = [NAME, DAMAGE, IMPACT];
 
+  const total = calculateTopPlayersData(5)[2].guildTotal;
+  const top5Percentage = calculateTopPlayersData(5)[2].topDamagePercentage;
+  const other = (100 - top5Percentage) * total;
+  const top5 = top5Percentage * total;
+
+  const data = {
+    labels: [TOP_PLAYERS, OTHERS],
+    datasets: [
+      {
+        data: [top5, other],
+        backgroundColor: ['rgb(245, 200, 86)', 'rgb(54, 162, 23)'],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
+  const centerText: Plugin = {
+    id: 'centerText',
+    beforeDraw: (chart) => {
+      const { width, height, ctx } = chart;
+      ctx.save();
+      ctx.font = "bold 0.9rem 'Manrope', sans-serif";
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.6);
+      ctx.restore();
+    },
+  };
+
   return (
     <TopsDiv>
-      <TopsTiles>Doughnut</TopsTiles>
+      <TopsTiles><Doughnut data={data} plugins={[centerText]} redraw /></TopsTiles>
       <TopsTiles>
         <Table>
           <TableHead>
