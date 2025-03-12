@@ -68,7 +68,7 @@ const Tops = () => {
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.6);
+      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.7);
       ctx.restore();
     },
   };
@@ -128,6 +128,7 @@ const TopsTiles = styled.div`
     0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 1rem;
+  padding-top: 0;
   margin: 1rem;
   height: 88%;
   background: #fff;
@@ -140,7 +141,7 @@ const Row = styled(TableRow)`
     height: 2.4rem;
     align-items: center;
     text-align: center;
-    margin: 0.3rem;
+    margin: 0.5rem;
   }
 `;
 
