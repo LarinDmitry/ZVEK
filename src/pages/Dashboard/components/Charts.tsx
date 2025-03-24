@@ -39,9 +39,9 @@ const Charts = () => {
 
   const createGradient = useCallback((ctx: CanvasRenderingContext2D | null, color: string) => {
     if (!ctx) return color;
-    const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+    const gradient = ctx.createLinearGradient(0, 0, 0, 250);
     gradient.addColorStop(0, color);
-    gradient.addColorStop(1, 'white');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, .4)');
 
     return gradient;
   }, []);
@@ -107,7 +107,7 @@ const Charts = () => {
   return (
     <Wrapper>
       {chartsConfig.map(({key, color, title}) => (
-        <div key={key}>
+        <Chart key={key}>
           <Line
             data={createChartData(
               (document.createElement('canvas') as HTMLCanvasElement).getContext('2d'),
@@ -116,7 +116,7 @@ const Charts = () => {
             )}
             options={createOptions(title)}
           />
-        </div>
+        </Chart>
       ))}
     </Wrapper>
   );
@@ -126,6 +126,12 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, calc(33% - 0.5rem));
   grid-column-gap: 1rem;
+`;
+
+const Chart = styled.div`
+  background: ${({theme}) => theme.colors.gray000};
+  border-radius: 12px;
+  padding-left: 0.5rem;
 `;
 
 export default Charts;
