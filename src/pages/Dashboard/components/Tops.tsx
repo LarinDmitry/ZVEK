@@ -29,19 +29,7 @@ const Tops = () => {
     []
   );
 
-  const arrFull = (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557" />
-    </svg>
-  );
-
-  const arrEmpty = (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      <path d="M9.502 5.513a.144.144 0 0 0-.202.134V6.65a.5.5 0 0 1-.5.5H2.5v2.9h6.3a.5.5 0 0 1 .5.5v1.003c0 .108.11.176.202.134l3.984-2.933.042-.028a.147.147 0 0 0 0-.252l-.042-.028zM8.3 5.647a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.503H2a.5.5 0 0 1-.5-.5v-3.9a.5.5 0 0 1 .5-.5h6.3z" />
-    </svg>
-  );
-
-  const headerValues = [NAME, DAMAGE, IMPACT];
+  const headerValues = [NAME, DAMAGE, IMPACT, ''];
 
   const total = calculateTopPlayersData(5)[2].guildTotal;
   const top5Percentage = calculateTopPlayersData(5)[2].topDamagePercentage;
@@ -53,55 +41,66 @@ const Tops = () => {
     datasets: [
       {
         data: [top5, other],
-        backgroundColor: ['rgb(245, 200, 86)', 'rgb(54, 162, 23)'],
+        backgroundColor: ['rgba(72, 99, 235, 0.7)', 'rgba(68, 217, 38, 0.7)'],
         hoverOffset: 4,
       },
     ],
   };
 
+  const arrowIcon = (
+    <svg fill="#000000" height="16px" width="16px" viewBox="0 0 330 330">
+      <path
+        d="M250.606,154.389l-150-149.996c-5.857-5.858-15.355-5.858-21.213,0.001
+	c-5.857,5.858-5.857,15.355,0.001,21.213l139.393,139.39L79.393,304.394c-5.857,5.858-5.857,15.355,0.001,21.213
+	C82.322,328.536,86.161,330,90,330s7.678-1.464,10.607-4.394l149.999-150.004c2.814-2.813,4.394-6.628,4.394-10.606
+	C255,161.018,253.42,157.202,250.606,154.389z"
+      />
+    </svg>
+  );
+
   const centerText: Plugin = {
     id: 'centerText',
     beforeDraw: (chart) => {
-      const { width, height, ctx } = chart;
+      const {width, height, ctx} = chart;
       ctx.save();
       ctx.font = "bold 0.9rem 'Manrope', sans-serif";
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.7);
+      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.55);
       ctx.restore();
     },
   };
 
   return (
     <TopsDiv>
-      <TopsTiles><Doughnut data={data} plugins={[centerText]} redraw /></TopsTiles>
+      <TopsTiles>
+        <DoughnutTile>
+          <Doughnut data={data} plugins={[centerText]} />
+          <ArrowToMain onClick={() => navigate('/main')}>{arrowIcon}</ArrowToMain>
+        </DoughnutTile>
+      </TopsTiles>
       <TopsTiles>
         <Table>
           <TableHead>
-            <Row>
+            <HeadRow>
               {headerValues.map((value) => (
                 <TableCell align="center" key={value}>
                   <b>{value}</b>
                 </TableCell>
               ))}
-              <TableCell align="center" onClick={() => navigate('/main')}>
-                <Button>{arrFull}</Button>
-              </TableCell>
-            </Row>
+            </HeadRow>
           </TableHead>
           <TableBody>
             {calculateTopPlayersData(5)[2].topPlayers.map((name, idx) => {
               const player = tableData.find((p) => p.name === name) || {damage: 0, guildTotal: 1};
 
               return (
-                <Row key={idx}>
+                <Row key={idx} onClick={() => navigate(`/details/${name}`)}>
                   <TableCell align="center">{name}</TableCell>
                   <TableCell align="center">{(player.damage / 1e12).toFixed(2)}</TableCell>
                   <TableCell align="center">{((player.damage / player.guildTotal) * 100).toFixed(2)}%</TableCell>
-                  <TableCell align="center" onClick={() => navigate(`/details/${name}`)}>
-                    <Button>{arrEmpty}</Button>
-                  </TableCell>
+                  <TableCell align="center">{arrowIcon}</TableCell>
                 </Row>
               );
             })}
@@ -118,7 +117,7 @@ const TopsDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
-  grid-template-columns: 30% 68%;
+  grid-template-columns: 32% 65%;
 `;
 
 const TopsTiles = styled.div`
@@ -134,37 +133,38 @@ const TopsTiles = styled.div`
   background: #fff;
 `;
 
-const Row = styled(TableRow)`
+const DoughnutTile = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+`;
+
+const ArrowToMain = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 0 0 0;
+  cursor: pointer;
+  height: 20px;
+  z-index: 10;
+`;
+
+const HeadRow = styled(TableRow)`
   &.MuiTableRow-root {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    height: 2.4rem;
-    align-items: center;
-    text-align: center;
-    margin: 0.5rem;
+    grid-template-columns: 3fr 3fr 3fr 1fr;
   }
 `;
 
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Row = styled(TableRow)`
+  &.MuiTableRow-root {
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr 1fr;
+    border-radius: 3px;
+    cursor: pointer;
 
-  svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-  }
-
-  &:hover {
-    opacity: 0.7;
-  }
-
-  &:focus {
-    outline: none;
+    &:hover {
+      background-color: rgba(83, 158, 236, 0.6);
+    }
   }
 `;
