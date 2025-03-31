@@ -2,7 +2,6 @@ import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
 import {Doughnut} from 'react-chartjs-2';
-import {Plugin} from 'chart.js';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,10 +12,11 @@ import {selectUserConfiguration} from 'store/userSlice';
 import {calculateTopPlayersData} from 'services/GlobalUtils';
 import {localization} from '../DashboardUtils';
 import {latestZveks} from 'src/DATA';
+import {font_body_1_bold} from 'theme/fonts';
 
 const Tops = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {NAME, DAMAGE, IMPACT, TOP_PLAYERS, OTHERS} = localization(language);
+  const {NAME, TOTAL, DAMAGE, IMPACT, TOP_PLAYERS, OTHERS} = localization(language);
   const navigate = useNavigate();
 
   const tableData = useMemo(
@@ -58,25 +58,12 @@ const Tops = () => {
     </svg>
   );
 
-  const centerText: Plugin = {
-    id: 'centerText',
-    beforeDraw: (chart) => {
-      const {width, height, ctx} = chart;
-      ctx.save();
-      ctx.font = "bold 0.9rem 'Manrope', sans-serif";
-      ctx.fillStyle = 'black';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(`${(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T`, width / 2, height / 1.55);
-      ctx.restore();
-    },
-  };
-
   return (
     <TopsDiv>
       <TopsTiles>
         <DoughnutTile>
-          <Doughnut data={data} plugins={[centerText]} />
+          <Doughnut data={data} />
+          <StyledText>{TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T</StyledText>
           <ArrowToMain onClick={() => navigate('/main')}>{arrowIcon}</ArrowToMain>
         </DoughnutTile>
       </TopsTiles>
@@ -115,7 +102,6 @@ export default Tops;
 
 const TopsDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
   grid-template-columns: 32% 65%;
 `;
@@ -126,18 +112,21 @@ const TopsTiles = styled.div`
     0 2px 1px -1px rgba(0, 0, 0, 0.2),
     0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
-  padding: 1rem;
-  padding-top: 0;
+  padding: 0 1rem 1rem 1rem;
   margin: 1rem;
   height: 88%;
   background: #fff;
 `;
 
 const DoughnutTile = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   position: relative;
 `;
+
+const StyledText = styled.div`
+text-align: center;
+    ${font_body_1_bold};
+    height: fit-content;
+`
 
 const ArrowToMain = styled.div`
   position: absolute;
