@@ -142,7 +142,7 @@ const BarsDiv = styled.div`
 
 const ZvekChange = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr auto auto;
   grid-template-rows: auto;
   gap: 0.3rem;
   border-radius: 6px;
@@ -167,7 +167,7 @@ const BoldDiv = styled.div`
 
 const TopPlayers = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr auto auto;
   grid-template-rows: auto;
   gap: 0.3rem;
   border-radius: 6px;
@@ -183,7 +183,7 @@ const TopPlayers = styled.div`
 
 const GuildRating = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: 1fr auto auto;
     grid-template-rows: auto;
     gap: 0.3rem;
   border-radius: 6px;
