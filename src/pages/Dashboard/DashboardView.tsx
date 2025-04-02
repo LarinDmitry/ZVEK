@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 1rem 1rem 1.5rem;
   display: grid;
-  grid-template-rows: calc(30% - 7rem) calc(70% - 7rem) 12rem;
+  grid-template-rows: calc(22% - 4rem) calc(60% - 4rem) 9rem;
   grid-row-gap: 1rem;
 `;
 
