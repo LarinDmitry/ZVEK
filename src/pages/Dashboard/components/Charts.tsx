@@ -25,8 +25,8 @@ const Charts = () => {
   const extractedData = useMemo(
     () =>
       guildStatistic.reduce<Record<string, (string | number)[]>>(
-        (acc, {data, total, rate, newbies}) => {
-          acc.labels.push(data);
+        (acc, {date, total, rate, newbies}) => {
+          acc.labels.push(date);
           acc.total.push(total);
           acc.rate.push(rate);
           acc.newbies.push(newbies);

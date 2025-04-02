@@ -12,7 +12,7 @@ import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from '../StatisticUtils';
 import {globalLocalization } from 'services/GlobalUtils';
 import {useGuildData} from 'services/GlobalUtils';
-import {guildRate, newbies} from '../../../DATA';
+import {guildStatistic} from '../../../DATA';
 import {boldWeight} from 'theme/fonts';
 
 const DamageGrow = () => {
@@ -36,7 +36,7 @@ const DamageGrow = () => {
           </Row>
         </TableHead>
         <TableBody>
-          {guildData.map(({guildTotal, percentageChange, date}, idx) => {
+          {guildData.map(({total, percentageChange, date}, idx) => {
             const changeText =
               idx > 0
                 ? percentageChange === null
@@ -47,15 +47,15 @@ const DamageGrow = () => {
             return (
               <Row key={`guild-${idx}`}>
                 <TableCell align="center">{date}</TableCell>
-                <TableCell align="center">{(guildTotal / 1e12).toFixed(2)}</TableCell>
+                <TableCell align="center">{(total / 1e12).toFixed(2)}</TableCell>
                 <TableCell align="center">
                   <ChangeText value={percentageChange}>{changeText}</ChangeText>
                 </TableCell>
                 <TableCell align="center">
-                  <ChangeText value={guildRate[idx - 1] - guildRate[idx]}>{guildRate[idx]}</ChangeText>
+                  <ChangeText value={guildStatistic[idx - 1].rate - guildStatistic[idx].rate}>{guildStatistic[idx].rate}</ChangeText>
                 </TableCell>
                 <TableCell align="center">
-                  <NewbiesText>{newbies[idx]}</NewbiesText>
+                  <NewbiesText>{guildStatistic[idx].newbies}</NewbiesText>
                 </TableCell>
               </Row>
             );
