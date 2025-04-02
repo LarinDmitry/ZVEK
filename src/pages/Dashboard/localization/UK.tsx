@@ -4,6 +4,7 @@ export default {
   NAME: 'Нік',
   DAMAGE: 'Дамаг, Т',
   IMPACT: 'Вклад',
+  BEST: 'Найкращий ріст',
   TOTAL: 'Урон гільдії',
   RATE: 'Рейтинг',
   NEW: 'Новачки',

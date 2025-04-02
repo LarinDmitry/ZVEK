@@ -18,6 +18,9 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: calc(22% - 4rem) calc(60% - 4rem) 9rem;
   grid-row-gap: 1rem;
+  @media (max-width: 800px) {
+  grid-template-rows: auto;
+  }
 `;
 
 export default DashboardView;

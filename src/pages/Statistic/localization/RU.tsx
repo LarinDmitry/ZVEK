@@ -1,5 +1,4 @@
 export default {
-  GROW: 'Звэк движение',
   TOP_PLAYERS: 'Топ игроки последних Звэк',
   DAMAGE_DECREASE: 'Снижение урона',
   ZERO_DAMAGE: 'Нулевой дамаг последнего Звэк',
@@ -18,9 +17,8 @@ export default {
   TOP: 'Топ 1,2,3',
   PERCENT: '% от всего урона',
   JINNI: 'Коэффициент Джинни',
-  DAMAGE_GUILD: 'Урон гильдии, млрд',
+  DAMAGE_GUILD: 'Урон гильдии, T',
   CHANGES: 'Изменение',
-  NO_DATA: 'Нет данных',
   INCREASE: 'Увеличился на',
   DECREASE: 'Уменьшился на',
   DAY: 'День',

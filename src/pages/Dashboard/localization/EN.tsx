@@ -4,6 +4,7 @@ export default {
   NAME: 'Nickname',
   DAMAGE: 'Damage, Т',
   IMPACT: 'Impact',
+  BEST: 'Best transformation',
   TOTAL: 'Guild total',
   RATE: 'Rate',
   NEW: 'Newbies',

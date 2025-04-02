@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import en from './GlobalLocalization/EN';
 import uk from './GlobalLocalization/UK';
 import ru from './GlobalLocalization/RU';
 import SvgIcon from '@mui/material/SvgIcon';
-import {latestZveks} from 'src/DATA';
+import {latestZveks, guildStatistic} from 'src/DATA';
+import {guildStatistic} from 'src/DATA';
 import UK from 'assets/icons/language_uk.svg';
 import EN from 'assets/icons/language_en.svg';
 import RU from 'assets/icons/language_ru.svg';
@@ -20,6 +21,11 @@ export interface TopPlayerData {
   topPlayers: string[];
   topDamagePercentage: number;
   guildTotal: number;
+
+export interface GuildData {
+  guildTotal: number;
+  percentageChange: number | null;
+  date: string;
 }
 
 export const stateReducer = (state: any, action: any) => ({...state, ...action});
@@ -50,6 +56,16 @@ export const calculateTopPlayersData = (topN: number): TopPlayerData[] =>
       };
     })
     .filter((item) => item !== null);
+
+export const useGuildData = () => {
+  return useMemo(() => {
+    return guildStatistic.map(({ total, rate, date }, index, arr) => {
+      const previous = arr[index - 1]?.total || 0;
+      const percentageChange = index > 0 && previous > 0 ? ((total - previous) / previous) * 100 : null;
+      return { total, percentageChange, rate, date };
+    });
+  }, []);
+};
 
 const Icon = styled(SvgIcon)`
   &.MuiSvgIcon-root {
