@@ -5,7 +5,6 @@ import uk from './GlobalLocalization/UK';
 import ru from './GlobalLocalization/RU';
 import SvgIcon from '@mui/material/SvgIcon';
 import {latestZveks, guildStatistic} from 'src/DATA';
-import {guildStatistic} from 'src/DATA';
 import UK from 'assets/icons/language_uk.svg';
 import EN from 'assets/icons/language_en.svg';
 import RU from 'assets/icons/language_ru.svg';
@@ -21,6 +20,7 @@ export interface TopPlayerData {
   topPlayers: string[];
   topDamagePercentage: number;
   guildTotal: number;
+}
 
 export interface GuildData {
   guildTotal: number;
