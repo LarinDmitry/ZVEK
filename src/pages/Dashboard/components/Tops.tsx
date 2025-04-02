@@ -60,8 +60,17 @@ const Tops = () => {
     <TopsDiv>
       <TopsTiles>
         <DoughnutTile>
+          {/* height: 100%;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          */}
           <Doughnut data={data} />
-          <StyledText>{TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T</StyledText>
+          <StyledText>
+            {TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T
+          </StyledText>
           <ArrowToMain onClick={() => navigate('/main')}>{arrowIcon}</ArrowToMain>
         </DoughnutTile>
       </TopsTiles>
@@ -96,40 +105,38 @@ const Tops = () => {
   );
 };
 
-export default Tops;
-
 const TopsDiv = styled.div`
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 32% 65%;
-    height: fit-content;
+  grid-template-columns: calc(28% - 0.5rem) calc(72% - 0.5rem);
 `;
 
 const TopsTiles = styled.div`
+  position: relative;
+  align-items: center;
+  display: flex;
   border-radius: 6px;
   box-shadow:
     0 2px 1px -1px rgba(0, 0, 0, 0.2),
     0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 0 1rem 1rem 1rem;
-  margin: 1rem;
   background: #fff;
 `;
 
-const DoughnutTile = styled.div`
-  position: relative;
-`;
+const DoughnutTile = styled.div``;
 
 const StyledText = styled.div`
-text-align: center;
-    ${font_body_1_bold};
-    height: fit-content;
-`
+  margin-top: 1rem;
+  text-align: center;
+  ${font_body_1_bold};
+  height: fit-content;
+`;
 
 const ArrowToMain = styled.div`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 15px;
   padding: 0.5rem 0 0 0;
   cursor: pointer;
   height: 20px;
@@ -155,3 +162,5 @@ const Row = styled(TableRow)`
     }
   }
 `;
+
+export default Tops;
