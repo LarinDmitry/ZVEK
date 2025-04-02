@@ -14,20 +14,6 @@ interface PlayerData {
   percentageChange: number | null;
 }
 
-
-// по барам:
-// поправить стрелки и размер шрифта
-// поведение для всех баров
-
-// center
-// більший дів
-// 1fr 1fr auto -> 1fr auto auto
-//
-//
-// dashboard layout
-//
-// таблиця щоб займала весь дів
-
 const Bars = () => {
   console.log('Bars');
   const guildData = useGuildData();
