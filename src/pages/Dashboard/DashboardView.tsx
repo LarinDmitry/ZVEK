@@ -13,14 +13,11 @@ const DashboardView = () => (
 );
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   padding: 1rem 1rem 1.5rem;
   display: grid;
-  grid-template-rows: calc(22% - 4rem) calc(60% - 4rem) 9rem;
+  grid-template-rows: 16% 55% 24%;
   grid-row-gap: 1rem;
-  @media (max-width: 800px) {
-  grid-template-rows: auto;
-  }
 `;
 
 export default DashboardView;

@@ -906,12 +906,6 @@ export const teamDetails = [
 
 export const guildStatistic = [
   {
-    date: '01.25',
-    total: 2256435284074980,
-    rate: 27,
-    newbies: 4,
-  },
-  {
     date: '02.25',
     total: 4998122913240970,
     rate: 15,
@@ -922,5 +916,11 @@ export const guildStatistic = [
     total: 1998168307709090,
     rate: 9,
     newbies: 1,
+  },
+  {
+    date: '03.25(2)',
+    total: 1387568253448040,
+    rate: 11,
+    newbies: 2,
   },
 ];

@@ -14,7 +14,7 @@ import {
 } from 'chart.js';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
-import {localization} from 'pages/Details/DetailsUtils';
+import {localization} from '../DashboardUtils';
 import {guildStatistic} from '../../../DATA';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler);

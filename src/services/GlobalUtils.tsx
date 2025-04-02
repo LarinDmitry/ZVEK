@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import en from './GlobalLocalization/EN';
 import uk from './GlobalLocalization/UK';
@@ -57,15 +57,12 @@ export const calculateTopPlayersData = (topN: number): TopPlayerData[] =>
     })
     .filter((item) => item !== null);
 
-export const useGuildData = () => {
-  return useMemo(() => {
-    return guildStatistic.map(({ total, rate, date }, index, arr) => {
-      const previous = arr[index - 1]?.total || 0;
-      const percentageChange = index > 0 && previous > 0 ? ((total - previous) / previous) * 100 : null;
-      return { total, percentageChange, rate, date };
-    });
-  }, []);
-};
+export const useGuildData = () =>
+  guildStatistic.map(({total, rate, date}, index, arr) => {
+    const previous = arr[index - 1]?.total || 0;
+    const percentageChange = index > 0 && previous > 0 ? ((total - previous) / previous) * 100 : null;
+    return {total, percentageChange, rate, date};
+  });
 
 const Icon = styled(SvgIcon)`
   &.MuiSvgIcon-root {

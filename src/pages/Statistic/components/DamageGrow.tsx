@@ -10,19 +10,15 @@ import Paper from '@mui/material/Paper';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from '../StatisticUtils';
-import {globalLocalization } from 'services/GlobalUtils';
+import {globalLocalization} from 'services/GlobalUtils';
 import {useGuildData} from 'services/GlobalUtils';
 import {guildStatistic} from '../../../DATA';
 import {boldWeight} from 'theme/fonts';
 
 const DamageGrow = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-
-  const guildData = useGuildData();
-
   const {DATE, DAMAGE_GUILD, CHANGES} = localization(language);
   const {NO_DATA, GUILD_RATING, NEWBIES} = globalLocalization(language);
-
   const headerValues = [DATE, DAMAGE_GUILD, CHANGES, GUILD_RATING, NEWBIES];
 
   return (
@@ -36,7 +32,7 @@ const DamageGrow = () => {
           </Row>
         </TableHead>
         <TableBody>
-          {guildData.map(({total, percentageChange, date}, idx) => {
+          {useGuildData().map(({total, percentageChange, date}, idx) => {
             const changeText =
               idx > 0
                 ? percentageChange === null
@@ -52,10 +48,12 @@ const DamageGrow = () => {
                   <ChangeText value={percentageChange}>{changeText}</ChangeText>
                 </TableCell>
                 <TableCell align="center">
-                  <ChangeText value={guildStatistic[idx - 1].rate - guildStatistic[idx].rate}>{guildStatistic[idx].rate}</ChangeText>
+                  <ChangeText value={guildStatistic[idx - 1]?.rate - guildStatistic[idx].rate}>
+                    {guildStatistic[idx].rate}
+                  </ChangeText>
                 </TableCell>
                 <TableCell align="center">
-                  <NewbiesText>{guildStatistic[idx].newbies}</NewbiesText>
+                  <NewbiesText value={guildStatistic[idx].newbies}>{guildStatistic[idx].newbies}</NewbiesText>
                 </TableCell>
               </Row>
             );
@@ -94,15 +92,20 @@ const ChangeText = styled.span<{value: number | null}>`
       colors: {red100, green100, gray100},
     },
   }) => {
-    if (value === null) return gray100;
+    if (value === null || value === 0) return gray100;
     if (value > 0) return green100;
     if (value < 0) return red100;
     return gray100;
   }};
 `;
 
-const NewbiesText = styled.span`
-  color: ${({theme}) => theme.colors.green100};
+const NewbiesText = styled.span<{value: number}>`
+  color: ${({
+    value,
+    theme: {
+      colors: {green100, gray100},
+    },
+  }) => (value === 0 ? gray100 : green100)};
 `;
 
 export default DamageGrow;
