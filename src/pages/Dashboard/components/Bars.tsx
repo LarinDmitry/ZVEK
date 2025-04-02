@@ -116,7 +116,7 @@ const Bars = () => {
 
       <GuildRating>
         <ChangeText value={guildRateChange}>{guildStatistic[2].rate}</ChangeText>
-        <StyledDiv percentageChange={guildRateChange}>{guildRateChange > 0 ? `(${-guildRateChange})` : guildRateChange < 0 ? `(+${-guildRateChange})` : 0}</StyledDiv>
+        <StyledDiv percentageChange={guildRateChange}>{guildRateChange > 0 ? `(${-guildRateChange})` : guildRateChange < 0 ? `(+${-guildRateChange})` : ""}</StyledDiv>
         <StyledIcon percentageChange={guildRateChange}>{guildRateChange > 0 ? growIcon : guildRateChange < 0 ? decreaseIcon : zeroArrow}</StyledIcon>
         <StyledText>{GUILD_RATING}</StyledText>
       </GuildRating>
