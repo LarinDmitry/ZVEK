@@ -108,7 +108,7 @@ const Icon = styled(SvgIcon)`
   &.MuiSvgIcon-root {
     font-size: 2rem;
     cursor: pointer;
-    fill: ${({theme}) => theme.colors.blue100};
+    color: ${({theme}) => theme.colors.blue100};
   }
 `;
 
