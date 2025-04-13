@@ -46,19 +46,17 @@ const DashboardLayout: FC = () => {
     [CONTACTS, LAST, STAT]
   );
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed((prev) => !prev);
-  };
-
   return (
     <Wrapper isCollapsed={isSidebarCollapsed}>
       <Sidebar isCollapsed={isSidebarCollapsed}>
         <Title>
           {!isSidebarCollapsed && <div>ZVEK</div>}
-          <Icon onClick={toggleSidebar}><SidebarIcon /></Icon>
+          <Icon onClick={() => setIsSidebarCollapsed(prev => !prev)}>
+            <SidebarIcon />
+          </Icon>
         </Title>
 
-        {menuLinks.map(({ to, text, icon }) => (
+        {menuLinks.map(({to, text, icon}) => (
           <MenuItem key={text} to={to}>
             {icon}
             {!isSidebarCollapsed && text}
@@ -71,15 +69,17 @@ const DashboardLayout: FC = () => {
 };
 
 const Wrapper = styled.div<{isCollapsed: boolean}>`
-  height: 100vh;
   display: grid;
-  grid-template-columns: ${(props) => (props.isCollapsed ? '6rem' : '16rem')} 1fr;
+  height: 100vh;
+  grid-template-columns: ${({isCollapsed}) => (isCollapsed ? '6rem' : '16rem')} 1fr;
+  transition: grid-template-columns 0.4s ease;
   background-color: ${({theme}) => theme.colors.gray050};
 `;
 
 const Title = styled.div`
-  display: grid;
-  grid-template-columns: 84% 16%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: rgb(230, 230, 230);
   ${font_header_4_bold};
   padding: 1rem;
@@ -91,40 +91,35 @@ const Icon = styled(SvgIcon)`
         fill: white;
         height: 32px;
         width: 32px;
-        align-items: center;
-        justify-content: center;
 
         &:hover {
-            border: 1.5px solid rgb(248, 203, 12);
+            border: 1.5px solid rgb(127 145 241);
             border-radius: 5px;
         }
     }
 `;
 
-
 const Sidebar = styled.div<{isCollapsed: boolean}>`
   background: rgb(14, 30, 73);
   width: ${(props) => (props.isCollapsed ? '6rem' : '16rem')};
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
   justify-items: ${(props) => (props.isCollapsed ? 'center' : 'items')};
 `;
 
 const MenuItem = styled(Link)`
-  border-left: 0.25rem solid transparent;
-  text-decoration: none;
-  display: grid;
+  display: flex;
   align-items: center;
-  grid-template-columns: 1.5rem 1fr;
-  grid-column-gap: 1.25rem;
-  height: 3.125rem;
-  padding-left: 1rem;
-  margin: 0.5rem 1rem 0.5rem 1rem;
+  gap: 1rem;
+  height: 3rem;
+  padding: 0 1rem;
+  margin: 0.5rem;
   border-radius: 1rem;
+  text-decoration: none;
   ${font_body_2_bold};
   color: rgb(230, 230, 230);
 
   &:hover {
-    background-color: rgb(248, 203, 12);
+    background-color: rgb(127 145 241);
   }
 `;
 
