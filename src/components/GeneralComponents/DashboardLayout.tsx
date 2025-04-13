@@ -1,6 +1,7 @@
 import React, {FC, useMemo, useState} from 'react';
 import {Link, Outlet} from 'react-router-dom';
 import styled from 'styled-components';
+import SvgIcon from '@mui/material/SvgIcon';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {globalLocalization} from 'services/GlobalUtils';
@@ -52,28 +53,17 @@ const DashboardLayout: FC = () => {
   return (
     <Wrapper isCollapsed={isSidebarCollapsed}>
       <Sidebar isCollapsed={isSidebarCollapsed}>
-        {isSidebarCollapsed ? (
-          <SidebarTitle onClick={toggleSidebar}>
-            <SidebarIcon />
-          </SidebarTitle>
-        ) : (
-          <SidebarTitle onClick={toggleSidebar}>
-            <div>ZVEK</div>
-            <SidebarIcon />
-          </SidebarTitle>
-        )}
-        {menuLinks.map(({to, text, icon}) =>
-          isSidebarCollapsed ? (
-            <MenuItem key={text} to={to}>
-              {icon}
-            </MenuItem>
-          ) : (
-            <MenuItem key={text} to={to}>
-              {icon}
-              {text}
-            </MenuItem>
-          )
-        )}
+        <Title>
+          {!isSidebarCollapsed && <div>ZVEK</div>}
+          <Icon onClick={toggleSidebar}><SidebarIcon /></Icon>
+        </Title>
+
+        {menuLinks.map(({ to, text, icon }) => (
+          <MenuItem key={text} to={to}>
+            {icon}
+            {!isSidebarCollapsed && text}
+          </MenuItem>
+        ))}
       </Sidebar>
       <Outlet />
     </Wrapper>
@@ -87,19 +77,36 @@ const Wrapper = styled.div<{isCollapsed: boolean}>`
   background-color: ${({theme}) => theme.colors.gray050};
 `;
 
-const SidebarTitle = styled.div`
+const Title = styled.div`
   display: grid;
   grid-template-columns: 84% 16%;
   color: rgb(230, 230, 230);
   ${font_header_4_bold};
   padding: 1rem;
-  cursor: pointer;
 `;
+
+const Icon = styled(SvgIcon)`
+    &.MuiSvgIcon-root {
+        cursor: pointer;
+        fill: white;
+        height: 32px;
+        width: 32px;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            border: 1.5px solid rgb(248, 203, 12);
+            border-radius: 5px;
+        }
+    }
+`;
+
 
 const Sidebar = styled.div<{isCollapsed: boolean}>`
   background: rgb(14, 30, 73);
   width: ${(props) => (props.isCollapsed ? '6rem' : '16rem')};
   transition: width 0.3s ease;
+  justify-items: ${(props) => (props.isCollapsed ? 'center' : 'items')};
 `;
 
 const MenuItem = styled(Link)`
