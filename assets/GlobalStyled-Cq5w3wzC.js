@@ -1,13 +1,13 @@
-import{K as r}from"./index-DwI-zSfn.js";import{i as o,j as a}from"./fonts-D07d1pfq.js";const p=r`
-  ${a};
+import{a4 as a,c as r,a5 as o}from"./index-mt-46Lye.js";const l=r`
+  ${o};
   border-radius: 4px;
   box-shadow:
     0 2px 1px -1px rgba(0, 0, 0, 0.2),
     0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 1rem;
-`,s=r`
-  ${o};
+`,p=r`
+  ${a};
   color: ${({theme:t})=>t.colors.gray000};
   background: linear-gradient(to right, rgb(141, 252, 253), rgb(201, 254, 255));
   -webkit-background-clip: text;
@@ -27,4 +27,4 @@ import{K as r}from"./index-DwI-zSfn.js";import{i as o,j as a}from"./fonts-D07d1p
         0 0 20px rgb(201, 254, 255);
     }
   }
-`;export{p as P,s as w};
+`;export{l as P,p as w};

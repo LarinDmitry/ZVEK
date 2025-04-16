@@ -1,7 +1,7 @@
-import{w as e,x as n,y as c,F as i,j as r,v as t,A as l,S as u}from"./index-DwI-zSfn.js";import{F as g}from"./arrow-C0Jy27Ei.js";import{d}from"./fonts-D07d1pfq.js";const b=()=>{const o=e(),{language:s}=n(c),{BACK:a}=i(s);return r.jsxs(m,{onClick:()=>o("/main"),children:[r.jsx(p,{children:r.jsx(g,{})}),a]})},m=t(l)`
+import{e,u as n,s as c,b as i,j as r,$ as l,d as t,M as u,S as g}from"./index-mt-46Lye.js";import{F as d}from"./arrow-Ca_Wtlwr.js";const h=()=>{const o=e(),{language:s}=n(c),{BACK:a}=i(s);return r.jsxs(m,{onClick:()=>o("/main"),children:[r.jsx(p,{children:r.jsx(d,{})}),a]})},m=t(u)`
   &.MuiButtonBase-root {
     width: 5rem;
-    ${d};
+    ${l};
     color: ${({theme:o})=>o.colors.gray000};
     background: ${({theme:o})=>o.colors.blue100};
     border-radius: 16px;
@@ -11,7 +11,7 @@ import{w as e,x as n,y as c,F as i,j as r,v as t,A as l,S as u}from"./index-DwI-
       background: ${({theme:o})=>o.colors.blue100};
     }
   }
-`,p=t(u)`
+`,p=t(g)`
   &.MuiSvgIcon-root {
     width: 1rem;
     height: 1rem;
@@ -19,4 +19,4 @@ import{w as e,x as n,y as c,F as i,j as r,v as t,A as l,S as u}from"./index-DwI-
     fill: ${({theme:o})=>o.colors.gray000};
     transform: rotate(90deg);
   }
-`;export{b as B};
+`;export{h as B};
