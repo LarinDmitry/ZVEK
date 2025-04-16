@@ -51,7 +51,7 @@ const DashboardLayout: FC = () => {
       <Sidebar isCollapsed={isSidebarCollapsed}>
         <Title>
           {!isSidebarCollapsed && <div>ZVEK</div>}
-          <Icon onClick={() => setIsSidebarCollapsed(prev => !prev)}>
+          <Icon onClick={() => setIsSidebarCollapsed((prev) => !prev)}>
             <SidebarIcon />
           </Icon>
         </Title>
@@ -86,17 +86,12 @@ const Title = styled.div`
 `;
 
 const Icon = styled(SvgIcon)`
-    &.MuiSvgIcon-root {
-        cursor: pointer;
-        fill: white;
-        height: 32px;
-        width: 32px;
-
-        &:hover {
-            border: 1.5px solid rgb(127 145 241);
-            border-radius: 5px;
-        }
-    }
+  &.MuiSvgIcon-root {
+    cursor: pointer;
+    fill: white;
+    height: 32px;
+    width: 32px;
+  }
 `;
 
 const Sidebar = styled.div<{isCollapsed: boolean}>`

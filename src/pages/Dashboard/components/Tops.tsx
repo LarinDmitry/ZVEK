@@ -5,13 +5,15 @@ import {Doughnut} from 'react-chartjs-2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import SvgIcon from '@mui/material/SvgIcon';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {calculateTopPlayersData} from 'services/GlobalUtils';
 import {localization} from '../DashboardUtils';
 import {latestZveks} from 'src/DATA';
+import {BlockStyles} from 'pages/Dashboard/DashboardStyled';
+import ArrowLink from 'assets/icons/arrow_link.svg';
 import {font_body_1_bold} from 'theme/fonts';
 
 const Tops = () => {
@@ -29,132 +31,117 @@ const Tops = () => {
     []
   );
 
-  const headerValues = [NAME, DAMAGE, IMPACT, ''];
-
   const total = calculateTopPlayersData(5)[2].guildTotal;
   const top5Percentage = calculateTopPlayersData(5)[2].topDamagePercentage;
-  const other = (100 - top5Percentage) * total;
-  const top5 = top5Percentage * total;
 
   const data = {
     labels: [TOP_PLAYERS, OTHERS],
     datasets: [
       {
-        data: [top5, other],
+        data: [top5Percentage * total, (100 - top5Percentage) * total],
         backgroundColor: ['rgba(72, 99, 235, 0.7)', 'rgba(68, 217, 38, 0.7)'],
         hoverOffset: 4,
       },
     ],
   };
 
-  const arrowIcon = (
-    <svg width="16" height="16" viewBox="1 1 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M3.64645 11.3536C3.45118 11.1583 3.45118 10.8417 3.64645 10.6465L10.2929 4L6 4C5.72386 4 5.5 3.77614 5.5 3.5C5.5 3.22386 5.72386 3 6 3L11.5 3C11.6326 3 11.7598 3.05268 11.8536 3.14645C11.9473 3.24022 12 3.36739 12 3.5L12 9.00001C12 9.27615 11.7761 9.50001 11.5 9.50001C11.2239 9.50001 11 9.27615 11 9.00001V4.70711L4.35355 11.3536C4.15829 11.5488 3.84171 11.5488 3.64645 11.3536Z"
-        fill="currentColor"
-      ></path>
-    </svg>
-  );
+  const headerValues = [NAME, DAMAGE, IMPACT, ''];
 
   return (
-    <TopsDiv>
-      <TopsTiles>
-        <DoughnutTile>
-          {/* height: 100%;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          */}
+    <Wrapper>
+      <Chart>
+        <DoughnutWrapper>
           <Doughnut data={data} />
-          <StyledText>
-            {TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T
-          </StyledText>
-          <ArrowToMain onClick={() => navigate('/main')}>{arrowIcon}</ArrowToMain>
-        </DoughnutTile>
-      </TopsTiles>
-      <TopsTiles>
+        </DoughnutWrapper>
+        <Text>
+          {TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T
+        </Text>
+        <Icon onClick={() => navigate('/main')}>
+          <ArrowLink />
+        </Icon>
+      </Chart>
+
+      <TopsTable>
         <Table>
-          <TableHead>
-            <HeadRow>
-              {headerValues.map((value) => (
-                <TableCell align="center" key={value}>
-                  <b>{value}</b>
-                </TableCell>
-              ))}
-            </HeadRow>
-          </TableHead>
+          <TableRow>
+            {headerValues.map((value) => (
+              <TableCell align="center" key={value}>
+                <b>{value}</b>
+              </TableCell>
+            ))}
+          </TableRow>
           <TableBody>
             {calculateTopPlayersData(5)[2].topPlayers.map((name, idx) => {
               const player = tableData.find((p) => p.name === name) || {damage: 0, guildTotal: 1};
+              const arrValues = [
+                name,
+                (player.damage / 1e12).toFixed(2),
+                `${((player.damage / player.guildTotal) * 100).toFixed(2)}%`,
+                <ArrowLink />,
+              ];
 
               return (
                 <Row key={idx} onClick={() => navigate(`/details/${name}`)}>
-                  <TableCell align="center">{name}</TableCell>
-                  <TableCell align="center">{(player.damage / 1e12).toFixed(2)}</TableCell>
-                  <TableCell align="center">{((player.damage / player.guildTotal) * 100).toFixed(2)}%</TableCell>
-                  <TableCell align="center">{arrowIcon}</TableCell>
+                  {arrValues.map((item, idx) => (
+                    <TableCell key={idx} align="center">
+                      {item}
+                    </TableCell>
+                  ))}
                 </Row>
               );
             })}
           </TableBody>
         </Table>
-      </TopsTiles>
-    </TopsDiv>
+      </TopsTable>
+    </Wrapper>
   );
 };
 
-const TopsDiv = styled.div`
+const Wrapper = styled.div`
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: calc(28% - 0.5rem) calc(72% - 0.5rem);
+  grid-template-columns: calc(35% - 0.5rem) calc(65% - 0.5rem);
 `;
 
-const TopsTiles = styled.div`
+const Chart = styled.div`
+  ${BlockStyles};
   position: relative;
-  align-items: center;
   display: flex;
-  border-radius: 6px;
-  box-shadow:
-    0 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0 1px 1px 0 rgba(0, 0, 0, 0.14),
-    0 1px 3px 0 rgba(0, 0, 0, 0.12);
-  padding: 0 1rem 1rem 1rem;
-  background: #fff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const DoughnutTile = styled.div``;
+const TopsTable = styled.div`
+  ${BlockStyles};
+  height: 100%;
+  display: flex;
+`;
 
-const StyledText = styled.div`
-  margin-top: 1rem;
-  text-align: center;
+const DoughnutWrapper = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: center;
+`;
+
+const Text = styled.div`
   ${font_body_1_bold};
-  height: fit-content;
+  margin-top: 0.5rem;
+  text-align: center;
 `;
 
-const ArrowToMain = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  padding: 0.5rem 0 0 0;
-  cursor: pointer;
-  height: 20px;
-  z-index: 10;
-`;
-
-const HeadRow = styled(TableRow)`
-  &.MuiTableRow-root {
-    display: grid;
-    grid-template-columns: 3fr 3fr 3fr 1fr;
+const Icon = styled(SvgIcon)`
+  &.MuiSvgIcon-root {
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
 `;
 
 const Row = styled(TableRow)`
   &.MuiTableRow-root {
-    display: grid;
-    grid-template-columns: 3fr 3fr 3fr 1fr;
-    border-radius: 3px;
+    position: relative;
     cursor: pointer;
 
     &:hover {

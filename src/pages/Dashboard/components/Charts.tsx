@@ -15,6 +15,7 @@ import {
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
 import {localization} from '../DashboardUtils';
+import {BlockStyles} from 'pages/Dashboard/DashboardStyled';
 import {guildStatistic} from '../../../DATA';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler);
@@ -129,6 +130,7 @@ const Wrapper = styled.div`
 `;
 
 const Chart = styled.div`
+  ${BlockStyles};
   background: ${({theme}) => theme.colors.gray000};
   border-radius: 12px;
   padding-left: 0.5rem;
