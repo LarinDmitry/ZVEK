@@ -71,7 +71,7 @@ export const font_header_3_bold = css`
 export const font_header_4_reg = css`
   ${ManropeFont}
   ${regularWeight}
-  font-size: 2rem;
+  font-size: 1.75rem;
   line-height: 2.125rem;
   letter-spacing: -0.64px;
 `;
@@ -79,7 +79,7 @@ export const font_header_4_reg = css`
 export const font_header_4_bold = css`
   ${ManropeFont}
   ${boldWeight}
-  font-size: 2rem;
+  font-size: 1.75rem;
   line-height: 2.125rem;
   letter-spacing: -0.64px;
 `;

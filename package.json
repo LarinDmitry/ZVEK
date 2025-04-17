@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && copy dist\\index.html dist\\404.html",
     "deploy": "gh-pages -d dist",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix",

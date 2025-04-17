@@ -1,5 +1,5 @@
 import React, {Fragment, lazy} from 'react';
-import {Route, createRoutesFromChildren, createHashRouter} from 'react-router-dom';
+import {Route, createRoutesFromChildren, createBrowserRouter} from 'react-router-dom';
 import PageLayout from './PageLayout';
 import DashboardLayout from './DashboardLayout';
 
@@ -31,4 +31,6 @@ const Routers = () => (
   </Fragment>
 );
 
-export const router = createHashRouter(createRoutesFromChildren(Routers()));
+export const router = createBrowserRouter(createRoutesFromChildren(Routers()), {
+  basename: '/ZVEK',
+});
