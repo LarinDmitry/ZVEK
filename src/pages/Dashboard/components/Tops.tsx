@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
-import {Doughnut} from 'react-chartjs-2';
+import {Chart} from 'react-chartjs-2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,8 +18,9 @@ import {font_body_1_bold} from 'theme/fonts';
 
 const Tops = () => {
   const {language} = useAppSelector(selectUserConfiguration);
-  const {NAME, TOTAL, DAMAGE, IMPACT, TOP_PLAYERS, OTHERS} = localization(language);
   const navigate = useNavigate();
+
+  const {NAME, TOTAL, DAMAGE, IMPACT, TOP_PLAYERS, OTHERS} = localization(language);
 
   const tableData = useMemo(
     () =>
@@ -45,13 +46,27 @@ const Tops = () => {
     ],
   };
 
+  const options = useMemo(
+    () => ({
+      responsive: true,
+      plugins: {
+        legend: {position: 'bottom'},
+        title: {
+          display: true,
+          text: TOTAL,
+        },
+      },
+    }),
+    [TOTAL]
+  ) as any;
+
   const headerValues = [NAME, DAMAGE, IMPACT, ''];
 
   return (
     <Wrapper>
-      <Chart>
+      <ChartBlock>
         <DoughnutWrapper>
-          <Doughnut data={data} />
+          <Chart key={`chart-${language}-${total}-${top5Percentage}`} type="doughnut" data={data} options={options} />
         </DoughnutWrapper>
         <Text>
           {TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T
@@ -59,7 +74,7 @@ const Tops = () => {
         <Icon onClick={() => navigate('/main')}>
           <ArrowLink />
         </Icon>
-      </Chart>
+      </ChartBlock>
 
       <TopsTable>
         <Table>
@@ -103,7 +118,7 @@ const Wrapper = styled.div`
   grid-template-columns: calc(35% - 0.5rem) calc(65% - 0.5rem);
 `;
 
-const Chart = styled.div`
+const ChartBlock = styled.div`
   ${BlockStyles};
   position: relative;
   display: flex;
