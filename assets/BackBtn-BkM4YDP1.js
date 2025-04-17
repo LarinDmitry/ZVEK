@@ -1,4 +1,4 @@
-import{e,u as n,s as c,b as i,j as r,$ as l,d as t,M as u,S as g}from"./index-D4fIbGbE.js";import{F as d}from"./arrow-BrWn4rA9.js";const h=()=>{const o=e(),{language:s}=n(c),{BACK:a}=i(s);return r.jsxs(m,{onClick:()=>o("/main"),children:[r.jsx(p,{children:r.jsx(d,{})}),a]})},m=t(u)`
+import{e,u as n,s as c,b as i,j as r,$ as l,d as t,M as u,S as g}from"./index-D75Q-jW6.js";import{F as d}from"./arrow-C8UPlpyP.js";const h=()=>{const o=e(),{language:s}=n(c),{BACK:a}=i(s);return r.jsxs(m,{onClick:()=>o("/main"),children:[r.jsx(p,{children:r.jsx(d,{})}),a]})},m=t(u)`
   &.MuiButtonBase-root {
     width: 5rem;
     ${l};

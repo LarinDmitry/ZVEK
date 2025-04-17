@@ -1,0 +1,1 @@
+import{S as t,r,j as m,p as c}from"./index-D75Q-jW6.js";function u(n,o){function e(a,s){return m.jsx(t,c({"data-testid":`${o}Icon`,ref:s},a,{children:n}))}return e.muiName=t.muiName,r.memo(r.forwardRef(e))}export{u as c};
