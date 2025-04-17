@@ -134,6 +134,8 @@ const Chart = styled.div`
   background: ${({theme}) => theme.colors.gray000};
   border-radius: 12px;
   padding-left: 0.5rem;
+  align-items: center;
+  display: flex;
 `;
 
 export default Charts;
