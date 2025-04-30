@@ -59,7 +59,7 @@ const DashboardLayout: FC = () => {
 
         {menuLinks.map(({to, text, icon}) => (
           <MenuItem key={text} to={to}>
-            {icon}
+            <SideIcon>{icon}</SideIcon>
             {!isSidebarCollapsed && text}
           </MenuItem>
         ))}
@@ -92,6 +92,13 @@ const Icon = styled(SvgIcon)`
     fill: ${({theme}) => theme.colors.gray000};
     height: 2rem;
     width: 2rem;
+  }
+`;
+
+const SideIcon = styled(Icon)`
+  &.MuiSvgIcon-root {
+    height: 1.5rem;
+    width: 1.5rem;
   }
 `;
 
