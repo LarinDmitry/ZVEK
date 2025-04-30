@@ -1,5 +1,5 @@
 import React, {Fragment, lazy} from 'react';
-import {Route, createRoutesFromChildren, createBrowserRouter} from 'react-router-dom';
+import {Route, createRoutesFromChildren, createBrowserRouter} from 'react-router';
 import PageLayout from './PageLayout';
 import DashboardLayout from './DashboardLayout';
 

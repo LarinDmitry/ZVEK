@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "paths": {
       "assets/*": ["./src/assets/*"],
       "components/*": ["./src/components/*"],
@@ -23,9 +23,11 @@
       "services/*": ["./src/services/*"],
       "theme/*": ["./src/theme/*"],
       "store/*": ["./src/store/*"],
-      "stories/*": ["./src/stories/*"]
+      "stories/*": ["./src/stories/*"],
+      "api/*": ["./src/api/*"]
     },
     "types": ["vite-plugin-svgr/client"]
   },
-  "include": ["src", "custom.d.ts", "vite.config.ts"]
+  "include": ["src",
+    "src/custom.d.ts", "vite.config.ts", "eslint.config.js"]
 }

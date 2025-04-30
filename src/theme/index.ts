@@ -1,7 +1,10 @@
+import type {AppTheme} from './types';
 import breakpoints from './breakpoints';
 import colors from './colors';
 
-export default {
+const MainTheme: AppTheme = {
   breakpoints,
   colors,
 };
+
+export default MainTheme;

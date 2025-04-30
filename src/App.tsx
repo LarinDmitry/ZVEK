@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react';
-import {RouterProvider} from 'react-router-dom';
+import {RouterProvider} from 'react-router';
 import {ThemeProvider} from 'styled-components';
 import {Provider} from 'react-redux';
 import {ErrorBoundary} from 'react-error-boundary';

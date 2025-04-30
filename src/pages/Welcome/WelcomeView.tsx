@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import styled, {keyframes} from 'styled-components';
 import LanguageSelector from 'components/GeneralComponents/LanguageSelector';
 import Button from '@mui/material/Button';

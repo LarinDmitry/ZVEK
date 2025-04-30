@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import Checkbox from '@mui/material/Checkbox';
 import SvgIcon from '@mui/material/SvgIcon';
 import useQuery from 'services/useQuery';
@@ -193,7 +193,7 @@ const Collapsible = styled.div`
   grid-template-columns: repeat(5, auto);
   gap: 0.5rem;
   padding: 0.5rem 0;
-  border-top: 1px solid ${({theme}) => theme.colors.gray200};
+  border-top: 1px solid ${({theme}) => theme.colors.gray100};
 
   ${Hero} {
     justify-content: flex-end;

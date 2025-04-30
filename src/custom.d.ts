@@ -1,3 +1,6 @@
+import 'styled-components';
+import type {AppTheme} from 'theme/types';
+
 declare module '*.svg' {
   import React = require('react');
   export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -17,4 +20,8 @@ declare module '*.png' {
 declare module '*.webp' {
   const path: string;
   export default path;
+}
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends AppTheme {}
 }

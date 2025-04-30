@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams} from 'react-router';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import LineChart from './components/LineChart';

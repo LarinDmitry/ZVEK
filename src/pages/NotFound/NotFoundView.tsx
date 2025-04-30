@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import Button from '@mui/material/Button';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';

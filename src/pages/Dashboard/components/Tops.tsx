@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import {Chart as ChartJS, ArcElement, Tooltip, Legend, Title} from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 import Table from '@mui/material/Table';

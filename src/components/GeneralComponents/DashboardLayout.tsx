@@ -1,5 +1,5 @@
 import React, {FC, useMemo, useState} from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import {Link, Outlet} from 'react-router';
 import styled from 'styled-components';
 import SvgIcon from '@mui/material/SvgIcon';
 import {useAppSelector} from 'services/hooks';
@@ -72,7 +72,7 @@ const DashboardLayout: FC = () => {
 const Wrapper = styled.div<{iscollapsed: number}>`
   display: grid;
   height: 100vh;
-  grid-template-columns: ${({iscollapsed}) => (iscollapsed ? 6 : 16)rem} 1fr;
+  grid-template-columns: ${({iscollapsed}) => (iscollapsed ? 6 : 16)}rem 1fr;
   transition: grid-template-columns 0.4s ease;
   background-color: ${({theme}) => theme.colors.gray050};
 `;
@@ -97,9 +97,9 @@ const Icon = styled(SvgIcon)`
 
 const Sidebar = styled.div<{iscollapsed: number}>`
   background: rgb(14, 30, 73);
-  width: ${({iscollapsed}) => (isCollapsed ? 6 : 16)rem};
+  width: ${({iscollapsed}) => (iscollapsed ? 6 : 16)}rem;
   transition: width 0.4s ease;
-  justify-items: ${({iscollapsed}) => (isCollapsed ? 'center' : 'inherit')};
+  justify-items: ${({iscollapsed}) => (iscollapsed ? 'center' : 'inherit')};
 `;
 
 const MenuItem = styled(Link)`

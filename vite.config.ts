@@ -12,13 +12,12 @@ export default defineConfig({
       include: '**/*.svg',
     }),
     viteTsconfigPaths(),
-    react(),
-    checker({
-      typescript: true,
-      eslint: {
-        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+    react({
+      babel: {
+        plugins: [['babel-plugin-styled-components']],
       },
     }),
+    checker({typescript: true}),
   ],
   base: "/ZVEK",
   server: {
