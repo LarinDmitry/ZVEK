@@ -18,7 +18,7 @@ const DashboardLayout: FC = () => {
   const {language} = useAppSelector(selectUserConfiguration);
   const {LAST, STAT, CONTACTS} = globalLocalization(language);
 
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
 
   const menuLinks = useMemo(
     () => [
@@ -47,9 +47,10 @@ const DashboardLayout: FC = () => {
   );
 
   return (
-    <Wrapper isCollapsed={isSidebarCollapsed}>
-      <Sidebar isCollapsed={isSidebarCollapsed}>
+    <Wrapper iscollapsed={+isSidebarCollapsed}>
+      <Sidebar iscollapsed={+isSidebarCollapsed}>
         <Title>
+          {/* Here will be log instead of text */}
           {!isSidebarCollapsed && <div>ZVEK</div>}
           <Icon onClick={() => setIsSidebarCollapsed((prev) => !prev)}>
             <SidebarIcon />
@@ -68,10 +69,10 @@ const DashboardLayout: FC = () => {
   );
 };
 
-const Wrapper = styled.div<{isCollapsed: boolean}>`
+const Wrapper = styled.div<{iscollapsed: number}>`
   display: grid;
   height: 100vh;
-  grid-template-columns: ${({isCollapsed}) => (isCollapsed ? '6rem' : '16rem')} 1fr;
+  grid-template-columns: ${({iscollapsed}) => (iscollapsed ? 6 : 16)rem} 1fr;
   transition: grid-template-columns 0.4s ease;
   background-color: ${({theme}) => theme.colors.gray050};
 `;
@@ -88,17 +89,17 @@ const Title = styled.div`
 const Icon = styled(SvgIcon)`
   &.MuiSvgIcon-root {
     cursor: pointer;
-    fill: white;
-    height: 32px;
-    width: 32px;
+    fill: ${({theme}) => theme.colors.gray000};
+    height: 2rem;
+    width: 2rem;
   }
 `;
 
-const Sidebar = styled.div<{isCollapsed: boolean}>`
+const Sidebar = styled.div<{iscollapsed: number}>`
   background: rgb(14, 30, 73);
-  width: ${(props) => (props.isCollapsed ? '6rem' : '16rem')};
+  width: ${({iscollapsed}) => (isCollapsed ? 6 : 16)rem};
   transition: width 0.4s ease;
-  justify-items: ${(props) => (props.isCollapsed ? 'center' : 'items')};
+  justify-items: ${({iscollapsed}) => (isCollapsed ? 'center' : 'inherit')};
 `;
 
 const MenuItem = styled(Link)`
@@ -114,7 +115,7 @@ const MenuItem = styled(Link)`
   color: rgb(230, 230, 230);
 
   &:hover {
-    background-color: rgb(127 145 241);
+    background-color: rgb(127, 145, 241);
   }
 `;
 
