@@ -1,1 +1,0 @@
-import{r as n,an as s,ao as o}from"./index-DqtByJw7.js";function r(e){return Object.keys(e).length===0}function u(e=null){const t=n.useContext(s);return!t||r(t)?e:t}const a=o();function m(e=a){return u(e)}export{m as a,u};
