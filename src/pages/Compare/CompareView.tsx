@@ -150,7 +150,7 @@ const CompareView = () => {
 
   return (
     <Wrapper>
-      <BackBtn />
+      <BackBtn to='/main' />
       <Charts>
         <div>
           <Bar

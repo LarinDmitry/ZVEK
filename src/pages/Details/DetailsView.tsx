@@ -45,7 +45,7 @@ const DetailsView = () => {
   return (
     <Wrapper>
       <Header>
-        <BackBtn />
+        <BackBtn to="/main" />
         <NickName>
           {STATISTIC}
           <b>“{id}”</b>

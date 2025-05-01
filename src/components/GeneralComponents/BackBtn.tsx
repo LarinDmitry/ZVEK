@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useNavigate} from 'react-router';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
@@ -9,13 +9,17 @@ import {globalLocalization} from 'services/GlobalUtils';
 import Arrow from 'assets/icons/arrow.svg';
 import {font_body_4_reg} from 'theme/fonts';
 
-const BackBtn = () => {
+interface Props {
+  to?: string;
+}
+
+const BackBtn:FC<Props> = ({to}) => {
   const navigate = useNavigate();
   const {language} = useAppSelector(selectUserConfiguration);
   const {BACK} = globalLocalization(language);
 
   return (
-    <Wrapper onClick={() => navigate('/main')}>
+    <Wrapper onClick={() => navigate(to || '/dashboard')}>
       <Icon>
         <Arrow />
       </Icon>

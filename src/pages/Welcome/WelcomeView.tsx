@@ -38,7 +38,7 @@ const WelcomeView = () => {
       </Leaves>
       <Content>
         <Title>{WELCOME}</Title>
-        <Inside variant="contained" onClick={() => navigate('/main')}>
+        <Inside variant="contained" onClick={() => navigate('/dashboard')}>
           {COME}
         </Inside>
       </Content>

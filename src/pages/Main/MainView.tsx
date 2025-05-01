@@ -12,11 +12,9 @@ import {selectUserConfiguration} from 'store/userSlice';
 import {globalLocalization} from 'services/GlobalUtils';
 import {localization} from './MainUtils';
 import {latestZveks} from '../../DATA';
-import Statistic from 'assets/icons/statistic.svg';
-import Contacts from 'assets/icons/contacts.svg';
 import Compare from 'assets/icons/compare.svg';
-import Squid from 'assets/icons/squid.svg';
 import {font_header_5_bold, font_body_2_reg} from 'theme/fonts';
+import BackBtn from 'components/GeneralComponents/BackBtn';
 
 const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 
@@ -50,16 +48,8 @@ const MainView = () => {
     <Wrapper>
       <Header>
         <Title>
+          <BackBtn />
           {LAST} - {date}
-          <Icon onClick={() => navigate('/statistic')}>
-            <Statistic />
-          </Icon>
-          <Icon onClick={() => navigate('/bossHP')}>
-            <Squid />
-          </Icon>
-          <Icon onClick={() => navigate('/contacts')}>
-            <Contacts />
-          </Icon>
         </Title>
         <Tooltip title={MIN} disableHoverListener={selectedItems.length >= 2}>
           <span>
