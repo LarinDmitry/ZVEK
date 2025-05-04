@@ -111,6 +111,11 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 1rem;
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+  }
 `;
 
 const Box = styled.div`

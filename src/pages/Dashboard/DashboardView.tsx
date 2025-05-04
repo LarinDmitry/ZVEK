@@ -18,6 +18,12 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: calc(15% - 2rem) calc(58% - 2rem) auto;
   grid-row-gap: 1rem;
+  background-color: ${({theme}) => theme.colors.gray000};
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    height: 100%;
+    grid-template-rows: repeat(3, auto);
+  }
 `;
 
 export default DashboardView;

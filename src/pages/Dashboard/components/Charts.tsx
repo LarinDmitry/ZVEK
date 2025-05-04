@@ -127,6 +127,11 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, calc(33% - 0.5rem));
   grid-column-gap: 1rem;
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+  }
 `;
 
 const Chart = styled.div`

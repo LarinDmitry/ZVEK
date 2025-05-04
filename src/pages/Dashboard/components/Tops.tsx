@@ -105,6 +105,11 @@ const Wrapper = styled.div`
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: calc(35% - 0.5rem) calc(65% - 0.5rem);
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+  }
 `;
 
 const ChartBlock = styled.div`

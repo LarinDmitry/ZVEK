@@ -12,8 +12,6 @@ import Squid from 'assets/icons/squid.svg';
 import Persons from 'assets/icons/persons.svg';
 import {font_body_2_bold, font_header_4_bold} from 'theme/fonts';
 
-// TODO нужно стилизировать и адаптировать всю дашбордину
-
 const DashboardLayout: FC = () => {
   const {language} = useAppSelector(selectUserConfiguration);
   const {LAST, STAT, CONTACTS} = globalLocalization(language);
@@ -60,7 +58,7 @@ const DashboardLayout: FC = () => {
         {menuLinks.map(({to, text, icon}) => (
           <MenuItem key={text} to={to}>
             <SideIcon>{icon}</SideIcon>
-            {!isSidebarCollapsed && text}
+            {!isSidebarCollapsed && <div>{text}</div>}
           </MenuItem>
         ))}
       </Sidebar>
@@ -75,15 +73,11 @@ const Wrapper = styled.div<{iscollapsed: number}>`
   grid-template-columns: ${({iscollapsed}) => (iscollapsed ? 6 : 16)}rem 1fr;
   transition: grid-template-columns 0.4s ease;
   background-color: ${({theme}) => theme.colors.gray050};
-`;
 
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: rgb(230, 230, 230);
-  ${font_header_4_bold};
-  padding: 1rem;
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    grid-template-columns: 1fr;
+    grid-template-rows: 4rem auto;
+  }
 `;
 
 const Icon = styled(SvgIcon)`
@@ -95,18 +89,26 @@ const Icon = styled(SvgIcon)`
   }
 `;
 
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(230, 230, 230);
+  ${font_header_4_bold};
+  padding: 1rem;
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    ${Icon} {
+      display: none;
+    }
+  }
+`;
+
 const SideIcon = styled(Icon)`
   &.MuiSvgIcon-root {
     height: 1.5rem;
     width: 1.5rem;
   }
-`;
-
-const Sidebar = styled.div<{iscollapsed: number}>`
-  background: rgb(14, 30, 73);
-  width: ${({iscollapsed}) => (iscollapsed ? 6 : 16)}rem;
-  transition: width 0.4s ease;
-  justify-items: ${({iscollapsed}) => (iscollapsed ? 'center' : 'inherit')};
 `;
 
 const MenuItem = styled(Link)`
@@ -123,6 +125,28 @@ const MenuItem = styled(Link)`
 
   &:hover {
     background-color: rgb(127, 145, 241);
+  }
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    & > div {
+      display: none;
+    }
+  }
+`;
+
+const Sidebar = styled.div<{iscollapsed: number}>`
+  background: rgb(14, 30, 73);
+  width: ${({iscollapsed}) => (iscollapsed ? 6 : 16)}rem;
+  transition: width 0.4s ease;
+  justify-items: ${({iscollapsed}) => (iscollapsed ? 'center' : 'inherit')};
+
+  @media ${({theme}) => theme.breakpoints.maxTb} {
+    width: 100%;
+    display: flex;
+
+    & > div {
+      margin-right: auto;
+    }
   }
 `;
 
