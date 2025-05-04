@@ -1,5 +1,6 @@
-import React, {useMemo} from 'react';
-import {useParams} from 'react-router';
+import React, {useEffect, useMemo} from 'react';
+import {useLocation, useParams} from 'react-router';
+import ReactGA from 'react-ga4';
 import styled from 'styled-components';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import LineChart from './components/LineChart';
@@ -13,7 +14,12 @@ import {font_body_2_reg, font_header_6_reg} from 'theme/fonts';
 
 const DetailsView = () => {
   const {id} = useParams<{id: string}>();
+  const location = useLocation();
   const {language} = useAppSelector(selectUserConfiguration);
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'details', page: location.pathname});
+  }, []);
 
   const latestZvekValues = useMemo(() => latestZveks.find(({name}) => name === id)?.info || [], [id]);
 

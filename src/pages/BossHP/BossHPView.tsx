@@ -1,5 +1,7 @@
-import React, {useCallback, useReducer, useMemo} from 'react';
+import React, {useCallback, useReducer, useMemo, useEffect} from 'react';
 import styled from 'styled-components';
+import {useLocation} from 'react-router';
+import ReactGA from 'react-ga4';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import MuiInput from '@mui/material/Input';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -15,7 +17,12 @@ const bossHPValues = Array.from({length: 200}, (_, i) => (i + 1) * 100).reverse(
 
 const BossHPView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
+  const location = useLocation();
   const [state, stateDispatch] = useReducer(stateReducer, sliderInitialState);
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'calculator', page: location.pathname});
+  }, []);
 
   const updateValue = useCallback((key: string, newValue: number) => {
     stateDispatch({[key]: Math.min(key === 'bossLevel' ? 200 : 100, Math.max(1, newValue))});

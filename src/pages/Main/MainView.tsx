@@ -1,5 +1,6 @@
-import React, {useMemo} from 'react';
-import {useNavigate} from 'react-router';
+import React, {useEffect, useMemo} from 'react';
+import {useLocation, useNavigate} from 'react-router';
+import ReactGA from 'react-ga4';
 import styled from 'styled-components';
 import Table from './components/Table';
 import PieChart from './components/PieChart';
@@ -20,8 +21,13 @@ const {guildTotal, date} = latestZveks[0].info[latestZveks[0].info.length - 1];
 
 const MainView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMobile, ,] = useQuery();
   const {language, selectedItems} = useAppSelector(selectUserConfiguration);
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'main', page: location.pathname});
+  }, []);
 
   const pieChartData = useMemo(
     () =>

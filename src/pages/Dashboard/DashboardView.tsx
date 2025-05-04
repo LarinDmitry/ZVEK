@@ -1,16 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useLocation} from 'react-router';
 import styled from 'styled-components';
+import ReactGA from 'react-ga4';
 import Bars from './components/Bars';
 import Tops from './components/Tops';
 import Charts from './components/Charts';
 
-const DashboardView = () => (
-  <Wrapper>
-    <Bars />
-    <Tops />
-    <Charts />
-  </Wrapper>
-);
+const DashboardView = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'dashboard', page: location.pathname});
+  }, []);
+
+  return (
+    <Wrapper>
+      <Bars />
+      <Tops />
+      <Charts />
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   height: 100vh;

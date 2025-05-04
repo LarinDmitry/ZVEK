@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router';
+import ReactGA from 'react-ga4';
+import {useLocation, useNavigate} from 'react-router';
 import Button from '@mui/material/Button';
 import {useAppSelector} from 'services/hooks';
 import {selectUserConfiguration} from 'store/userSlice';
@@ -9,7 +10,13 @@ import {font_body_1_reg, font_header_4_bold, mediumWeight} from 'theme/fonts';
 
 const NotFoundView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {language} = useAppSelector(selectUserConfiguration);
+
+  useEffect(() => {
+    ReactGA.send({hitType: '404', page: location.pathname});
+  }, []);
+
   const {NO_DATA, SUB_INFO, MAIN} = localization(language);
 
   return (

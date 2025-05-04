@@ -1,5 +1,6 @@
-import React from 'react';
-import {useNavigate} from 'react-router';
+import React, {useEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router';
+import ReactGA from 'react-ga4';
 import styled, {keyframes} from 'styled-components';
 import LanguageSelector from 'components/GeneralComponents/LanguageSelector';
 import Button from '@mui/material/Button';
@@ -12,7 +13,13 @@ import {font_body_2_reg, font_header_6_bold} from 'theme/fonts';
 
 const WelcomeView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {language} = useAppSelector(selectUserConfiguration);
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'welcome', page: location.pathname});
+  }, []);
+
   const {WELCOME, COME} = localization(language);
 
   return (

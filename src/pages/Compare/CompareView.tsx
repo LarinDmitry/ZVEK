@@ -1,5 +1,6 @@
-import React, {useCallback, useMemo} from 'react';
-import {useParams} from 'react-router';
+import React, {useCallback, useEffect, useMemo} from 'react';
+import {useLocation, useParams} from 'react-router';
+import ReactGA from 'react-ga4';
 import styled from 'styled-components';
 import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
@@ -16,7 +17,12 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 
 const CompareView = () => {
   const {id} = useParams<{id: string}>();
+  const location = useLocation();
   const {language} = useAppSelector(selectUserConfiguration);
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'compare', page: location.pathname});
+  }, []);
 
   const dataLastThreeEvents = useMemo(() => {
     if (!id) return null;

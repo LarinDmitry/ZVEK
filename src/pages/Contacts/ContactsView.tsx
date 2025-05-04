@@ -1,5 +1,7 @@
-import React, {ElementType, useMemo} from 'react';
+import React, {ElementType, useEffect, useMemo} from 'react';
 import styled from 'styled-components';
+import ReactGA from 'react-ga4';
+import {useLocation} from 'react-router';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
@@ -14,35 +16,44 @@ import {font_body_2_bold} from 'theme/fonts';
 
 const ContactsView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'contacts', page: location.pathname});
+  }, []);
+
   const {LEADER, CO_LEADER, ADMIN, WEB, SUPPORT} = localization(language);
 
-  const arrValues = useMemo(() => [
-    {
-      position: LEADER,
-      name: 'Артем',
-      link: 'Artem_Chuvanov',
-    },
-    {
-      position: CO_LEADER,
-      name: 'Марина',
-      link: 'MarVik3108',
-    },
-    {
-      position: ADMIN,
-      name: 'Роман',
-      link: 'Matpockyx',
-    },
-    {
-      position: ADMIN,
-      name: 'Санта',
-      link: 'Erbol_Santa',
-    },
-    {
-      position: WEB,
-      name: 'Дмитрий',
-      link: 'Larin_Dmytro',
-    },
-  ], [LEADER, CO_LEADER, ADMIN, WEB]);
+  const arrValues = useMemo(
+    () => [
+      {
+        position: LEADER,
+        name: 'Артем',
+        link: 'Artem_Chuvanov',
+      },
+      {
+        position: CO_LEADER,
+        name: 'Марина',
+        link: 'MarVik3108',
+      },
+      {
+        position: ADMIN,
+        name: 'Роман',
+        link: 'Matpockyx',
+      },
+      {
+        position: ADMIN,
+        name: 'Санта',
+        link: 'Erbol_Santa',
+      },
+      {
+        position: WEB,
+        name: 'Дмитрий',
+        link: 'Larin_Dmytro',
+      },
+    ],
+    [LEADER, CO_LEADER, ADMIN, WEB]
+  );
 
   return (
     <Wrapper>

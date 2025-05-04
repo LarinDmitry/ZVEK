@@ -1,5 +1,6 @@
-import React, {Fragment, useMemo} from 'react';
+import React, {Fragment, useEffect, useMemo} from 'react';
 import styled from 'styled-components';
+import ReactGA from 'react-ga4';
 import BackBtn from 'components/GeneralComponents/BackBtn';
 import DamageGrow from './components/DamageGrow';
 import DamageDecrease from './components/DamageDecrease';
@@ -14,9 +15,16 @@ import {localization} from './StatisticUtils';
 import {globalLocalization} from 'services/GlobalUtils';
 import Info from 'assets/icons/hint.svg';
 import {font_body_2_bold} from 'theme/fonts';
+import {useLocation} from 'react-router';
 
 const StatisticView = () => {
   const {language} = useAppSelector(selectUserConfiguration);
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({hitType: 'statistic', page: location.pathname});
+  }, []);
+
   const {
     TOP_PLAYERS,
     DAMAGE_DECREASE,
