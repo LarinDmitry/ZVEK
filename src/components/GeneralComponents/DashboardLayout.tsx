@@ -49,7 +49,7 @@ const DashboardLayout: FC = () => {
       <Sidebar iscollapsed={+isSidebarCollapsed}>
         <Title>
           {/* Here will be log instead of text */}
-          {!isSidebarCollapsed && <div>ZVEK</div>}
+          {!isSidebarCollapsed && <div>SE</div>}
           <Icon onClick={() => setIsSidebarCollapsed((prev) => !prev)}>
             <SidebarIcon />
           </Icon>

@@ -1,7 +1,7 @@
 export default {
-  TOP_PLAYERS: 'Top players of last ZVEKs',
+  TOP_PLAYERS: 'Top players of last SEs',
   DAMAGE_DECREASE: 'Damage decrease',
-  ZERO_DAMAGE: 'Zero damage at last ZVEK',
+  ZERO_DAMAGE: 'Zero damage at last SE',
   JINNI_COEF: 'Disbalance factor',
   FORMULA: 'Equation:',
   WHERE: 'where',
@@ -22,6 +22,6 @@ export default {
   INCREASE: 'Increased by',
   DECREASE: 'Decreased by',
   DAY: 'Day',
-  LAST_ZVEK: 'Last ZVEK Damage, T',
+  LAST_ZVEK: 'Last SE Damage, T',
   ALL_PLAYERS_HAVE_DAMAGED: 'All players damaged in all days',
 };

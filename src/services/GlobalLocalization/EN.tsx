@@ -1,5 +1,5 @@
 export default {
-  LATEST_ZVEK: 'Latest ZVEK Damage, B',
+  LATEST_ZVEK: 'Latest SE Damage, B',
   DAMAGE: 'Damage',
   NICKNAME: 'Nickname',
   BILLION: 'B',
@@ -12,11 +12,11 @@ export default {
   FRI: 'Fri',
   SAT: 'Sat',
   SUN: 'Sun',
-  LAST: 'Last ZVEK',
+  LAST: 'Last SE',
   STAT: 'Statistics',
   CONTACTS: 'Contacts',
   NO_DATA: 'No data',
-  GROW: 'ZVEK change',
+  GROW: 'SE change',
   GUILD_RATING: 'Guild rating',
   NEWBIES: 'Newbies',
 };
