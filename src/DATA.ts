@@ -864,8 +864,8 @@ export const teamDetails = [
     name: 'Belaga',
     damageDealer: 'vulkan',
     quality: 'a-',
-    stars: 10,
-    temple: 10,
+    stars: 14,
+    temple: 14,
   },
   {
     name: 'Kboron',
