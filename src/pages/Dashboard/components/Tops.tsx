@@ -55,7 +55,15 @@ const Tops = () => {
     <Wrapper>
       <ChartBlock>
         <DoughnutWrapper>
-          <Doughnut data={data} />
+          <Doughnut
+            data={data}
+            options={{
+              responsive: true,
+              plugins: {
+                datalabels: {display: false},
+              },
+            }}
+          />
         </DoughnutWrapper>
         <Text>
           {TOTAL}: {(calculateTopPlayersData(5)[2].guildTotal / 1e12).toFixed(2)} T

@@ -93,6 +93,7 @@ const Charts = () => {
           display: true,
           text,
         },
+        datalabels: {display: false},
       },
     };
   };
