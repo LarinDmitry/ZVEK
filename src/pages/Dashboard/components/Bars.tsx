@@ -79,8 +79,8 @@ const Bars = () => {
       key: 'rating',
       value: <ChangeText value={guildRateDiff}>{currentRate}</ChangeText>,
       isPositive: guildRateDiff > 0,
-      percent: guildRateDiff === 0 ? '' : guildRateDiff > 0 ? `(-${guildRateDiff})` : `(+${-guildRateDiff})`,
-      icon: guildRateDiff === 0 ? null : getIcon(guildRateDiff < 0),
+      percent: guildRateDiff === 0 ? '' : guildRateDiff > 0 ? `(+${guildRateDiff})` : `(-${-guildRateDiff})`,
+      icon: guildRateDiff === 0 ? null : getIcon(guildRateDiff > 0),
       label: GUILD_RATING,
     },
     {
