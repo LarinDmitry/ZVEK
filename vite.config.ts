@@ -19,7 +19,7 @@ export default defineConfig({
     }),
     checker({typescript: true}),
   ],
-  base: "/ZVEK",
+  base: "/stalkers",
   server: {
     port: 3000,
   },

@@ -32,5 +32,5 @@ const Routers = () => (
 );
 
 export const router = createBrowserRouter(createRoutesFromChildren(Routers()), {
-  basename: '/ZVEK',
+  basename: '/stalkers',
 });
